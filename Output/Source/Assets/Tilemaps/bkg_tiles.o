@@ -1,0 +1,28 @@
+XL4
+H 9 areas 2 global symbols
+M bkg_tiles
+S .__.ABS. Def00000000
+A _CODE size 40 flags 0 addr 0
+S _bkg_tiles Def00000000
+A _DATA size 0 flags 0 addr 0
+A _INITIALIZED size 0 flags 0 addr 0
+A _DABS size 0 flags 8 addr 0
+A _HOME size 0 flags 0 addr 0
+A _GSINIT size 0 flags 0 addr 0
+A _GSFINAL size 0 flags 0 addr 0
+A _INITIALIZER size 0 flags 0 addr 0
+A _CABS size 0 flags 8 addr 0
+T 00 00 00 00
+R 00 00 00 00
+T 00 00 00 00 00 01 02 03 FC FC 04 FC FC 05 06 FC
+R 00 00 00 00
+T 0C 00 00 00 07 08 09 0A FC FC FC 02 0B 0C 0D FC
+R 00 00 00 00
+T 18 00 00 00 0E 0F 10 FC 11 12 13 14 15 16 17 FC
+R 00 00 00 00
+T 24 00 00 00 18 19 1A FC 1B 1C 1D FC FC 1E 1F 20
+R 00 00 00 00
+T 30 00 00 00 21 22 FC 23 24 25 FC 26 27 13 28 29
+R 00 00 00 00
+T 3C 00 00 00 2A 2B 2C 11
+R 00 00 00 00
