@@ -42,14 +42,14 @@
                                      42 ; code
                                      43 ;--------------------------------------------------------
                                      44 	.area _CODE
-                                     45 ;Source/Engine/Libraries/vec2.h:32: static inline void vec2_set(vec2 *v, int x, int y) {
+                                     45 ;Source/Engine/ECS/../Libraries/vec2.h:32: static inline void vec2_set(vec2 *v, int x, int y) {
                                      46 ;	---------------------------------
                                      47 ; Function vec2_set
                                      48 ; ---------------------------------
     00000000                         49 _vec2_set:
     00000000 69               [ 4]   50 	ld	l, c
     00000001 60               [ 4]   51 	ld	h, b
-                                     52 ;Source/Engine/Libraries/vec2.h:33: v->x = F12(x);
+                                     52 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
     00000002 4B               [ 4]   53 	ld	c, e
     00000003 42               [ 4]   54 	ld	b, d
     00000004 29               [ 8]   55 	add	hl, hl
@@ -61,7 +61,7 @@
     0000000A 03               [ 8]   61 	inc	bc
     0000000B 7C               [ 4]   62 	ld	a, h
     0000000C 02               [ 8]   63 	ld	(bc), a
-                                     64 ;Source/Engine/Libraries/vec2.h:34: v->y = F12(y);
+                                     64 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
     0000000D 13               [ 8]   65 	inc	de
     0000000E 13               [ 8]   66 	inc	de
     0000000F F8 02            [12]   67 	ldhl	sp,	#2
@@ -80,11 +80,11 @@
     00000021 13               [ 8]   80 	inc	de
     00000022 78               [ 4]   81 	ld	a, b
     00000023 12               [ 8]   82 	ld	(de), a
-                                     83 ;Source/Engine/Libraries/vec2.h:35: }
+                                     83 ;Source/Engine/ECS/../Libraries/vec2.h:35: }
     00000024 E1               [12]   84 	pop	hl
     00000025 F1               [12]   85 	pop	af
     00000026 E9               [ 4]   86 	jp	(hl)
-                                     87 ;Source/Engine/Libraries/vec2.h:38: static inline void vec2_add(vec2 *a, const vec2 *b) {
+                                     87 ;Source/Engine/ECS/../Libraries/vec2.h:38: static inline void vec2_add(vec2 *a, const vec2 *b) {
                                      88 ;	---------------------------------
                                      89 ; Function vec2_add
                                      90 ; ---------------------------------
@@ -97,7 +97,7 @@
     0000002E F8 04            [12]   97 	ldhl	sp,	#4
     00000030 79               [ 4]   98 	ld	a, c
     00000031 22               [ 8]   99 	ld	(hl+), a
-                                    100 ;Source/Engine/Libraries/vec2.h:39: a->x += b->x;
+                                    100 ;Source/Engine/ECS/../Libraries/vec2.h:39: a->x += b->x;
     00000032 78               [ 4]  101 	ld	a, b
     00000033 22               [ 8]  102 	ld	(hl+), a
     00000034 7E               [ 8]  103 	ld	a, (hl)
@@ -134,7 +134,7 @@
     00000057 79               [ 4]  134 	ld	a, c
     00000058 22               [ 8]  135 	ld	(hl+), a
     00000059 70               [ 8]  136 	ld	(hl), b
-                                    137 ;Source/Engine/Libraries/vec2.h:40: a->y += b->y;
+                                    137 ;Source/Engine/ECS/../Libraries/vec2.h:40: a->y += b->y;
     0000005A F8 06            [12]  138 	ldhl	sp,	#6
     0000005C 2A               [ 8]  139 	ld	a, (hl+)
     0000005D 4F               [ 4]  140 	ld	c, a
@@ -177,10 +177,10 @@
     00000086 03               [ 8]  177 	inc	bc
     00000087 7A               [ 4]  178 	ld	a, d
     00000088 02               [ 8]  179 	ld	(bc), a
-                                    180 ;Source/Engine/Libraries/vec2.h:41: }
+                                    180 ;Source/Engine/ECS/../Libraries/vec2.h:41: }
     00000089 E8 08            [16]  181 	add	sp, #8
     0000008B C9               [16]  182 	ret
-                                    183 ;Source/Engine/Libraries/vec2.h:44: static inline void vec2_sub(vec2 *a, const vec2 *b) {
+                                    183 ;Source/Engine/ECS/../Libraries/vec2.h:44: static inline void vec2_sub(vec2 *a, const vec2 *b) {
                                     184 ;	---------------------------------
                                     185 ; Function vec2_sub
                                     186 ; ---------------------------------
@@ -193,7 +193,7 @@
     00000093 F8 02            [12]  193 	ldhl	sp,	#2
     00000095 79               [ 4]  194 	ld	a, c
     00000096 22               [ 8]  195 	ld	(hl+), a
-                                    196 ;Source/Engine/Libraries/vec2.h:45: a->x -= b->x;
+                                    196 ;Source/Engine/ECS/../Libraries/vec2.h:45: a->x -= b->x;
     00000097 78               [ 4]  197 	ld	a, b
     00000098 22               [ 8]  198 	ld	(hl+), a
     00000099 7E               [ 8]  199 	ld	a, (hl)
@@ -229,7 +229,7 @@
     000000BA 79               [ 4]  229 	ld	a, c
     000000BB 22               [ 8]  230 	ld	(hl+), a
     000000BC 70               [ 8]  231 	ld	(hl), b
-                                    232 ;Source/Engine/Libraries/vec2.h:46: a->y -= b->y;
+                                    232 ;Source/Engine/ECS/../Libraries/vec2.h:46: a->y -= b->y;
     000000BD F8 04            [12]  233 	ldhl	sp,#4
     000000BF 2A               [ 8]  234 	ld	a, (hl+)
     000000C0 5F               [ 4]  235 	ld	e, a
@@ -266,10 +266,10 @@
     000000E2 79               [ 4]  266 	ld	a, c
     000000E3 22               [ 8]  267 	ld	(hl+), a
     000000E4 70               [ 8]  268 	ld	(hl), b
-                                    269 ;Source/Engine/Libraries/vec2.h:47: }
+                                    269 ;Source/Engine/ECS/../Libraries/vec2.h:47: }
     000000E5 E8 06            [16]  270 	add	sp, #6
     000000E7 C9               [16]  271 	ret
-                                    272 ;Source/Engine/Libraries/vec2.h:50: static inline void vec2_scale(vec2 *a, f12 s) {
+                                    272 ;Source/Engine/ECS/../Libraries/vec2.h:50: static inline void vec2_scale(vec2 *a, f12 s) {
                                     273 ;	---------------------------------
                                     274 ; Function vec2_scale
                                     275 ; ---------------------------------
@@ -282,7 +282,7 @@
     000000EF F8 0A            [12]  282 	ldhl	sp,	#10
     000000F1 79               [ 4]  283 	ld	a, c
     000000F2 22               [ 8]  284 	ld	(hl+), a
-                                    285 ;Source/Engine/Libraries/vec2.h:52: a->x = ((int32_t)a->x * s) >> 4;
+                                    285 ;Source/Engine/ECS/../Libraries/vec2.h:52: a->x = ((int32_t)a->x * s) >> 4;
     000000F3 78               [ 4]  286 	ld	a, b
     000000F4 22               [ 8]  287 	ld	(hl+), a
     000000F5 7E               [ 8]  288 	ld	a, (hl)
@@ -348,7 +348,7 @@
     00000141 79               [ 4]  348 	ld	a, c
     00000142 22               [ 8]  349 	ld	(hl+), a
     00000143 70               [ 8]  350 	ld	(hl), b
-                                    351 ;Source/Engine/Libraries/vec2.h:53: a->y = ((int32_t)a->y * s) >> 4;
+                                    351 ;Source/Engine/ECS/../Libraries/vec2.h:53: a->y = ((int32_t)a->y * s) >> 4;
     00000144 F8 0C            [12]  352 	ldhl	sp,#12
     00000146 2A               [ 8]  353 	ld	a, (hl+)
     00000147 5F               [ 4]  354 	ld	e, a
@@ -401,10 +401,10 @@
     00000184 79               [ 4]  401 	ld	a, c
     00000185 22               [ 8]  402 	ld	(hl+), a
     00000186 70               [ 8]  403 	ld	(hl), b
-                                    404 ;Source/Engine/Libraries/vec2.h:54: }
+                                    404 ;Source/Engine/ECS/../Libraries/vec2.h:54: }
     00000187 E8 0E            [16]  405 	add	sp, #14
     00000189 C9               [16]  406 	ret
-                                    407 ;Source/Engine/Libraries/vec2.h:57: static inline void vec2_copy(vec2 *dest, const vec2 *src) {
+                                    407 ;Source/Engine/ECS/../Libraries/vec2.h:57: static inline void vec2_copy(vec2 *dest, const vec2 *src) {
                                     408 ;	---------------------------------
                                     409 ; Function vec2_copy
                                     410 ; ---------------------------------
@@ -413,7 +413,7 @@
     0000018C F8 02            [12]  413 	ldhl	sp,	#2
     0000018E 7B               [ 4]  414 	ld	a, e
     0000018F 22               [ 8]  415 	ld	(hl+), a
-                                    416 ;Source/Engine/Libraries/vec2.h:58: dest->x = src->x;
+                                    416 ;Source/Engine/ECS/../Libraries/vec2.h:58: dest->x = src->x;
     00000190 7A               [ 4]  417 	ld	a, d
     00000191 32               [ 8]  418 	ld	(hl-), a
     00000192 33               [ 8]  419 	inc	sp
@@ -434,7 +434,7 @@
     000001A1 03               [ 8]  434 	inc	bc
     000001A2 7C               [ 4]  435 	ld	a, h
     000001A3 02               [ 8]  436 	ld	(bc), a
-                                    437 ;Source/Engine/Libraries/vec2.h:59: dest->y = src->y;
+                                    437 ;Source/Engine/ECS/../Libraries/vec2.h:59: dest->y = src->y;
     000001A4 F8 02            [12]  438 	ldhl	sp,	#2
     000001A6 2A               [ 8]  439 	ld	a, (hl+)
     000001A7 4F               [ 4]  440 	ld	c, a
@@ -451,10 +451,10 @@
     000001B2 03               [ 8]  451 	inc	bc
     000001B3 7C               [ 4]  452 	ld	a, h
     000001B4 02               [ 8]  453 	ld	(bc), a
-                                    454 ;Source/Engine/Libraries/vec2.h:60: }
+                                    454 ;Source/Engine/ECS/../Libraries/vec2.h:60: }
     000001B5 E8 04            [16]  455 	add	sp, #4
     000001B7 C9               [16]  456 	ret
-                                    457 ;Source/Engine/Libraries/vec2.h:63: static inline bool vec2_equal(const vec2 *a, const vec2 *b) {
+                                    457 ;Source/Engine/ECS/../Libraries/vec2.h:63: static inline bool vec2_equal(const vec2 *a, const vec2 *b) {
                                     458 ;	---------------------------------
                                     459 ; Function vec2_equal
                                     460 ; ---------------------------------
@@ -467,7 +467,7 @@
     000001BF F8 04            [12]  467 	ldhl	sp,	#4
     000001C1 79               [ 4]  468 	ld	a, c
     000001C2 22               [ 8]  469 	ld	(hl+), a
-                                    470 ;Source/Engine/Libraries/vec2.h:64: return a->x == b->x && a->y == b->y;
+                                    470 ;Source/Engine/ECS/../Libraries/vec2.h:64: return a->x == b->x && a->y == b->y;
     000001C3 78               [ 4]  471 	ld	a, b
     000001C4 22               [ 8]  472 	ld	(hl+), a
     000001C5 2A               [ 8]  473 	ld	a, (hl+)
@@ -549,10 +549,10 @@
     0000021C                        549 00104$:
     0000021C 3E 01            [ 8]  550 	ld	a, #0x01
     0000021E                        551 00105$:
-                                    552 ;Source/Engine/Libraries/vec2.h:65: }
+                                    552 ;Source/Engine/ECS/../Libraries/vec2.h:65: }
     0000021E E8 08            [16]  553 	add	sp, #8
     00000220 C9               [16]  554 	ret
-                                    555 ;Source/Engine/ECS.c:6: void EntityAddComponent (Entity *entity, uint16_t component) {
+                                    555 ;Source/Engine/ECS/ECS.c:6: void EntityAddComponent (Entity *entity, uint16_t component) {
                                     556 ;	---------------------------------
                                     557 ; Function EntityAddComponent
                                     558 ; ---------------------------------
@@ -565,7 +565,7 @@
     00000228 F8 07            [12]  565 	ldhl	sp,	#7
     0000022A 79               [ 4]  566 	ld	a, c
     0000022B 22               [ 8]  567 	ld	(hl+), a
-                                    568 ;Source/Engine/ECS.c:10: if (EntityHasComponent(entity, component)){
+                                    568 ;Source/Engine/ECS/ECS.c:10: if (EntityHasComponent(entity, component)){
     0000022C 78               [ 4]  569 	ld	a, b
     0000022D 32               [ 8]  570 	ld	(hl-), a
     0000022E 2A               [ 8]  571 	ld	a, (hl+)
@@ -579,9 +579,9 @@
     00000238 F8 06            [12]  579 	ldhl	sp,#6
     0000023A 77               [ 8]  580 	ld	(hl), a
     0000023B CB 46            [12]  581 	bit	0, (hl)
-                                    582 ;Source/Engine/ECS.c:11: return;
+                                    582 ;Source/Engine/ECS/ECS.c:11: return;
     0000023D C2rC9r03         [16]  583 	jp	NZ, 00112$
-                                    584 ;Source/Engine/ECS.c:14: entity->components |= component;
+                                    584 ;Source/Engine/ECS/ECS.c:14: entity->components |= component;
     00000240 F8 09            [12]  585 	ldhl	sp,	#9
     00000242 2A               [ 8]  586 	ld	a, (hl+)
     00000243 4F               [ 4]  587 	ld	c, a
@@ -602,7 +602,7 @@
     00000253 F1               [12]  602 	pop	af
     00000254 F8 08            [12]  603 	ldhl	sp,	#8
     00000256 B6               [ 8]  604 	or	a, (hl)
-                                    605 ;Source/Engine/ECS.c:22: transformComponent.entityID[nextPoolSlot] = entity->ID;
+                                    605 ;Source/Engine/ECS/ECS.c:22: transformComponent.entityID[nextPoolSlot] = entity->ID;
     00000257 23               [ 8]  606 	inc	hl
     00000258 57               [ 4]  607 	ld	d, a
     00000259 7B               [ 4]  608 	ld	a, e
@@ -617,7 +617,7 @@
     00000264 7E               [ 8]  617 	ld	a, (hl)
     00000265 F8 02            [12]  618 	ldhl	sp,	#2
     00000267 77               [ 8]  619 	ld	(hl), a
-                                    620 ;Source/Engine/ECS.c:17: switch (component) {
+                                    620 ;Source/Engine/ECS/ECS.c:17: switch (component) {
     00000268 F8 07            [12]  621 	ldhl	sp,	#7
     0000026A 2A               [ 8]  622 	ld	a, (hl+)
     0000026B 3D               [ 4]  623 	dec	a
@@ -629,18 +629,18 @@
     00000274 B6               [ 8]  629 	or	a, (hl)
     00000275 CAr02r03         [16]  630 	jp	Z, 00106$
     00000278 C3rC9r03         [16]  631 	jp	00112$
-                                    632 ;Source/Engine/ECS.c:18: case TRANSFORM_COMPONENT:
+                                    632 ;Source/Engine/ECS/ECS.c:18: case TRANSFORM_COMPONENT:
     0000027B                        633 00103$:
-                                    634 ;Source/Engine/ECS.c:19: nextPoolSlot = GetNextAvailableComponentPoolSlot(transformComponent.entityID, TRANSFORM_POOL_SIZE);
+                                    634 ;Source/Engine/ECS/ECS.c:19: nextPoolSlot = GetNextAvailableComponentPoolSlot(transformComponent.entityID, TRANSFORM_POOL_SIZE);
     0000027B 3E 64            [ 8]  635 	ld	a, #0x64
     0000027D 11r00r00         [12]  636 	ld	de, #_transformComponent
     00000280 CDrB4r04         [24]  637 	call	_GetNextAvailableComponentPoolSlot
-                                    638 ;Source/Engine/ECS.c:20: if (nextPoolSlot != 255) {
+                                    638 ;Source/Engine/ECS/ECS.c:20: if (nextPoolSlot != 255) {
     00000283 F8 00            [12]  639 	ldhl	sp,#0
     00000285 77               [ 8]  640 	ld	(hl), a
     00000286 3C               [ 4]  641 	inc	a
     00000287 CArC9r03         [16]  642 	jp	Z, 00112$
-                                    643 ;Source/Engine/ECS.c:21: vec2_set(&transformComponent.position[nextPoolSlot], 0, 0);
+                                    643 ;Source/Engine/ECS/ECS.c:21: vec2_set(&transformComponent.position[nextPoolSlot], 0, 0);
     0000028A F8 00            [12]  644 	ldhl	sp,	#0
     0000028C 7E               [ 8]  645 	ld	a, (hl)
     0000028D F8 05            [12]  646 	ldhl	sp,	#5
@@ -679,7 +679,7 @@
     000002B8 F8 06            [12]  679 	ldhl	sp,	#6
     000002BA 3A               [ 8]  680 	ld	a, (hl-)
     000002BB 2B               [ 8]  681 	dec	hl
-                                    682 ;Source/Engine/Libraries/vec2.h:33: v->x = F12(x);
+                                    682 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
     000002BC 32               [ 8]  683 	ld	(hl-), a
     000002BD 2A               [ 8]  684 	ld	a, (hl+)
     000002BE 66               [ 8]  685 	ld	h, (hl)
@@ -687,7 +687,7 @@
     000002C0 AF               [ 4]  687 	xor	a, a
     000002C1 22               [ 8]  688 	ld	(hl+), a
     000002C2 77               [ 8]  689 	ld	(hl), a
-                                    690 ;Source/Engine/Libraries/vec2.h:34: v->y = F12(y);
+                                    690 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
     000002C3 F8 03            [12]  691 	ldhl	sp,#3
     000002C5 2A               [ 8]  692 	ld	a, (hl+)
     000002C6 5F               [ 4]  693 	ld	e, a
@@ -708,7 +708,7 @@
     000002D9 AF               [ 4]  708 	xor	a, a
     000002DA 22               [ 8]  709 	ld	(hl+), a
     000002DB 77               [ 8]  710 	ld	(hl), a
-                                    711 ;Source/Engine/ECS.c:22: transformComponent.entityID[nextPoolSlot] = entity->ID;
+                                    711 ;Source/Engine/ECS/ECS.c:22: transformComponent.entityID[nextPoolSlot] = entity->ID;
     000002DC 11r00r00         [12]  712 	ld	de, #_transformComponent
     000002DF F8 00            [12]  713 	ldhl	sp,	#0
     000002E1 6E               [ 8]  714 	ld	l, (hl)
@@ -737,20 +737,20 @@
     000002FC 57               [ 4]  737 	ld	d, a
     000002FD 7E               [ 8]  738 	ld	a, (hl)
     000002FE 12               [ 8]  739 	ld	(de), a
-                                    740 ;Source/Engine/ECS.c:24: break;
+                                    740 ;Source/Engine/ECS/ECS.c:24: break;
     000002FF C3rC9r03         [16]  741 	jp	00112$
-                                    742 ;Source/Engine/ECS.c:25: case SPRITE_COMPONENT:
+                                    742 ;Source/Engine/ECS/ECS.c:25: case SPRITE_COMPONENT:
     00000302                        743 00106$:
-                                    744 ;Source/Engine/ECS.c:26: nextPoolSlot = GetNextAvailableComponentPoolSlot(spriteComponent.entityID, SPRITE_POOL_SIZE);
+                                    744 ;Source/Engine/ECS/ECS.c:26: nextPoolSlot = GetNextAvailableComponentPoolSlot(spriteComponent.entityID, SPRITE_POOL_SIZE);
     00000302 3E 32            [ 8]  745 	ld	a, #0x32
     00000304 11r00r00         [12]  746 	ld	de, #_spriteComponent
     00000307 CDrB4r04         [24]  747 	call	_GetNextAvailableComponentPoolSlot
-                                    748 ;Source/Engine/ECS.c:27: if (nextPoolSlot != 255) {
+                                    748 ;Source/Engine/ECS/ECS.c:27: if (nextPoolSlot != 255) {
     0000030A F8 03            [12]  749 	ldhl	sp,#3
     0000030C 77               [ 8]  750 	ld	(hl), a
     0000030D 3C               [ 4]  751 	inc	a
     0000030E CArC9r03         [16]  752 	jp	Z, 00112$
-                                    753 ;Source/Engine/ECS.c:28: spriteComponent.entityID[nextPoolSlot] = entity->ID;
+                                    753 ;Source/Engine/ECS/ECS.c:28: spriteComponent.entityID[nextPoolSlot] = entity->ID;
     00000311 11r00r00         [12]  754 	ld	de, #_spriteComponent
     00000314 F8 03            [12]  755 	ldhl	sp,	#3
     00000316 6E               [ 8]  756 	ld	l, (hl)
@@ -778,7 +778,7 @@
     00000331 57               [ 4]  778 	ld	d, a
     00000332 7E               [ 8]  779 	ld	a, (hl)
     00000333 12               [ 8]  780 	ld	(de), a
-                                    781 ;Source/Engine/ECS.c:29: spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
+                                    781 ;Source/Engine/ECS/ECS.c:29: spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
     00000334 F8 03            [12]  782 	ldhl	sp,	#3
     00000336 7E               [ 8]  783 	ld	a, (hl)
     00000337 87               [ 4]  784 	add	a, a
@@ -802,7 +802,7 @@
     0000034F AF               [ 4]  802 	xor	a, a
     00000350 22               [ 8]  803 	ld	(hl+), a
     00000351 77               [ 8]  804 	ld	(hl), a
-                                    805 ;Source/Engine/ECS.c:30: spriteComponent.tileIndex[nextPoolSlot] = 0;
+                                    805 ;Source/Engine/ECS/ECS.c:30: spriteComponent.tileIndex[nextPoolSlot] = 0;
     00000352 11r96r00         [12]  806 	ld	de, #(_spriteComponent + 150)
     00000355 F8 03            [12]  807 	ldhl	sp,	#3
     00000357 6E               [ 8]  808 	ld	l, (hl)
@@ -820,7 +820,7 @@
     00000366 66               [ 8]  820 	ld	h, (hl)
     00000367 6F               [ 4]  821 	ld	l, a
     00000368 36 00            [12]  822 	ld	(hl), #0x00
-                                    823 ;Source/Engine/ECS.c:31: spriteComponent.offset[nextPoolSlot].x = 0;
+                                    823 ;Source/Engine/ECS/ECS.c:31: spriteComponent.offset[nextPoolSlot].x = 0;
     0000036A 11rC8r00         [12]  824 	ld	de, #(_spriteComponent + 200)
     0000036D F8 06            [12]  825 	ldhl	sp,	#6
     0000036F 6E               [ 8]  826 	ld	l, (hl)
@@ -838,7 +838,7 @@
     0000037E 66               [ 8]  838 	ld	h, (hl)
     0000037F 6F               [ 4]  839 	ld	l, a
     00000380 36 00            [12]  840 	ld	(hl), #0x00
-                                    841 ;Source/Engine/ECS.c:32: spriteComponent.offset[nextPoolSlot].y = 0;
+                                    841 ;Source/Engine/ECS/ECS.c:32: spriteComponent.offset[nextPoolSlot].y = 0;
     00000382 F8 01            [12]  842 	ldhl	sp,#1
     00000384 2A               [ 8]  843 	ld	a, (hl+)
     00000385 5F               [ 4]  844 	ld	e, a
@@ -858,7 +858,7 @@
     00000395 66               [ 8]  858 	ld	h, (hl)
     00000396 6F               [ 4]  859 	ld	l, a
     00000397 36 00            [12]  860 	ld	(hl), #0x00
-                                    861 ;Source/Engine/ECS.c:33: spriteComponent.type[nextPoolSlot] = SPRITE_TYPE_WORLD;
+                                    861 ;Source/Engine/ECS/ECS.c:33: spriteComponent.type[nextPoolSlot] = SPRITE_TYPE_WORLD;
     00000399 11r2Cr01         [12]  862 	ld	de, #(_spriteComponent + 300)
     0000039C F8 03            [12]  863 	ldhl	sp,	#3
     0000039E 6E               [ 8]  864 	ld	l, (hl)
@@ -876,7 +876,7 @@
     000003AD 66               [ 8]  876 	ld	h, (hl)
     000003AE 6F               [ 4]  877 	ld	l, a
     000003AF 36 00            [12]  878 	ld	(hl), #0x00
-                                    879 ;Source/Engine/ECS.c:34: spriteComponent.visible[nextPoolSlot] = false;
+                                    879 ;Source/Engine/ECS/ECS.c:34: spriteComponent.visible[nextPoolSlot] = false;
     000003B1 11r5Er01         [12]  880 	ld	de, #(_spriteComponent + 350)
     000003B4 F8 03            [12]  881 	ldhl	sp,	#3
     000003B6 6E               [ 8]  882 	ld	l, (hl)
@@ -894,12 +894,12 @@
     000003C5 66               [ 8]  894 	ld	h, (hl)
     000003C6 6F               [ 4]  895 	ld	l, a
     000003C7 36 00            [12]  896 	ld	(hl), #0x00
-                                    897 ;Source/Engine/ECS.c:41: }
+                                    897 ;Source/Engine/ECS/ECS.c:41: }
     000003C9                        898 00112$:
-                                    899 ;Source/Engine/ECS.c:42: }
+                                    899 ;Source/Engine/ECS/ECS.c:42: }
     000003C9 E8 0B            [16]  900 	add	sp, #11
     000003CB C9               [16]  901 	ret
-                                    902 ;Source/Engine/ECS.c:45: void EntityRemoveComponent(Entity *entity, uint16_t component) {
+                                    902 ;Source/Engine/ECS/ECS.c:45: void EntityRemoveComponent(Entity *entity, uint16_t component) {
                                     903 ;	---------------------------------
                                     904 ; Function EntityRemoveComponent
                                     905 ; ---------------------------------
@@ -908,7 +908,7 @@
     000003CE F8 04            [12]  908 	ldhl	sp,	#4
     000003D0 7B               [ 4]  909 	ld	a, e
     000003D1 22               [ 8]  910 	ld	(hl+), a
-                                    911 ;Source/Engine/ECS.c:47: entity->components &= ~component;
+                                    911 ;Source/Engine/ECS/ECS.c:47: entity->components &= ~component;
     000003D2 7A               [ 4]  912 	ld	a, d
     000003D3 32               [ 8]  913 	ld	(hl-), a
     000003D4 2A               [ 8]  914 	ld	a, (hl+)
@@ -949,13 +949,13 @@
     000003FA 2A               [ 8]  949 	ld	a, (hl+)
     000003FB 12               [ 8]  950 	ld	(de), a
     000003FC 13               [ 8]  951 	inc	de
-                                    952 ;Source/Engine/ECS.c:53: if (transformComponent.entityID[i] == entity -> ID)  {
+                                    952 ;Source/Engine/ECS/ECS.c:53: if (transformComponent.entityID[i] == entity -> ID)  {
     000003FD 2A               [ 8]  953 	ld	a, (hl+)
     000003FE 12               [ 8]  954 	ld	(de), a
     000003FF 2A               [ 8]  955 	ld	a, (hl+)
     00000400 5F               [ 4]  956 	ld	e, a
     00000401 56               [ 8]  957 	ld	d, (hl)
-                                    958 ;Source/Engine/ECS.c:50: switch (component) {
+                                    958 ;Source/Engine/ECS/ECS.c:50: switch (component) {
     00000402 79               [ 4]  959 	ld	a, c
     00000403 3D               [ 4]  960 	dec	a
     00000404 B0               [ 4]  961 	or	a, b
@@ -965,14 +965,14 @@
     0000040A B0               [ 4]  965 	or	a, b
     0000040B 28 43            [12]  966 	jr	Z, 00105$
     0000040D C3r9Fr04         [16]  967 	jp	00116$
-                                    968 ;Source/Engine/ECS.c:51: case TRANSFORM_COMPONENT:
+                                    968 ;Source/Engine/ECS/ECS.c:51: case TRANSFORM_COMPONENT:
     00000410                        969 00101$:
-                                    970 ;Source/Engine/ECS.c:52: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+                                    970 ;Source/Engine/ECS/ECS.c:52: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
     00000410 F8 03            [12]  971 	ldhl	sp,	#3
     00000412 36 00            [12]  972 	ld	(hl), #0x00
     00000414 0E 00            [ 8]  973 	ld	c, #0x00
     00000416                        974 00112$:
-                                    975 ;Source/Engine/ECS.c:53: if (transformComponent.entityID[i] == entity -> ID)  {
+                                    975 ;Source/Engine/ECS/ECS.c:53: if (transformComponent.entityID[i] == entity -> ID)  {
     00000416 21r00r00         [12]  976 	ld	hl, #_transformComponent
     00000419 06 00            [ 8]  977 	ld	b, #0x00
     0000041B 09               [ 8]  978 	add	hl, bc
@@ -980,7 +980,7 @@
     0000041D 46               [ 8]  980 	ld	b, (hl)
     0000041E 90               [ 4]  981 	sub	a, b
     0000041F 20 24            [12]  982 	jr	NZ, 00113$
-                                    983 ;Source/Engine/ECS.c:54: vec2_set(&transformComponent.position[i], 0, 0);
+                                    983 ;Source/Engine/ECS/ECS.c:54: vec2_set(&transformComponent.position[i], 0, 0);
     00000421 01r64r00         [12]  984 	ld	bc, #_transformComponent + 100
     00000424 F8 03            [12]  985 	ldhl	sp,	#3
     00000426 5E               [ 8]  986 	ld	e, (hl)
@@ -990,17 +990,17 @@
     0000042B 29               [ 8]  990 	add	hl, hl
     0000042C 29               [ 8]  991 	add	hl, hl
     0000042D 09               [ 8]  992 	add	hl, bc
-                                    993 ;Source/Engine/Libraries/vec2.h:33: v->x = F12(x);
+                                    993 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
     0000042E AF               [ 4]  994 	xor	a, a
     0000042F 22               [ 8]  995 	ld	(hl+), a
     00000430 32               [ 8]  996 	ld	(hl-), a
-                                    997 ;Source/Engine/Libraries/vec2.h:34: v->y = F12(y);
+                                    997 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
     00000431 23               [ 8]  998 	inc	hl
     00000432 23               [ 8]  999 	inc	hl
     00000433 AF               [ 4] 1000 	xor	a, a
     00000434 22               [ 8] 1001 	ld	(hl+), a
     00000435 77               [ 8] 1002 	ld	(hl), a
-                                   1003 ;Source/Engine/ECS.c:55: transformComponent.entityID[i] = 0;
+                                   1003 ;Source/Engine/ECS/ECS.c:55: transformComponent.entityID[i] = 0;
     00000436 11r00r00         [12] 1004 	ld	de, #_transformComponent
     00000439 F8 03            [12] 1005 	ldhl	sp,	#3
     0000043B 6E               [ 8] 1006 	ld	l, (hl)
@@ -1010,24 +1010,24 @@
     00000440 44               [ 4] 1010 	ld	b, h
     00000441 AF               [ 4] 1011 	xor	a, a
     00000442 02               [ 8] 1012 	ld	(bc), a
-                                   1013 ;Source/Engine/ECS.c:56: return;
+                                   1013 ;Source/Engine/ECS/ECS.c:56: return;
     00000443 18 5A            [12] 1014 	jr	00116$
     00000445                       1015 00113$:
-                                   1016 ;Source/Engine/ECS.c:52: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+                                   1016 ;Source/Engine/ECS/ECS.c:52: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
     00000445 0C               [ 4] 1017 	inc	c
     00000446 F8 03            [12] 1018 	ldhl	sp,	#3
     00000448 79               [ 4] 1019 	ld	a,c
     00000449 77               [ 8] 1020 	ld	(hl),a
     0000044A D6 64            [ 8] 1021 	sub	a, #0x64
     0000044C 38 C8            [12] 1022 	jr	C, 00112$
-                                   1023 ;Source/Engine/ECS.c:59: break;
+                                   1023 ;Source/Engine/ECS/ECS.c:59: break;
     0000044E 18 4F            [12] 1024 	jr	00116$
-                                   1025 ;Source/Engine/ECS.c:60: case SPRITE_COMPONENT:
+                                   1025 ;Source/Engine/ECS/ECS.c:60: case SPRITE_COMPONENT:
     00000450                       1026 00105$:
-                                   1027 ;Source/Engine/ECS.c:61: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
+                                   1027 ;Source/Engine/ECS/ECS.c:61: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
     00000450 01 00 00         [12] 1028 	ld	bc, #0x0
     00000453                       1029 00114$:
-                                   1030 ;Source/Engine/ECS.c:62: if (spriteComponent.entityID[i] == entity -> ID)  {
+                                   1030 ;Source/Engine/ECS/ECS.c:62: if (spriteComponent.entityID[i] == entity -> ID)  {
     00000453 3Er00            [ 8] 1031 	ld	a, #<(_spriteComponent)
     00000455 80               [ 4] 1032 	add	a, b
     00000456 6F               [ 4] 1033 	ld	l, a
@@ -1038,12 +1038,12 @@
     0000045D 6E               [ 8] 1038 	ld	l, (hl)
     0000045E 95               [ 4] 1039 	sub	a, l
     0000045F 20 37            [12] 1040 	jr	NZ, 00115$
-                                   1041 ;Source/Engine/ECS.c:63: spriteComponent.entityID[i] = 0;
+                                   1041 ;Source/Engine/ECS/ECS.c:63: spriteComponent.entityID[i] = 0;
     00000461 21r00r00         [12] 1042 	ld	hl, #_spriteComponent
     00000464 06 00            [ 8] 1043 	ld	b, #0x00
     00000466 09               [ 8] 1044 	add	hl, bc
     00000467 36 00            [12] 1045 	ld	(hl), #0x00
-                                   1046 ;Source/Engine/ECS.c:64: spriteComponent.tileData[i] = 0;
+                                   1046 ;Source/Engine/ECS/ECS.c:64: spriteComponent.tileData[i] = 0;
     00000469 21r32r00         [12] 1047 	ld	hl, #_spriteComponent + 50
     0000046C 79               [ 4] 1048 	ld	a, c
     0000046D 87               [ 4] 1049 	add	a, a
@@ -1053,49 +1053,49 @@
     00000472 AF               [ 4] 1053 	xor	a, a
     00000473 22               [ 8] 1054 	ld	(hl+), a
     00000474 77               [ 8] 1055 	ld	(hl), a
-                                   1056 ;Source/Engine/ECS.c:65: spriteComponent.tileIndex[i] = 0;
+                                   1056 ;Source/Engine/ECS/ECS.c:65: spriteComponent.tileIndex[i] = 0;
     00000475 21r96r00         [12] 1057 	ld	hl, #_spriteComponent + 150
     00000478 06 00            [ 8] 1058 	ld	b, #0x00
     0000047A 09               [ 8] 1059 	add	hl, bc
     0000047B 36 00            [12] 1060 	ld	(hl), #0x00
-                                   1061 ;Source/Engine/ECS.c:66: spriteComponent.offset[i].x = 0;
+                                   1061 ;Source/Engine/ECS/ECS.c:66: spriteComponent.offset[i].x = 0;
     0000047D 21rC8r00         [12] 1062 	ld	hl, #_spriteComponent + 200
     00000480 16 00            [ 8] 1063 	ld	d, #0x00
     00000482 19               [ 8] 1064 	add	hl, de
-                                   1065 ;Source/Engine/ECS.c:67: spriteComponent.offset[i].y = 0;
+                                   1065 ;Source/Engine/ECS/ECS.c:67: spriteComponent.offset[i].y = 0;
     00000483 AF               [ 4] 1066 	xor	a, a
     00000484 22               [ 8] 1067 	ld	(hl+), a
     00000485 77               [ 8] 1068 	ld	(hl), a
-                                   1069 ;Source/Engine/ECS.c:68: spriteComponent.type[i] = SPRITE_TYPE_WORLD;
+                                   1069 ;Source/Engine/ECS/ECS.c:68: spriteComponent.type[i] = SPRITE_TYPE_WORLD;
     00000486 21r2Cr01         [12] 1070 	ld	hl, #(_spriteComponent + 300)
     00000489 06 00            [ 8] 1071 	ld	b, #0x00
     0000048B 09               [ 8] 1072 	add	hl, bc
     0000048C 36 00            [12] 1073 	ld	(hl), #0x00
-                                   1074 ;Source/Engine/ECS.c:69: spriteComponent.visible[i] = false;
+                                   1074 ;Source/Engine/ECS/ECS.c:69: spriteComponent.visible[i] = false;
     0000048E 21r5Er01         [12] 1075 	ld	hl, #(_spriteComponent + 350)
     00000491 06 00            [ 8] 1076 	ld	b, #0x00
     00000493 09               [ 8] 1077 	add	hl, bc
     00000494 36 00            [12] 1078 	ld	(hl), #0x00
-                                   1079 ;Source/Engine/ECS.c:70: return;
+                                   1079 ;Source/Engine/ECS/ECS.c:70: return;
     00000496 18 07            [12] 1080 	jr	00116$
     00000498                       1081 00115$:
-                                   1082 ;Source/Engine/ECS.c:61: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
+                                   1082 ;Source/Engine/ECS/ECS.c:61: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
     00000498 04               [ 4] 1083 	inc	b
     00000499 48               [ 4] 1084 	ld	c, b
     0000049A 78               [ 4] 1085 	ld	a, b
     0000049B D6 32            [ 8] 1086 	sub	a, #0x32
     0000049D 38 B4            [12] 1087 	jr	C, 00114$
-                                   1088 ;Source/Engine/ECS.c:78: }
+                                   1088 ;Source/Engine/ECS/ECS.c:78: }
     0000049F                       1089 00116$:
-                                   1090 ;Source/Engine/ECS.c:79: }
+                                   1090 ;Source/Engine/ECS/ECS.c:79: }
     0000049F E8 06            [16] 1091 	add	sp, #6
     000004A1 C9               [16] 1092 	ret
-                                   1093 ;Source/Engine/ECS.c:82: bool EntityHasComponent(const Entity *entity, uint16_t component) {
+                                   1093 ;Source/Engine/ECS/ECS.c:82: bool EntityHasComponent(const Entity *entity, uint16_t component) {
                                    1094 ;	---------------------------------
                                    1095 ; Function EntityHasComponent
                                    1096 ; ---------------------------------
     000004A2                       1097 _EntityHasComponent::
-                                   1098 ;Source/Engine/ECS.c:83: return (entity->components & component) != 0;
+                                   1098 ;Source/Engine/ECS/ECS.c:83: return (entity->components & component) != 0;
     000004A2 6B               [ 4] 1099 	ld	l, e
     000004A3 62               [ 4] 1100 	ld	h, d
     000004A4 23               [ 8] 1101 	inc	hl
@@ -1110,16 +1110,16 @@
     000004AE 3E 00            [ 8] 1110 	ld	a, #0x00
     000004B0 17               [ 4] 1111 	rla
     000004B1 EE 01            [ 8] 1112 	xor	a, #0x01
-                                   1113 ;Source/Engine/ECS.c:84: }
+                                   1113 ;Source/Engine/ECS/ECS.c:84: }
     000004B3 C9               [16] 1114 	ret
-                                   1115 ;Source/Engine/ECS.c:86: uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
+                                   1115 ;Source/Engine/ECS/ECS.c:86: uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
                                    1116 ;	---------------------------------
                                    1117 ; Function GetNextAvailableComponentPoolSlot
                                    1118 ; ---------------------------------
     000004B4                       1119 _GetNextAvailableComponentPoolSlot::
     000004B4 3B               [ 8] 1120 	dec	sp
     000004B5 4F               [ 4] 1121 	ld	c, a
-                                   1122 ;Source/Engine/ECS.c:88: for (i = 0; i < poolSize; i++) {
+                                   1122 ;Source/Engine/ECS/ECS.c:88: for (i = 0; i < poolSize; i++) {
     000004B6 F8 00            [12] 1123 	ldhl	sp,	#0
     000004B8 36 00            [12] 1124 	ld	(hl), #0x00
     000004BA 06 00            [ 8] 1125 	ld	b, #0x00
@@ -1127,28 +1127,28 @@
     000004BC 78               [ 4] 1127 	ld	a, b
     000004BD 91               [ 4] 1128 	sub	a, c
     000004BE 30 13            [12] 1129 	jr	NC, 00103$
-                                   1130 ;Source/Engine/ECS.c:89: if (poolPointer[i] == 0) {
+                                   1130 ;Source/Engine/ECS/ECS.c:89: if (poolPointer[i] == 0) {
     000004C0 68               [ 4] 1131 	ld	l, b
     000004C1 26 00            [ 8] 1132 	ld	h, #0x00
     000004C3 19               [ 8] 1133 	add	hl, de
     000004C4 7E               [ 8] 1134 	ld	a, (hl)
     000004C5 B7               [ 4] 1135 	or	a, a
     000004C6 20 05            [12] 1136 	jr	NZ, 00106$
-                                   1137 ;Source/Engine/ECS.c:90: return i;
+                                   1137 ;Source/Engine/ECS/ECS.c:90: return i;
     000004C8 F8 00            [12] 1138 	ldhl	sp,	#0
     000004CA 7E               [ 8] 1139 	ld	a, (hl)
     000004CB 18 08            [12] 1140 	jr	00107$
     000004CD                       1141 00106$:
-                                   1142 ;Source/Engine/ECS.c:88: for (i = 0; i < poolSize; i++) {
+                                   1142 ;Source/Engine/ECS/ECS.c:88: for (i = 0; i < poolSize; i++) {
     000004CD 04               [ 4] 1143 	inc	b
     000004CE F8 00            [12] 1144 	ldhl	sp,	#0
     000004D0 70               [ 8] 1145 	ld	(hl), b
     000004D1 18 E9            [12] 1146 	jr	00105$
     000004D3                       1147 00103$:
-                                   1148 ;Source/Engine/ECS.c:93: return 255;
+                                   1148 ;Source/Engine/ECS/ECS.c:93: return 255;
     000004D3 3E FF            [ 8] 1149 	ld	a, #0xff
     000004D5                       1150 00107$:
-                                   1151 ;Source/Engine/ECS.c:94: }
+                                   1151 ;Source/Engine/ECS/ECS.c:94: }
     000004D5 33               [ 8] 1152 	inc	sp
     000004D6 C9               [16] 1153 	ret
                                    1154 	.area _CODE

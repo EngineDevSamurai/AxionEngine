@@ -335,7 +335,7 @@ _HRAM12                00000000    00000003 =           3. bytes (ABS,CON)
 Files Linked                              [ module(s) ]
 
 /opt/gbdk/lib/gb/crt0.o                   [ Runtime ]
-Output/Source/Engine/ECS.o                [ ECS ]
+Output/Source/Engine/ECS/ECS.o            [ ECS ]
 Output/Source/Engine/axion_engine.o       [ axion_engine ]
 Output/Source/Engine/Components/transform_component.o
                                           [ transform_component ]

@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "Libraries/vec2.h"  
+#include "../Libraries/vec2.h"  
 
 // Defining our bits for the bitmask
 #define TRANSFORM_COMPONENT (1 << 0)

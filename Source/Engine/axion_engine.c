@@ -30,7 +30,7 @@ SOFTWARE. */
 #include "../Asset_Manifests/tile_manifest.h"
 #include "../Asset_Manifests/tilemap_manifest.h"
 #include "Components/component_manifest.h"
-#include "ECS.h"
+#include "ECS/ECS.h"
 
 void main(void)
 {

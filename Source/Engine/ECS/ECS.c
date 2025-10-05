@@ -1,6 +1,6 @@
 #include "ECS.h"
-#include "Components/transform_component.h"
-#include "Components/sprite_component.h"
+#include "../Components/transform_component.h"
+#include "../Components/sprite_component.h"
 
 // Add a component to an entity
 void EntityAddComponent (Entity *entity, uint16_t component) {
