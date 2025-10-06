@@ -26,4 +26,7 @@ bool EntityHasComponent(const Entity *entity, uint16_t component);
 
 uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize);
 
+// Return a pointer to an entity for lookup by ID
+Entity* getEntityById (uint8_t id);
+
 #endif

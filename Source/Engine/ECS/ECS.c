@@ -2,6 +2,9 @@
 #include "../Components/transform_component.h"
 #include "../Components/sprite_component.h"
 
+// Global Entity Pool
+Entity entity[MAX_ENTITIES];
+
 // Add a component to an entity
 void EntityAddComponent (Entity *entity, uint16_t component) {
     uint8_t nextPoolSlot;
@@ -28,10 +31,12 @@ void EntityAddComponent (Entity *entity, uint16_t component) {
                 spriteComponent.entityID[nextPoolSlot] = entity->ID;
                 spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
                 spriteComponent.tileIndex[nextPoolSlot] = 0;
+                spriteComponent.width[nextPoolSlot] = 0;
+                spriteComponent.height[nextPoolSlot] = 0;
                 spriteComponent.offset[nextPoolSlot].x = 0;
                 spriteComponent.offset[nextPoolSlot].y = 0;
-                spriteComponent.type[nextPoolSlot] = SPRITE_TYPE_WORLD;
-                spriteComponent.visible[nextPoolSlot] = false;
+                spriteComponent.flags[nextPoolSlot] = 0;
+                spriteComponent.palette[nextPoolSlot] = 0;
             }
         break;
         default:
@@ -63,10 +68,12 @@ void EntityRemoveComponent(Entity *entity, uint16_t component) {
                     spriteComponent.entityID[i] = 0;
                     spriteComponent.tileData[i] = 0;
                     spriteComponent.tileIndex[i] = 0;
+                    spriteComponent.width[i] = 0;
+                    spriteComponent.height[i] = 0;
                     spriteComponent.offset[i].x = 0;
                     spriteComponent.offset[i].y = 0;
-                    spriteComponent.type[i] = SPRITE_TYPE_WORLD;
-                    spriteComponent.visible[i] = false;
+                    spriteComponent.flags[i] = 0;
+                    spriteComponent.palette[i] = 0;
                     return;
                 }
             }
@@ -91,4 +98,13 @@ uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize
         }
     }
     return 255;
+}
+
+Entity* getEntityById (uint8_t id) {
+    for (int i = 0; i < MAX_ENTITIES; i++) {
+        if (entity[i].ID == id) {
+            return &entity[i];
+        }
+    }
+    return 0;
 }

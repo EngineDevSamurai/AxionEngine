@@ -30,6 +30,7 @@ SOFTWARE. */
 #include "../Asset_Manifests/tile_manifest.h"
 #include "../Asset_Manifests/tilemap_manifest.h"
 #include "Components/component_manifest.h"
+#include "Systems/render_sprite_system.h"
 #include "ECS/ECS.h"
 
 void main(void)
@@ -39,7 +40,13 @@ void main(void)
   Entity player =  { .ID = 1, .components = 0 }; // Write function to get next ID
   
   EntityAddComponent(&player, TRANSFORM_COMPONENT);
+  transformComponent.position[0].x = F12(65);
+  transformComponent.position[0].y = F12(65);
   EntityAddComponent(&player, SPRITE_COMPONENT);
+  spriteComponent.tileData[0] = earth_data[0];
+  spriteComponent.width[0] = 2;
+  spriteComponent.height[0] = 2;
+  spriteComponent.flags[0] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
 
 
   disable_interrupts();
@@ -78,5 +85,6 @@ void main(void)
     // Systems Function Calls Here
 
     // Render Function Calls Here
+    RenderSprites();
   }
 }
