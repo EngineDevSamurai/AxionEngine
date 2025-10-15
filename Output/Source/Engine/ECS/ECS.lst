@@ -556,695 +556,773 @@
                                     556 ;Source/Engine/ECS/../Libraries/vec2.h:65: }
     0000021E E8 08            [16]  557 	add	sp, #8
     00000220 C9               [16]  558 	ret
-                                    559 ;Source/Engine/ECS/ECS.c:9: void EntityAddComponent (Entity *entity, uint16_t component) {
+                                    559 ;Source/Engine/ECS/../Components/transform_component.h:41: static inline vec2 getTransformPos(uint8_t entityID) {
                                     560 ;	---------------------------------
-                                    561 ; Function EntityAddComponent
+                                    561 ; Function getTransformPos
                                     562 ; ---------------------------------
-    00000221                        563 _EntityAddComponent::
-    00000221 E8 F5            [16]  564 	add	sp, #-11
-    00000223 F8 09            [12]  565 	ldhl	sp,	#9
-    00000225 7B               [ 4]  566 	ld	a, e
-    00000226 22               [ 8]  567 	ld	(hl+), a
-    00000227 72               [ 8]  568 	ld	(hl), d
-    00000228 F8 07            [12]  569 	ldhl	sp,	#7
-    0000022A 79               [ 4]  570 	ld	a, c
-    0000022B 22               [ 8]  571 	ld	(hl+), a
-                                    572 ;Source/Engine/ECS/ECS.c:13: if (EntityHasComponent(entity, component)){
-    0000022C 78               [ 4]  573 	ld	a, b
-    0000022D 32               [ 8]  574 	ld	(hl-), a
-    0000022E 2A               [ 8]  575 	ld	a, (hl+)
-    0000022F 4F               [ 4]  576 	ld	c, a
-    00000230 2A               [ 8]  577 	ld	a, (hl+)
-    00000231 47               [ 4]  578 	ld	b, a
-    00000232 2A               [ 8]  579 	ld	a, (hl+)
-    00000233 5F               [ 4]  580 	ld	e, a
-    00000234 56               [ 8]  581 	ld	d, (hl)
-    00000235 CDrE2r04         [24]  582 	call	_EntityHasComponent
-    00000238 F8 06            [12]  583 	ldhl	sp,#6
-    0000023A 77               [ 8]  584 	ld	(hl), a
-    0000023B CB 46            [12]  585 	bit	0, (hl)
-                                    586 ;Source/Engine/ECS/ECS.c:14: return;
-    0000023D C2rF9r03         [16]  587 	jp	NZ, 00112$
-                                    588 ;Source/Engine/ECS/ECS.c:17: entity->components |= component;
-    00000240 F8 09            [12]  589 	ldhl	sp,	#9
-    00000242 2A               [ 8]  590 	ld	a, (hl+)
-    00000243 4F               [ 4]  591 	ld	c, a
-    00000244 46               [ 8]  592 	ld	b, (hl)
-    00000245 03               [ 8]  593 	inc	bc
-    00000246 69               [ 4]  594 	ld	l, c
-    00000247 60               [ 4]  595 	ld	h, b
-    00000248 23               [ 8]  596 	inc	hl
-    00000249 3A               [ 8]  597 	ld	a,	(hl-)
-    0000024A 6E               [ 8]  598 	ld	l, (hl)
-    0000024B F5               [16]  599 	push	af
-    0000024C 7D               [ 4]  600 	ld	a, l
-    0000024D E5               [16]  601 	push	hl
-    0000024E F8 0B            [12]  602 	ldhl	sp,	#11
-    00000250 B6               [ 8]  603 	or	a, (hl)
-    00000251 E1               [12]  604 	pop	hl
-    00000252 5F               [ 4]  605 	ld	e, a
-    00000253 F1               [12]  606 	pop	af
-    00000254 F8 08            [12]  607 	ldhl	sp,	#8
-    00000256 B6               [ 8]  608 	or	a, (hl)
-                                    609 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
-    00000257 23               [ 8]  610 	inc	hl
-    00000258 57               [ 4]  611 	ld	d, a
-    00000259 7B               [ 4]  612 	ld	a, e
-    0000025A 02               [ 8]  613 	ld	(bc), a
-    0000025B 03               [ 8]  614 	inc	bc
-    0000025C 7A               [ 4]  615 	ld	a, d
-    0000025D 02               [ 8]  616 	ld	(bc), a
-    0000025E 7E               [ 8]  617 	ld	a, (hl)
-    0000025F F8 01            [12]  618 	ldhl	sp,	#1
-    00000261 77               [ 8]  619 	ld	(hl), a
-    00000262 F8 0A            [12]  620 	ldhl	sp,	#10
-    00000264 7E               [ 8]  621 	ld	a, (hl)
-    00000265 F8 02            [12]  622 	ldhl	sp,	#2
-    00000267 77               [ 8]  623 	ld	(hl), a
-                                    624 ;Source/Engine/ECS/ECS.c:20: switch (component) {
-    00000268 F8 07            [12]  625 	ldhl	sp,	#7
-    0000026A 2A               [ 8]  626 	ld	a, (hl+)
-    0000026B 3D               [ 4]  627 	dec	a
-    0000026C B6               [ 8]  628 	or	a, (hl)
-    0000026D 28 0C            [12]  629 	jr	Z, 00103$
-    0000026F F8 07            [12]  630 	ldhl	sp,	#7
-    00000271 2A               [ 8]  631 	ld	a, (hl+)
-    00000272 D6 02            [ 8]  632 	sub	a, #0x02
-    00000274 B6               [ 8]  633 	or	a, (hl)
-    00000275 CAr02r03         [16]  634 	jp	Z, 00106$
-    00000278 C3rF9r03         [16]  635 	jp	00112$
-                                    636 ;Source/Engine/ECS/ECS.c:21: case TRANSFORM_COMPONENT:
-    0000027B                        637 00103$:
-                                    638 ;Source/Engine/ECS/ECS.c:22: nextPoolSlot = GetNextAvailableComponentPoolSlot(transformComponent.entityID, TRANSFORM_POOL_SIZE);
-    0000027B 3E 64            [ 8]  639 	ld	a, #0x64
-    0000027D 11r00r00         [12]  640 	ld	de, #_transformComponent
-    00000280 CDrF4r04         [24]  641 	call	_GetNextAvailableComponentPoolSlot
-                                    642 ;Source/Engine/ECS/ECS.c:23: if (nextPoolSlot != 255) {
-    00000283 F8 00            [12]  643 	ldhl	sp,#0
-    00000285 77               [ 8]  644 	ld	(hl), a
-    00000286 3C               [ 4]  645 	inc	a
-    00000287 CArF9r03         [16]  646 	jp	Z, 00112$
-                                    647 ;Source/Engine/ECS/ECS.c:24: vec2_set(&transformComponent.position[nextPoolSlot], 0, 0);
-    0000028A F8 00            [12]  648 	ldhl	sp,	#0
-    0000028C 7E               [ 8]  649 	ld	a, (hl)
-    0000028D F8 05            [12]  650 	ldhl	sp,	#5
-    0000028F 22               [ 8]  651 	ld	(hl+), a
-    00000290 AF               [ 4]  652 	xor	a, a
-    00000291 32               [ 8]  653 	ld	(hl-), a
-    00000292 3A               [ 8]  654 	ld	a, (hl-)
-    00000293 2B               [ 8]  655 	dec	hl
-    00000294 22               [ 8]  656 	ld	(hl+), a
-    00000295 36 00            [12]  657 	ld	(hl), #0x00
-    00000297 3E 02            [ 8]  658 	ld	a, #0x02
-    00000299                        659 00152$:
-    00000299 F8 03            [12]  660 	ldhl	sp,	#3
-    0000029B CB 26            [16]  661 	sla	(hl)
-    0000029D 23               [ 8]  662 	inc	hl
-    0000029E CB 16            [16]  663 	rl	(hl)
-    000002A0 3D               [ 4]  664 	dec	a
-    000002A1 20 F6            [12]  665 	jr	NZ, 00152$
-    000002A3 2B               [ 8]  666 	dec	hl
-    000002A4 2A               [ 8]  667 	ld	a, (hl+)
-    000002A5 5F               [ 4]  668 	ld	e, a
-    000002A6 56               [ 8]  669 	ld	d, (hl)
-    000002A7 21r64r00         [12]  670 	ld	hl, #(_transformComponent + 100)
-    000002AA 19               [ 8]  671 	add	hl, de
-    000002AB E5               [16]  672 	push	hl
-    000002AC 7D               [ 4]  673 	ld	a, l
-    000002AD F8 07            [12]  674 	ldhl	sp,	#7
-    000002AF 77               [ 8]  675 	ld	(hl), a
-    000002B0 E1               [12]  676 	pop	hl
-    000002B1 7C               [ 4]  677 	ld	a, h
-    000002B2 F8 06            [12]  678 	ldhl	sp,	#6
-    000002B4 32               [ 8]  679 	ld	(hl-), a
-    000002B5 3A               [ 8]  680 	ld	a, (hl-)
-    000002B6 2B               [ 8]  681 	dec	hl
-    000002B7 77               [ 8]  682 	ld	(hl), a
-    000002B8 F8 06            [12]  683 	ldhl	sp,	#6
-    000002BA 3A               [ 8]  684 	ld	a, (hl-)
-    000002BB 2B               [ 8]  685 	dec	hl
-                                    686 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
-    000002BC 32               [ 8]  687 	ld	(hl-), a
-    000002BD 2A               [ 8]  688 	ld	a, (hl+)
-    000002BE 66               [ 8]  689 	ld	h, (hl)
-    000002BF 6F               [ 4]  690 	ld	l, a
-    000002C0 AF               [ 4]  691 	xor	a, a
-    000002C1 22               [ 8]  692 	ld	(hl+), a
-    000002C2 77               [ 8]  693 	ld	(hl), a
-                                    694 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
-    000002C3 F8 03            [12]  695 	ldhl	sp,#3
-    000002C5 2A               [ 8]  696 	ld	a, (hl+)
-    000002C6 5F               [ 4]  697 	ld	e, a
-    000002C7 56               [ 8]  698 	ld	d, (hl)
-    000002C8 21 02 00         [12]  699 	ld	hl, #0x0002
-    000002CB 19               [ 8]  700 	add	hl, de
-    000002CC E5               [16]  701 	push	hl
-    000002CD 7D               [ 4]  702 	ld	a, l
-    000002CE F8 07            [12]  703 	ldhl	sp,	#7
-    000002D0 77               [ 8]  704 	ld	(hl), a
-    000002D1 E1               [12]  705 	pop	hl
-    000002D2 7C               [ 4]  706 	ld	a, h
-    000002D3 F8 06            [12]  707 	ldhl	sp,	#6
-    000002D5 32               [ 8]  708 	ld	(hl-), a
-    000002D6 2A               [ 8]  709 	ld	a, (hl+)
-    000002D7 66               [ 8]  710 	ld	h, (hl)
-    000002D8 6F               [ 4]  711 	ld	l, a
-    000002D9 AF               [ 4]  712 	xor	a, a
-    000002DA 22               [ 8]  713 	ld	(hl+), a
-    000002DB 77               [ 8]  714 	ld	(hl), a
-                                    715 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
-    000002DC 11r00r00         [12]  716 	ld	de, #_transformComponent
-    000002DF F8 00            [12]  717 	ldhl	sp,	#0
-    000002E1 6E               [ 8]  718 	ld	l, (hl)
-    000002E2 26 00            [ 8]  719 	ld	h, #0x00
-    000002E4 19               [ 8]  720 	add	hl, de
-    000002E5 E5               [16]  721 	push	hl
-    000002E6 7D               [ 4]  722 	ld	a, l
-    000002E7 F8 07            [12]  723 	ldhl	sp,	#7
-    000002E9 77               [ 8]  724 	ld	(hl), a
-    000002EA E1               [12]  725 	pop	hl
-    000002EB 7C               [ 4]  726 	ld	a, h
-    000002EC F8 06            [12]  727 	ldhl	sp,	#6
-    000002EE 77               [ 8]  728 	ld	(hl), a
-    000002EF F8 01            [12]  729 	ldhl	sp,#1
-    000002F1 2A               [ 8]  730 	ld	a, (hl+)
-    000002F2 5F               [ 4]  731 	ld	e, a
-    000002F3 2A               [ 8]  732 	ld	a, (hl+)
-    000002F4 23               [ 8]  733 	inc	hl
-    000002F5 57               [ 4]  734 	ld	d, a
-    000002F6 1A               [ 8]  735 	ld	a, (de)
-    000002F7 22               [ 8]  736 	ld	(hl+), a
-    000002F8 2A               [ 8]  737 	ld	a, (hl+)
-    000002F9 5F               [ 4]  738 	ld	e, a
-    000002FA 3A               [ 8]  739 	ld	a, (hl-)
-    000002FB 2B               [ 8]  740 	dec	hl
-    000002FC 57               [ 4]  741 	ld	d, a
-    000002FD 7E               [ 8]  742 	ld	a, (hl)
-    000002FE 12               [ 8]  743 	ld	(de), a
-                                    744 ;Source/Engine/ECS/ECS.c:27: break;
-    000002FF C3rF9r03         [16]  745 	jp	00112$
-                                    746 ;Source/Engine/ECS/ECS.c:28: case SPRITE_COMPONENT:
-    00000302                        747 00106$:
-                                    748 ;Source/Engine/ECS/ECS.c:29: nextPoolSlot = GetNextAvailableComponentPoolSlot(spriteComponent.entityID, SPRITE_POOL_SIZE);
-    00000302 3E 32            [ 8]  749 	ld	a, #0x32
-    00000304 11r00r00         [12]  750 	ld	de, #_spriteComponent
-    00000307 CDrF4r04         [24]  751 	call	_GetNextAvailableComponentPoolSlot
-                                    752 ;Source/Engine/ECS/ECS.c:30: if (nextPoolSlot != 255) {
-    0000030A F8 03            [12]  753 	ldhl	sp,#3
-    0000030C 77               [ 8]  754 	ld	(hl), a
-    0000030D 3C               [ 4]  755 	inc	a
-    0000030E CArF9r03         [16]  756 	jp	Z, 00112$
-                                    757 ;Source/Engine/ECS/ECS.c:31: spriteComponent.entityID[nextPoolSlot] = entity->ID;
-    00000311 11r00r00         [12]  758 	ld	de, #_spriteComponent
-    00000314 F8 03            [12]  759 	ldhl	sp,	#3
-    00000316 6E               [ 8]  760 	ld	l, (hl)
-    00000317 26 00            [ 8]  761 	ld	h, #0x00
-    00000319 19               [ 8]  762 	add	hl, de
-    0000031A E5               [16]  763 	push	hl
-    0000031B 7D               [ 4]  764 	ld	a, l
-    0000031C F8 06            [12]  765 	ldhl	sp,	#6
-    0000031E 77               [ 8]  766 	ld	(hl), a
-    0000031F E1               [12]  767 	pop	hl
-    00000320 7C               [ 4]  768 	ld	a, h
-    00000321 F8 05            [12]  769 	ldhl	sp,	#5
-    00000323 77               [ 8]  770 	ld	(hl), a
-    00000324 F8 01            [12]  771 	ldhl	sp,#1
-    00000326 2A               [ 8]  772 	ld	a, (hl+)
-    00000327 5F               [ 4]  773 	ld	e, a
-    00000328 56               [ 8]  774 	ld	d, (hl)
-    00000329 1A               [ 8]  775 	ld	a, (de)
-    0000032A F8 06            [12]  776 	ldhl	sp,	#6
-    0000032C 32               [ 8]  777 	ld	(hl-), a
-    0000032D 2B               [ 8]  778 	dec	hl
-    0000032E 2A               [ 8]  779 	ld	a, (hl+)
-    0000032F 5F               [ 4]  780 	ld	e, a
-    00000330 2A               [ 8]  781 	ld	a, (hl+)
-    00000331 57               [ 4]  782 	ld	d, a
-    00000332 7E               [ 8]  783 	ld	a, (hl)
-    00000333 12               [ 8]  784 	ld	(de), a
-                                    785 ;Source/Engine/ECS/ECS.c:32: spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
-    00000334 F8 03            [12]  786 	ldhl	sp,	#3
-    00000336 7E               [ 8]  787 	ld	a, (hl)
-    00000337 87               [ 4]  788 	add	a, a
-    00000338 F8 06            [12]  789 	ldhl	sp,	#6
-    0000033A 77               [ 8]  790 	ld	(hl), a
-    0000033B 11r32r00         [12]  791 	ld	de, #(_spriteComponent + 50)
-    0000033E 6E               [ 8]  792 	ld	l, (hl)
-    0000033F 26 00            [ 8]  793 	ld	h, #0x00
-    00000341 19               [ 8]  794 	add	hl, de
-    00000342 E5               [16]  795 	push	hl
-    00000343 7D               [ 4]  796 	ld	a, l
-    00000344 F8 06            [12]  797 	ldhl	sp,	#6
-    00000346 77               [ 8]  798 	ld	(hl), a
-    00000347 E1               [12]  799 	pop	hl
-    00000348 7C               [ 4]  800 	ld	a, h
-    00000349 F8 05            [12]  801 	ldhl	sp,	#5
-    0000034B 32               [ 8]  802 	ld	(hl-), a
-    0000034C 2A               [ 8]  803 	ld	a, (hl+)
-    0000034D 66               [ 8]  804 	ld	h, (hl)
-    0000034E 6F               [ 4]  805 	ld	l, a
-    0000034F AF               [ 4]  806 	xor	a, a
-    00000350 22               [ 8]  807 	ld	(hl+), a
-    00000351 77               [ 8]  808 	ld	(hl), a
-                                    809 ;Source/Engine/ECS/ECS.c:33: spriteComponent.tileIndex[nextPoolSlot] = 0;
-    00000352 11r96r00         [12]  810 	ld	de, #(_spriteComponent + 150)
-    00000355 F8 03            [12]  811 	ldhl	sp,	#3
-    00000357 6E               [ 8]  812 	ld	l, (hl)
-    00000358 26 00            [ 8]  813 	ld	h, #0x00
-    0000035A 19               [ 8]  814 	add	hl, de
-    0000035B E5               [16]  815 	push	hl
-    0000035C 7D               [ 4]  816 	ld	a, l
-    0000035D F8 06            [12]  817 	ldhl	sp,	#6
-    0000035F 77               [ 8]  818 	ld	(hl), a
-    00000360 E1               [12]  819 	pop	hl
-    00000361 7C               [ 4]  820 	ld	a, h
-    00000362 F8 05            [12]  821 	ldhl	sp,	#5
-    00000364 32               [ 8]  822 	ld	(hl-), a
-    00000365 2A               [ 8]  823 	ld	a, (hl+)
-    00000366 66               [ 8]  824 	ld	h, (hl)
-    00000367 6F               [ 4]  825 	ld	l, a
-    00000368 36 00            [12]  826 	ld	(hl), #0x00
-                                    827 ;Source/Engine/ECS/ECS.c:34: spriteComponent.width[nextPoolSlot] = 0;
-    0000036A 11rC8r00         [12]  828 	ld	de, #(_spriteComponent + 200)
-    0000036D F8 03            [12]  829 	ldhl	sp,	#3
-    0000036F 6E               [ 8]  830 	ld	l, (hl)
-    00000370 26 00            [ 8]  831 	ld	h, #0x00
-    00000372 19               [ 8]  832 	add	hl, de
-    00000373 E5               [16]  833 	push	hl
-    00000374 7D               [ 4]  834 	ld	a, l
-    00000375 F8 06            [12]  835 	ldhl	sp,	#6
-    00000377 77               [ 8]  836 	ld	(hl), a
-    00000378 E1               [12]  837 	pop	hl
-    00000379 7C               [ 4]  838 	ld	a, h
-    0000037A F8 05            [12]  839 	ldhl	sp,	#5
-    0000037C 32               [ 8]  840 	ld	(hl-), a
-    0000037D 2A               [ 8]  841 	ld	a, (hl+)
-    0000037E 66               [ 8]  842 	ld	h, (hl)
-    0000037F 6F               [ 4]  843 	ld	l, a
-    00000380 36 00            [12]  844 	ld	(hl), #0x00
-                                    845 ;Source/Engine/ECS/ECS.c:35: spriteComponent.height[nextPoolSlot] = 0;
-    00000382 11rFAr00         [12]  846 	ld	de, #(_spriteComponent + 250)
-    00000385 F8 03            [12]  847 	ldhl	sp,	#3
-    00000387 6E               [ 8]  848 	ld	l, (hl)
-    00000388 26 00            [ 8]  849 	ld	h, #0x00
-    0000038A 19               [ 8]  850 	add	hl, de
-    0000038B E5               [16]  851 	push	hl
-    0000038C 7D               [ 4]  852 	ld	a, l
-    0000038D F8 06            [12]  853 	ldhl	sp,	#6
-    0000038F 77               [ 8]  854 	ld	(hl), a
-    00000390 E1               [12]  855 	pop	hl
-    00000391 7C               [ 4]  856 	ld	a, h
-    00000392 F8 05            [12]  857 	ldhl	sp,	#5
-    00000394 32               [ 8]  858 	ld	(hl-), a
-    00000395 2A               [ 8]  859 	ld	a, (hl+)
-    00000396 66               [ 8]  860 	ld	h, (hl)
-    00000397 6F               [ 4]  861 	ld	l, a
-    00000398 36 00            [12]  862 	ld	(hl), #0x00
-                                    863 ;Source/Engine/ECS/ECS.c:36: spriteComponent.offset[nextPoolSlot].x = 0;
-    0000039A 11r2Cr01         [12]  864 	ld	de, #(_spriteComponent + 300)
-    0000039D F8 06            [12]  865 	ldhl	sp,	#6
-    0000039F 6E               [ 8]  866 	ld	l, (hl)
-    000003A0 26 00            [ 8]  867 	ld	h, #0x00
-    000003A2 19               [ 8]  868 	add	hl, de
-    000003A3 E5               [16]  869 	push	hl
-    000003A4 7D               [ 4]  870 	ld	a, l
-    000003A5 F8 03            [12]  871 	ldhl	sp,	#3
-    000003A7 77               [ 8]  872 	ld	(hl), a
-    000003A8 E1               [12]  873 	pop	hl
-    000003A9 7C               [ 4]  874 	ld	a, h
-    000003AA F8 02            [12]  875 	ldhl	sp,	#2
-    000003AC 32               [ 8]  876 	ld	(hl-), a
-    000003AD 2A               [ 8]  877 	ld	a, (hl+)
-    000003AE 66               [ 8]  878 	ld	h, (hl)
-    000003AF 6F               [ 4]  879 	ld	l, a
-    000003B0 36 00            [12]  880 	ld	(hl), #0x00
-                                    881 ;Source/Engine/ECS/ECS.c:37: spriteComponent.offset[nextPoolSlot].y = 0;
-    000003B2 F8 01            [12]  882 	ldhl	sp,#1
-    000003B4 2A               [ 8]  883 	ld	a, (hl+)
-    000003B5 5F               [ 4]  884 	ld	e, a
-    000003B6 56               [ 8]  885 	ld	d, (hl)
-    000003B7 6B               [ 4]  886 	ld	l, e
-    000003B8 62               [ 4]  887 	ld	h, d
-    000003B9 23               [ 8]  888 	inc	hl
-    000003BA E5               [16]  889 	push	hl
-    000003BB 7D               [ 4]  890 	ld	a, l
-    000003BC F8 07            [12]  891 	ldhl	sp,	#7
-    000003BE 77               [ 8]  892 	ld	(hl), a
-    000003BF E1               [12]  893 	pop	hl
-    000003C0 7C               [ 4]  894 	ld	a, h
-    000003C1 F8 06            [12]  895 	ldhl	sp,	#6
-    000003C3 32               [ 8]  896 	ld	(hl-), a
-    000003C4 2A               [ 8]  897 	ld	a, (hl+)
-    000003C5 66               [ 8]  898 	ld	h, (hl)
-    000003C6 6F               [ 4]  899 	ld	l, a
-    000003C7 36 00            [12]  900 	ld	(hl), #0x00
-                                    901 ;Source/Engine/ECS/ECS.c:38: spriteComponent.flags[nextPoolSlot] = 0;
-    000003C9 11r90r01         [12]  902 	ld	de, #(_spriteComponent + 400)
-    000003CC F8 03            [12]  903 	ldhl	sp,	#3
-    000003CE 6E               [ 8]  904 	ld	l, (hl)
-    000003CF 26 00            [ 8]  905 	ld	h, #0x00
-    000003D1 19               [ 8]  906 	add	hl, de
-    000003D2 E5               [16]  907 	push	hl
-    000003D3 7D               [ 4]  908 	ld	a, l
-    000003D4 F8 07            [12]  909 	ldhl	sp,	#7
-    000003D6 77               [ 8]  910 	ld	(hl), a
-    000003D7 E1               [12]  911 	pop	hl
-    000003D8 7C               [ 4]  912 	ld	a, h
-    000003D9 F8 06            [12]  913 	ldhl	sp,	#6
-    000003DB 32               [ 8]  914 	ld	(hl-), a
-    000003DC 2A               [ 8]  915 	ld	a, (hl+)
-    000003DD 66               [ 8]  916 	ld	h, (hl)
-    000003DE 6F               [ 4]  917 	ld	l, a
-    000003DF 36 00            [12]  918 	ld	(hl), #0x00
-                                    919 ;Source/Engine/ECS/ECS.c:39: spriteComponent.palette[nextPoolSlot] = 0;
-    000003E1 11rC2r01         [12]  920 	ld	de, #(_spriteComponent + 450)
-    000003E4 F8 03            [12]  921 	ldhl	sp,	#3
-    000003E6 6E               [ 8]  922 	ld	l, (hl)
-    000003E7 26 00            [ 8]  923 	ld	h, #0x00
-    000003E9 19               [ 8]  924 	add	hl, de
-    000003EA E5               [16]  925 	push	hl
-    000003EB 7D               [ 4]  926 	ld	a, l
-    000003EC F8 07            [12]  927 	ldhl	sp,	#7
-    000003EE 77               [ 8]  928 	ld	(hl), a
-    000003EF E1               [12]  929 	pop	hl
-    000003F0 7C               [ 4]  930 	ld	a, h
-    000003F1 F8 06            [12]  931 	ldhl	sp,	#6
-    000003F3 32               [ 8]  932 	ld	(hl-), a
-    000003F4 2A               [ 8]  933 	ld	a, (hl+)
-    000003F5 66               [ 8]  934 	ld	h, (hl)
-    000003F6 6F               [ 4]  935 	ld	l, a
-    000003F7 36 00            [12]  936 	ld	(hl), #0x00
-                                    937 ;Source/Engine/ECS/ECS.c:46: }
-    000003F9                        938 00112$:
-                                    939 ;Source/Engine/ECS/ECS.c:47: }
-    000003F9 E8 0B            [16]  940 	add	sp, #11
-    000003FB C9               [16]  941 	ret
-                                    942 ;Source/Engine/ECS/ECS.c:50: void EntityRemoveComponent(Entity *entity, uint16_t component) {
-                                    943 ;	---------------------------------
-                                    944 ; Function EntityRemoveComponent
-                                    945 ; ---------------------------------
-    000003FC                        946 _EntityRemoveComponent::
-    000003FC E8 FA            [16]  947 	add	sp, #-6
-    000003FE F8 04            [12]  948 	ldhl	sp,	#4
-    00000400 7B               [ 4]  949 	ld	a, e
-    00000401 22               [ 8]  950 	ld	(hl+), a
-                                    951 ;Source/Engine/ECS/ECS.c:52: entity->components &= ~component;
-    00000402 7A               [ 4]  952 	ld	a, d
-    00000403 32               [ 8]  953 	ld	(hl-), a
-    00000404 2A               [ 8]  954 	ld	a, (hl+)
-    00000405 5F               [ 4]  955 	ld	e, a
-    00000406 56               [ 8]  956 	ld	d, (hl)
-    00000407 6B               [ 4]  957 	ld	l, e
-    00000408 62               [ 4]  958 	ld	h, d
-    00000409 23               [ 8]  959 	inc	hl
-    0000040A 33               [ 8]  960 	inc	sp
-    0000040B 33               [ 8]  961 	inc	sp
-    0000040C 5D               [ 4]  962 	ld	e, l
-    0000040D 54               [ 4]  963 	ld	d, h
-    0000040E D5               [16]  964 	push	de
-    0000040F 1A               [ 8]  965 	ld	a, (de)
-    00000410 6F               [ 4]  966 	ld	l, a
-    00000411 13               [ 8]  967 	inc	de
-    00000412 1A               [ 8]  968 	ld	a, (de)
-    00000413 67               [ 4]  969 	ld	h, a
-    00000414 79               [ 4]  970 	ld	a, c
-    00000415 2F               [ 4]  971 	cpl
-    00000416 5F               [ 4]  972 	ld	e, a
-    00000417 78               [ 4]  973 	ld	a, b
-    00000418 2F               [ 4]  974 	cpl
-    00000419 57               [ 4]  975 	ld	d, a
-    0000041A 7D               [ 4]  976 	ld	a, l
-    0000041B A3               [ 4]  977 	and	a, e
-    0000041C E5               [16]  978 	push	hl
-    0000041D F8 04            [12]  979 	ldhl	sp,	#4
-    0000041F 77               [ 8]  980 	ld	(hl), a
-    00000420 E1               [12]  981 	pop	hl
-    00000421 7C               [ 4]  982 	ld	a, h
-    00000422 A2               [ 4]  983 	and	a, d
-    00000423 F8 03            [12]  984 	ldhl	sp,	#3
-    00000425 77               [ 8]  985 	ld	(hl), a
-    00000426 D1               [12]  986 	pop	de
-    00000427 D5               [16]  987 	push	de
-    00000428 F8 02            [12]  988 	ldhl	sp,	#2
-    0000042A 2A               [ 8]  989 	ld	a, (hl+)
-    0000042B 12               [ 8]  990 	ld	(de), a
-    0000042C 13               [ 8]  991 	inc	de
-                                    992 ;Source/Engine/ECS/ECS.c:58: if (transformComponent.entityID[i] == entity -> ID)  {
-    0000042D 2A               [ 8]  993 	ld	a, (hl+)
-    0000042E 12               [ 8]  994 	ld	(de), a
-    0000042F 2A               [ 8]  995 	ld	a, (hl+)
-    00000430 5F               [ 4]  996 	ld	e, a
-    00000431 56               [ 8]  997 	ld	d, (hl)
-                                    998 ;Source/Engine/ECS/ECS.c:55: switch (component) {
-    00000432 79               [ 4]  999 	ld	a, c
-    00000433 3D               [ 4] 1000 	dec	a
-    00000434 B0               [ 4] 1001 	or	a, b
-    00000435 28 09            [12] 1002 	jr	Z, 00101$
-    00000437 79               [ 4] 1003 	ld	a, c
-    00000438 D6 02            [ 8] 1004 	sub	a, #0x02
-    0000043A B0               [ 4] 1005 	or	a, b
-    0000043B 28 43            [12] 1006 	jr	Z, 00105$
-    0000043D C3rDFr04         [16] 1007 	jp	00116$
-                                   1008 ;Source/Engine/ECS/ECS.c:56: case TRANSFORM_COMPONENT:
-    00000440                       1009 00101$:
-                                   1010 ;Source/Engine/ECS/ECS.c:57: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
-    00000440 F8 03            [12] 1011 	ldhl	sp,	#3
-    00000442 36 00            [12] 1012 	ld	(hl), #0x00
-    00000444 0E 00            [ 8] 1013 	ld	c, #0x00
-    00000446                       1014 00112$:
-                                   1015 ;Source/Engine/ECS/ECS.c:58: if (transformComponent.entityID[i] == entity -> ID)  {
-    00000446 21r00r00         [12] 1016 	ld	hl, #_transformComponent
-    00000449 06 00            [ 8] 1017 	ld	b, #0x00
-    0000044B 09               [ 8] 1018 	add	hl, bc
-    0000044C 1A               [ 8] 1019 	ld	a, (de)
-    0000044D 46               [ 8] 1020 	ld	b, (hl)
-    0000044E 90               [ 4] 1021 	sub	a, b
-    0000044F 20 24            [12] 1022 	jr	NZ, 00113$
-                                   1023 ;Source/Engine/ECS/ECS.c:59: vec2_set(&transformComponent.position[i], 0, 0);
-    00000451 01r64r00         [12] 1024 	ld	bc, #_transformComponent + 100
-    00000454 F8 03            [12] 1025 	ldhl	sp,	#3
-    00000456 5E               [ 8] 1026 	ld	e, (hl)
-    00000457 16 00            [ 8] 1027 	ld	d, #0x00
-    00000459 6B               [ 4] 1028 	ld	l, e
-    0000045A 62               [ 4] 1029 	ld	h, d
-    0000045B 29               [ 8] 1030 	add	hl, hl
-    0000045C 29               [ 8] 1031 	add	hl, hl
-    0000045D 09               [ 8] 1032 	add	hl, bc
-                                   1033 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
-    0000045E AF               [ 4] 1034 	xor	a, a
-    0000045F 22               [ 8] 1035 	ld	(hl+), a
-    00000460 32               [ 8] 1036 	ld	(hl-), a
-                                   1037 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
-    00000461 23               [ 8] 1038 	inc	hl
-    00000462 23               [ 8] 1039 	inc	hl
-    00000463 AF               [ 4] 1040 	xor	a, a
-    00000464 22               [ 8] 1041 	ld	(hl+), a
-    00000465 77               [ 8] 1042 	ld	(hl), a
-                                   1043 ;Source/Engine/ECS/ECS.c:60: transformComponent.entityID[i] = 0;
-    00000466 11r00r00         [12] 1044 	ld	de, #_transformComponent
-    00000469 F8 03            [12] 1045 	ldhl	sp,	#3
-    0000046B 6E               [ 8] 1046 	ld	l, (hl)
-    0000046C 26 00            [ 8] 1047 	ld	h, #0x00
-    0000046E 19               [ 8] 1048 	add	hl, de
-    0000046F 4D               [ 4] 1049 	ld	c, l
-    00000470 44               [ 4] 1050 	ld	b, h
-    00000471 AF               [ 4] 1051 	xor	a, a
-    00000472 02               [ 8] 1052 	ld	(bc), a
-                                   1053 ;Source/Engine/ECS/ECS.c:61: return;
-    00000473 18 6A            [12] 1054 	jr	00116$
-    00000475                       1055 00113$:
-                                   1056 ;Source/Engine/ECS/ECS.c:57: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
-    00000475 0C               [ 4] 1057 	inc	c
-    00000476 F8 03            [12] 1058 	ldhl	sp,	#3
-    00000478 79               [ 4] 1059 	ld	a,c
-    00000479 77               [ 8] 1060 	ld	(hl),a
-    0000047A D6 64            [ 8] 1061 	sub	a, #0x64
-    0000047C 38 C8            [12] 1062 	jr	C, 00112$
-                                   1063 ;Source/Engine/ECS/ECS.c:64: break;
-    0000047E 18 5F            [12] 1064 	jr	00116$
-                                   1065 ;Source/Engine/ECS/ECS.c:65: case SPRITE_COMPONENT:
-    00000480                       1066 00105$:
-                                   1067 ;Source/Engine/ECS/ECS.c:66: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000480 01 00 00         [12] 1068 	ld	bc, #0x0
-    00000483                       1069 00114$:
-                                   1070 ;Source/Engine/ECS/ECS.c:67: if (spriteComponent.entityID[i] == entity -> ID)  {
-    00000483 3Er00            [ 8] 1071 	ld	a, #<(_spriteComponent)
-    00000485 80               [ 4] 1072 	add	a, b
-    00000486 6F               [ 4] 1073 	ld	l, a
-    00000487 3Es00            [ 8] 1074 	ld	a, #>(_spriteComponent)
-    00000489 CE 00            [ 8] 1075 	adc	a, #0x00
-    0000048B 67               [ 4] 1076 	ld	h, a
-    0000048C 1A               [ 8] 1077 	ld	a, (de)
-    0000048D 6E               [ 8] 1078 	ld	l, (hl)
-    0000048E 95               [ 4] 1079 	sub	a, l
-    0000048F 20 47            [12] 1080 	jr	NZ, 00115$
-                                   1081 ;Source/Engine/ECS/ECS.c:68: spriteComponent.entityID[i] = 0;
-    00000491 21r00r00         [12] 1082 	ld	hl, #_spriteComponent
-    00000494 06 00            [ 8] 1083 	ld	b, #0x00
-    00000496 09               [ 8] 1084 	add	hl, bc
-    00000497 36 00            [12] 1085 	ld	(hl), #0x00
-                                   1086 ;Source/Engine/ECS/ECS.c:69: spriteComponent.tileData[i] = 0;
-    00000499 21r32r00         [12] 1087 	ld	hl, #_spriteComponent + 50
-    0000049C 79               [ 4] 1088 	ld	a, c
-    0000049D 87               [ 4] 1089 	add	a, a
-    0000049E 5F               [ 4] 1090 	ld	e, a
-    0000049F 16 00            [ 8] 1091 	ld	d, #0x00
-    000004A1 19               [ 8] 1092 	add	hl, de
-    000004A2 AF               [ 4] 1093 	xor	a, a
-    000004A3 22               [ 8] 1094 	ld	(hl+), a
-    000004A4 77               [ 8] 1095 	ld	(hl), a
-                                   1096 ;Source/Engine/ECS/ECS.c:70: spriteComponent.tileIndex[i] = 0;
-    000004A5 21r96r00         [12] 1097 	ld	hl, #_spriteComponent + 150
-    000004A8 06 00            [ 8] 1098 	ld	b, #0x00
-    000004AA 09               [ 8] 1099 	add	hl, bc
-    000004AB 36 00            [12] 1100 	ld	(hl), #0x00
-                                   1101 ;Source/Engine/ECS/ECS.c:71: spriteComponent.width[i] = 0;
-    000004AD 21rC8r00         [12] 1102 	ld	hl, #_spriteComponent + 200
-    000004B0 06 00            [ 8] 1103 	ld	b, #0x00
-    000004B2 09               [ 8] 1104 	add	hl, bc
-    000004B3 36 00            [12] 1105 	ld	(hl), #0x00
-                                   1106 ;Source/Engine/ECS/ECS.c:72: spriteComponent.height[i] = 0;
-    000004B5 21rFAr00         [12] 1107 	ld	hl, #_spriteComponent + 250
-    000004B8 06 00            [ 8] 1108 	ld	b, #0x00
-    000004BA 09               [ 8] 1109 	add	hl, bc
-    000004BB 36 00            [12] 1110 	ld	(hl), #0x00
-                                   1111 ;Source/Engine/ECS/ECS.c:73: spriteComponent.offset[i].x = 0;
-    000004BD 21r2Cr01         [12] 1112 	ld	hl, #_spriteComponent + 300
-    000004C0 16 00            [ 8] 1113 	ld	d, #0x00
-    000004C2 19               [ 8] 1114 	add	hl, de
-                                   1115 ;Source/Engine/ECS/ECS.c:74: spriteComponent.offset[i].y = 0;
-    000004C3 AF               [ 4] 1116 	xor	a, a
-    000004C4 22               [ 8] 1117 	ld	(hl+), a
-    000004C5 77               [ 8] 1118 	ld	(hl), a
-                                   1119 ;Source/Engine/ECS/ECS.c:75: spriteComponent.flags[i] = 0;
-    000004C6 21r90r01         [12] 1120 	ld	hl, #(_spriteComponent + 400)
-    000004C9 06 00            [ 8] 1121 	ld	b, #0x00
-    000004CB 09               [ 8] 1122 	add	hl, bc
-    000004CC 36 00            [12] 1123 	ld	(hl), #0x00
-                                   1124 ;Source/Engine/ECS/ECS.c:76: spriteComponent.palette[i] = 0;
-    000004CE 21rC2r01         [12] 1125 	ld	hl, #(_spriteComponent + 450)
-    000004D1 06 00            [ 8] 1126 	ld	b, #0x00
-    000004D3 09               [ 8] 1127 	add	hl, bc
-    000004D4 36 00            [12] 1128 	ld	(hl), #0x00
-                                   1129 ;Source/Engine/ECS/ECS.c:77: return;
-    000004D6 18 07            [12] 1130 	jr	00116$
-    000004D8                       1131 00115$:
-                                   1132 ;Source/Engine/ECS/ECS.c:66: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000004D8 04               [ 4] 1133 	inc	b
-    000004D9 48               [ 4] 1134 	ld	c, b
-    000004DA 78               [ 4] 1135 	ld	a, b
-    000004DB D6 32            [ 8] 1136 	sub	a, #0x32
-    000004DD 38 A4            [12] 1137 	jr	C, 00114$
-                                   1138 ;Source/Engine/ECS/ECS.c:85: }
-    000004DF                       1139 00116$:
-                                   1140 ;Source/Engine/ECS/ECS.c:86: }
-    000004DF E8 06            [16] 1141 	add	sp, #6
-    000004E1 C9               [16] 1142 	ret
-                                   1143 ;Source/Engine/ECS/ECS.c:89: bool EntityHasComponent(const Entity *entity, uint16_t component) {
-                                   1144 ;	---------------------------------
-                                   1145 ; Function EntityHasComponent
-                                   1146 ; ---------------------------------
-    000004E2                       1147 _EntityHasComponent::
-                                   1148 ;Source/Engine/ECS/ECS.c:90: return (entity->components & component) != 0;
-    000004E2 6B               [ 4] 1149 	ld	l, e
-    000004E3 62               [ 4] 1150 	ld	h, d
-    000004E4 23               [ 8] 1151 	inc	hl
-    000004E5 2A               [ 8] 1152 	ld	a, (hl+)
-    000004E6 6E               [ 8] 1153 	ld	l, (hl)
-    000004E7 A1               [ 4] 1154 	and	a, c
-    000004E8 4F               [ 4] 1155 	ld	c, a
-    000004E9 7D               [ 4] 1156 	ld	a, l
-    000004EA A0               [ 4] 1157 	and	a, b
-    000004EB B1               [ 4] 1158 	or	a, c
-    000004EC D6 01            [ 8] 1159 	sub	a, #0x01
-    000004EE 3E 00            [ 8] 1160 	ld	a, #0x00
-    000004F0 17               [ 4] 1161 	rla
-    000004F1 EE 01            [ 8] 1162 	xor	a, #0x01
-                                   1163 ;Source/Engine/ECS/ECS.c:91: }
-    000004F3 C9               [16] 1164 	ret
-                                   1165 ;Source/Engine/ECS/ECS.c:93: uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
-                                   1166 ;	---------------------------------
-                                   1167 ; Function GetNextAvailableComponentPoolSlot
-                                   1168 ; ---------------------------------
-    000004F4                       1169 _GetNextAvailableComponentPoolSlot::
-    000004F4 3B               [ 8] 1170 	dec	sp
-    000004F5 4F               [ 4] 1171 	ld	c, a
-                                   1172 ;Source/Engine/ECS/ECS.c:95: for (i = 0; i < poolSize; i++) {
-    000004F6 F8 00            [12] 1173 	ldhl	sp,	#0
-    000004F8 36 00            [12] 1174 	ld	(hl), #0x00
-    000004FA 06 00            [ 8] 1175 	ld	b, #0x00
-    000004FC                       1176 00105$:
-    000004FC 78               [ 4] 1177 	ld	a, b
-    000004FD 91               [ 4] 1178 	sub	a, c
-    000004FE 30 13            [12] 1179 	jr	NC, 00103$
-                                   1180 ;Source/Engine/ECS/ECS.c:96: if (poolPointer[i] == 0) {
-    00000500 68               [ 4] 1181 	ld	l, b
-    00000501 26 00            [ 8] 1182 	ld	h, #0x00
-    00000503 19               [ 8] 1183 	add	hl, de
-    00000504 7E               [ 8] 1184 	ld	a, (hl)
-    00000505 B7               [ 4] 1185 	or	a, a
-    00000506 20 05            [12] 1186 	jr	NZ, 00106$
-                                   1187 ;Source/Engine/ECS/ECS.c:97: return i;
-    00000508 F8 00            [12] 1188 	ldhl	sp,	#0
-    0000050A 7E               [ 8] 1189 	ld	a, (hl)
-    0000050B 18 08            [12] 1190 	jr	00107$
-    0000050D                       1191 00106$:
-                                   1192 ;Source/Engine/ECS/ECS.c:95: for (i = 0; i < poolSize; i++) {
-    0000050D 04               [ 4] 1193 	inc	b
-    0000050E F8 00            [12] 1194 	ldhl	sp,	#0
-    00000510 70               [ 8] 1195 	ld	(hl), b
-    00000511 18 E9            [12] 1196 	jr	00105$
-    00000513                       1197 00103$:
-                                   1198 ;Source/Engine/ECS/ECS.c:100: return 255;
-    00000513 3E FF            [ 8] 1199 	ld	a, #0xff
-    00000515                       1200 00107$:
-                                   1201 ;Source/Engine/ECS/ECS.c:101: }
-    00000515 33               [ 8] 1202 	inc	sp
-    00000516 C9               [16] 1203 	ret
-                                   1204 ;Source/Engine/ECS/ECS.c:103: Entity* getEntityById (uint8_t id) {
-                                   1205 ;	---------------------------------
-                                   1206 ; Function getEntityById
-                                   1207 ; ---------------------------------
-    00000517                       1208 _getEntityById::
-    00000517 3B               [ 8] 1209 	dec	sp
-    00000518 F8 00            [12] 1210 	ldhl	sp,	#0
-    0000051A 77               [ 8] 1211 	ld	(hl), a
-                                   1212 ;Source/Engine/ECS/ECS.c:104: for (int i = 0; i < MAX_ENTITIES; i++) {
-    0000051B 01 00 00         [12] 1213 	ld	bc, #0x0000
-    0000051E                       1214 00105$:
-    0000051E 79               [ 4] 1215 	ld	a, c
-    0000051F D6 64            [ 8] 1216 	sub	a, #0x64
-    00000521 30 19            [12] 1217 	jr	NC, 00103$
-                                   1218 ;Source/Engine/ECS/ECS.c:105: if (entity[i].ID == id) {
-    00000523 69               [ 4] 1219 	ld	l, c
-    00000524 60               [ 4] 1220 	ld	h, b
-    00000525 29               [ 8] 1221 	add	hl, hl
-    00000526 09               [ 8] 1222 	add	hl, bc
-    00000527 7D               [ 4] 1223 	ld	a, l
-    00000528 C6r00            [ 8] 1224 	add	a, #<(_entity)
-    0000052A 5F               [ 4] 1225 	ld	e, a
-    0000052B 7C               [ 4] 1226 	ld	a, h
-    0000052C CEs00            [ 8] 1227 	adc	a, #>(_entity)
-    0000052E 57               [ 4] 1228 	ld	d, a
-    0000052F 1A               [ 8] 1229 	ld	a, (de)
-    00000530 F8 00            [12] 1230 	ldhl	sp,	#0
-    00000532 96               [ 8] 1231 	sub	a, (hl)
-    00000533 20 04            [12] 1232 	jr	NZ, 00106$
-                                   1233 ;Source/Engine/ECS/ECS.c:106: return &entity[i];
-    00000535 4B               [ 4] 1234 	ld	c, e
-    00000536 42               [ 4] 1235 	ld	b, d
-    00000537 18 06            [12] 1236 	jr	00107$
-    00000539                       1237 00106$:
-                                   1238 ;Source/Engine/ECS/ECS.c:104: for (int i = 0; i < MAX_ENTITIES; i++) {
-    00000539 03               [ 8] 1239 	inc	bc
-    0000053A 18 E2            [12] 1240 	jr	00105$
-    0000053C                       1241 00103$:
-                                   1242 ;Source/Engine/ECS/ECS.c:109: return 0;
-    0000053C 01 00 00         [12] 1243 	ld	bc, #0x0000
-    0000053F                       1244 00107$:
-                                   1245 ;Source/Engine/ECS/ECS.c:110: }
-    0000053F 33               [ 8] 1246 	inc	sp
-    00000540 C9               [16] 1247 	ret
-                                   1248 	.area _CODE
-                                   1249 	.area _INITIALIZER
-                                   1250 	.area _CABS (ABS)
+    00000221                        563 _getTransformPos:
+    00000221 E8 FB            [16]  564 	add	sp, #-5
+    00000223 F8 04            [12]  565 	ldhl	sp,	#4
+    00000225 77               [ 8]  566 	ld	(hl), a
+                                    567 ;Source/Engine/ECS/../Components/transform_component.h:42: vec2 tmp = {0, 0};
+    00000226 AF               [ 4]  568 	xor	a, a
+    00000227 F8 00            [12]  569 	ldhl	sp,	#0
+    00000229 22               [ 8]  570 	ld	(hl+), a
+    0000022A 22               [ 8]  571 	ld	(hl+), a
+    0000022B AF               [ 4]  572 	xor	a, a
+    0000022C 22               [ 8]  573 	ld	(hl+), a
+    0000022D 77               [ 8]  574 	ld	(hl), a
+                                    575 ;Source/Engine/ECS/../Components/transform_component.h:43: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+    0000022E 0E 00            [ 8]  576 	ld	c, #0x00
+    00000230 59               [ 4]  577 	ld	e, c
+    00000231                        578 00105$:
+    00000231 7B               [ 4]  579 	ld	a, e
+    00000232 D6 64            [ 8]  580 	sub	a, #0x64
+    00000234 30 2B            [12]  581 	jr	NC, 00103$
+                                    582 ;Source/Engine/ECS/../Components/transform_component.h:44: if (transformComponent.entityID[i] == entityID) {
+    00000236 21r00r00         [12]  583 	ld	hl, #_transformComponent
+    00000239 16 00            [ 8]  584 	ld	d, #0x00
+    0000023B 19               [ 8]  585 	add	hl, de
+    0000023C 46               [ 8]  586 	ld	b, (hl)
+    0000023D F8 04            [12]  587 	ldhl	sp,	#4
+    0000023F 7E               [ 8]  588 	ld	a, (hl)
+    00000240 90               [ 4]  589 	sub	a, b
+    00000241 20 1A            [12]  590 	jr	NZ, 00106$
+                                    591 ;Source/Engine/ECS/../Components/transform_component.h:45: tmp = transformComponent.position[i];
+    00000243 11r64r00         [12]  592 	ld	de, #_transformComponent + 100
+    00000246 69               [ 4]  593 	ld	l, c
+    00000247 26 00            [ 8]  594 	ld	h, #0x00
+    00000249 29               [ 8]  595 	add	hl, hl
+    0000024A 29               [ 8]  596 	add	hl, hl
+    0000024B 19               [ 8]  597 	add	hl, de
+    0000024C 4D               [ 4]  598 	ld	c, l
+    0000024D 44               [ 4]  599 	ld	b, h
+    0000024E 21 00 00         [12]  600 	ld	hl, #0
+    00000251 39               [ 8]  601 	add	hl, sp
+    00000252 5D               [ 4]  602 	ld	e, l
+    00000253 54               [ 4]  603 	ld	d, h
+    00000254 21 04 00         [12]  604 	ld	hl, #0x0004
+    00000257 E5               [16]  605 	push	hl
+    00000258 CDr00r00         [24]  606 	call	___memcpy
+                                    607 ;Source/Engine/ECS/../Components/transform_component.h:46: break;
+    0000025B 18 04            [12]  608 	jr	00103$
+    0000025D                        609 00106$:
+                                    610 ;Source/Engine/ECS/../Components/transform_component.h:43: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+    0000025D 1C               [ 4]  611 	inc	e
+    0000025E 4B               [ 4]  612 	ld	c, e
+    0000025F 18 D0            [12]  613 	jr	00105$
+    00000261                        614 00103$:
+                                    615 ;Source/Engine/ECS/../Components/transform_component.h:49: return tmp;
+    00000261 F8 07            [12]  616 	ldhl	sp,	#7
+    00000263 2A               [ 8]  617 	ld	a, (hl+)
+    00000264 4F               [ 4]  618 	ld	c, a
+    00000265 46               [ 8]  619 	ld	b, (hl)
+    00000266 F8 00            [12]  620 	ldhl	sp,	#0
+    00000268 2A               [ 8]  621 	ld	a, (hl+)
+    00000269 02               [ 8]  622 	ld	(bc), a
+    0000026A 03               [ 8]  623 	inc	bc
+    0000026B 2A               [ 8]  624 	ld	a, (hl+)
+    0000026C 02               [ 8]  625 	ld	(bc), a
+    0000026D 03               [ 8]  626 	inc	bc
+    0000026E 2A               [ 8]  627 	ld	a, (hl+)
+    0000026F 02               [ 8]  628 	ld	(bc), a
+    00000270 03               [ 8]  629 	inc	bc
+    00000271 7E               [ 8]  630 	ld	a, (hl)
+    00000272 02               [ 8]  631 	ld	(bc), a
+                                    632 ;Source/Engine/ECS/../Components/transform_component.h:50: }
+    00000273 E8 05            [16]  633 	add	sp, #5
+    00000275 E1               [12]  634 	pop	hl
+    00000276 F1               [12]  635 	pop	af
+    00000277 E9               [ 4]  636 	jp	(hl)
+                                    637 ;Source/Engine/ECS/ECS.c:9: void EntityAddComponent (Entity *entity, uint16_t component) {
+                                    638 ;	---------------------------------
+                                    639 ; Function EntityAddComponent
+                                    640 ; ---------------------------------
+    00000278                        641 _EntityAddComponent::
+    00000278 E8 F5            [16]  642 	add	sp, #-11
+    0000027A F8 09            [12]  643 	ldhl	sp,	#9
+    0000027C 7B               [ 4]  644 	ld	a, e
+    0000027D 22               [ 8]  645 	ld	(hl+), a
+    0000027E 72               [ 8]  646 	ld	(hl), d
+    0000027F F8 07            [12]  647 	ldhl	sp,	#7
+    00000281 79               [ 4]  648 	ld	a, c
+    00000282 22               [ 8]  649 	ld	(hl+), a
+                                    650 ;Source/Engine/ECS/ECS.c:13: if (EntityHasComponent(entity, component)){
+    00000283 78               [ 4]  651 	ld	a, b
+    00000284 32               [ 8]  652 	ld	(hl-), a
+    00000285 2A               [ 8]  653 	ld	a, (hl+)
+    00000286 4F               [ 4]  654 	ld	c, a
+    00000287 2A               [ 8]  655 	ld	a, (hl+)
+    00000288 47               [ 4]  656 	ld	b, a
+    00000289 2A               [ 8]  657 	ld	a, (hl+)
+    0000028A 5F               [ 4]  658 	ld	e, a
+    0000028B 56               [ 8]  659 	ld	d, (hl)
+    0000028C CDr39r05         [24]  660 	call	_EntityHasComponent
+    0000028F F8 06            [12]  661 	ldhl	sp,#6
+    00000291 77               [ 8]  662 	ld	(hl), a
+    00000292 CB 46            [12]  663 	bit	0, (hl)
+                                    664 ;Source/Engine/ECS/ECS.c:14: return;
+    00000294 C2r50r04         [16]  665 	jp	NZ, 00112$
+                                    666 ;Source/Engine/ECS/ECS.c:17: entity->components |= component;
+    00000297 F8 09            [12]  667 	ldhl	sp,	#9
+    00000299 2A               [ 8]  668 	ld	a, (hl+)
+    0000029A 4F               [ 4]  669 	ld	c, a
+    0000029B 46               [ 8]  670 	ld	b, (hl)
+    0000029C 03               [ 8]  671 	inc	bc
+    0000029D 69               [ 4]  672 	ld	l, c
+    0000029E 60               [ 4]  673 	ld	h, b
+    0000029F 23               [ 8]  674 	inc	hl
+    000002A0 3A               [ 8]  675 	ld	a,	(hl-)
+    000002A1 6E               [ 8]  676 	ld	l, (hl)
+    000002A2 F5               [16]  677 	push	af
+    000002A3 7D               [ 4]  678 	ld	a, l
+    000002A4 E5               [16]  679 	push	hl
+    000002A5 F8 0B            [12]  680 	ldhl	sp,	#11
+    000002A7 B6               [ 8]  681 	or	a, (hl)
+    000002A8 E1               [12]  682 	pop	hl
+    000002A9 5F               [ 4]  683 	ld	e, a
+    000002AA F1               [12]  684 	pop	af
+    000002AB F8 08            [12]  685 	ldhl	sp,	#8
+    000002AD B6               [ 8]  686 	or	a, (hl)
+                                    687 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
+    000002AE 23               [ 8]  688 	inc	hl
+    000002AF 57               [ 4]  689 	ld	d, a
+    000002B0 7B               [ 4]  690 	ld	a, e
+    000002B1 02               [ 8]  691 	ld	(bc), a
+    000002B2 03               [ 8]  692 	inc	bc
+    000002B3 7A               [ 4]  693 	ld	a, d
+    000002B4 02               [ 8]  694 	ld	(bc), a
+    000002B5 7E               [ 8]  695 	ld	a, (hl)
+    000002B6 F8 01            [12]  696 	ldhl	sp,	#1
+    000002B8 77               [ 8]  697 	ld	(hl), a
+    000002B9 F8 0A            [12]  698 	ldhl	sp,	#10
+    000002BB 7E               [ 8]  699 	ld	a, (hl)
+    000002BC F8 02            [12]  700 	ldhl	sp,	#2
+    000002BE 77               [ 8]  701 	ld	(hl), a
+                                    702 ;Source/Engine/ECS/ECS.c:20: switch (component) {
+    000002BF F8 07            [12]  703 	ldhl	sp,	#7
+    000002C1 2A               [ 8]  704 	ld	a, (hl+)
+    000002C2 3D               [ 4]  705 	dec	a
+    000002C3 B6               [ 8]  706 	or	a, (hl)
+    000002C4 28 0C            [12]  707 	jr	Z, 00103$
+    000002C6 F8 07            [12]  708 	ldhl	sp,	#7
+    000002C8 2A               [ 8]  709 	ld	a, (hl+)
+    000002C9 D6 02            [ 8]  710 	sub	a, #0x02
+    000002CB B6               [ 8]  711 	or	a, (hl)
+    000002CC CAr59r03         [16]  712 	jp	Z, 00106$
+    000002CF C3r50r04         [16]  713 	jp	00112$
+                                    714 ;Source/Engine/ECS/ECS.c:21: case TRANSFORM_COMPONENT:
+    000002D2                        715 00103$:
+                                    716 ;Source/Engine/ECS/ECS.c:22: nextPoolSlot = GetNextAvailableComponentPoolSlot(transformComponent.entityID, TRANSFORM_POOL_SIZE);
+    000002D2 3E 64            [ 8]  717 	ld	a, #0x64
+    000002D4 11r00r00         [12]  718 	ld	de, #_transformComponent
+    000002D7 CDr4Br05         [24]  719 	call	_GetNextAvailableComponentPoolSlot
+                                    720 ;Source/Engine/ECS/ECS.c:23: if (nextPoolSlot != 255) {
+    000002DA F8 00            [12]  721 	ldhl	sp,#0
+    000002DC 77               [ 8]  722 	ld	(hl), a
+    000002DD 3C               [ 4]  723 	inc	a
+    000002DE CAr50r04         [16]  724 	jp	Z, 00112$
+                                    725 ;Source/Engine/ECS/ECS.c:24: vec2_set(&transformComponent.position[nextPoolSlot], 0, 0);
+    000002E1 F8 00            [12]  726 	ldhl	sp,	#0
+    000002E3 7E               [ 8]  727 	ld	a, (hl)
+    000002E4 F8 05            [12]  728 	ldhl	sp,	#5
+    000002E6 22               [ 8]  729 	ld	(hl+), a
+    000002E7 AF               [ 4]  730 	xor	a, a
+    000002E8 32               [ 8]  731 	ld	(hl-), a
+    000002E9 3A               [ 8]  732 	ld	a, (hl-)
+    000002EA 2B               [ 8]  733 	dec	hl
+    000002EB 22               [ 8]  734 	ld	(hl+), a
+    000002EC 36 00            [12]  735 	ld	(hl), #0x00
+    000002EE 3E 02            [ 8]  736 	ld	a, #0x02
+    000002F0                        737 00152$:
+    000002F0 F8 03            [12]  738 	ldhl	sp,	#3
+    000002F2 CB 26            [16]  739 	sla	(hl)
+    000002F4 23               [ 8]  740 	inc	hl
+    000002F5 CB 16            [16]  741 	rl	(hl)
+    000002F7 3D               [ 4]  742 	dec	a
+    000002F8 20 F6            [12]  743 	jr	NZ, 00152$
+    000002FA 2B               [ 8]  744 	dec	hl
+    000002FB 2A               [ 8]  745 	ld	a, (hl+)
+    000002FC 5F               [ 4]  746 	ld	e, a
+    000002FD 56               [ 8]  747 	ld	d, (hl)
+    000002FE 21r64r00         [12]  748 	ld	hl, #(_transformComponent + 100)
+    00000301 19               [ 8]  749 	add	hl, de
+    00000302 E5               [16]  750 	push	hl
+    00000303 7D               [ 4]  751 	ld	a, l
+    00000304 F8 07            [12]  752 	ldhl	sp,	#7
+    00000306 77               [ 8]  753 	ld	(hl), a
+    00000307 E1               [12]  754 	pop	hl
+    00000308 7C               [ 4]  755 	ld	a, h
+    00000309 F8 06            [12]  756 	ldhl	sp,	#6
+    0000030B 32               [ 8]  757 	ld	(hl-), a
+    0000030C 3A               [ 8]  758 	ld	a, (hl-)
+    0000030D 2B               [ 8]  759 	dec	hl
+    0000030E 77               [ 8]  760 	ld	(hl), a
+    0000030F F8 06            [12]  761 	ldhl	sp,	#6
+    00000311 3A               [ 8]  762 	ld	a, (hl-)
+    00000312 2B               [ 8]  763 	dec	hl
+                                    764 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
+    00000313 32               [ 8]  765 	ld	(hl-), a
+    00000314 2A               [ 8]  766 	ld	a, (hl+)
+    00000315 66               [ 8]  767 	ld	h, (hl)
+    00000316 6F               [ 4]  768 	ld	l, a
+    00000317 AF               [ 4]  769 	xor	a, a
+    00000318 22               [ 8]  770 	ld	(hl+), a
+    00000319 77               [ 8]  771 	ld	(hl), a
+                                    772 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
+    0000031A F8 03            [12]  773 	ldhl	sp,#3
+    0000031C 2A               [ 8]  774 	ld	a, (hl+)
+    0000031D 5F               [ 4]  775 	ld	e, a
+    0000031E 56               [ 8]  776 	ld	d, (hl)
+    0000031F 21 02 00         [12]  777 	ld	hl, #0x0002
+    00000322 19               [ 8]  778 	add	hl, de
+    00000323 E5               [16]  779 	push	hl
+    00000324 7D               [ 4]  780 	ld	a, l
+    00000325 F8 07            [12]  781 	ldhl	sp,	#7
+    00000327 77               [ 8]  782 	ld	(hl), a
+    00000328 E1               [12]  783 	pop	hl
+    00000329 7C               [ 4]  784 	ld	a, h
+    0000032A F8 06            [12]  785 	ldhl	sp,	#6
+    0000032C 32               [ 8]  786 	ld	(hl-), a
+    0000032D 2A               [ 8]  787 	ld	a, (hl+)
+    0000032E 66               [ 8]  788 	ld	h, (hl)
+    0000032F 6F               [ 4]  789 	ld	l, a
+    00000330 AF               [ 4]  790 	xor	a, a
+    00000331 22               [ 8]  791 	ld	(hl+), a
+    00000332 77               [ 8]  792 	ld	(hl), a
+                                    793 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
+    00000333 11r00r00         [12]  794 	ld	de, #_transformComponent
+    00000336 F8 00            [12]  795 	ldhl	sp,	#0
+    00000338 6E               [ 8]  796 	ld	l, (hl)
+    00000339 26 00            [ 8]  797 	ld	h, #0x00
+    0000033B 19               [ 8]  798 	add	hl, de
+    0000033C E5               [16]  799 	push	hl
+    0000033D 7D               [ 4]  800 	ld	a, l
+    0000033E F8 07            [12]  801 	ldhl	sp,	#7
+    00000340 77               [ 8]  802 	ld	(hl), a
+    00000341 E1               [12]  803 	pop	hl
+    00000342 7C               [ 4]  804 	ld	a, h
+    00000343 F8 06            [12]  805 	ldhl	sp,	#6
+    00000345 77               [ 8]  806 	ld	(hl), a
+    00000346 F8 01            [12]  807 	ldhl	sp,#1
+    00000348 2A               [ 8]  808 	ld	a, (hl+)
+    00000349 5F               [ 4]  809 	ld	e, a
+    0000034A 2A               [ 8]  810 	ld	a, (hl+)
+    0000034B 23               [ 8]  811 	inc	hl
+    0000034C 57               [ 4]  812 	ld	d, a
+    0000034D 1A               [ 8]  813 	ld	a, (de)
+    0000034E 22               [ 8]  814 	ld	(hl+), a
+    0000034F 2A               [ 8]  815 	ld	a, (hl+)
+    00000350 5F               [ 4]  816 	ld	e, a
+    00000351 3A               [ 8]  817 	ld	a, (hl-)
+    00000352 2B               [ 8]  818 	dec	hl
+    00000353 57               [ 4]  819 	ld	d, a
+    00000354 7E               [ 8]  820 	ld	a, (hl)
+    00000355 12               [ 8]  821 	ld	(de), a
+                                    822 ;Source/Engine/ECS/ECS.c:27: break;
+    00000356 C3r50r04         [16]  823 	jp	00112$
+                                    824 ;Source/Engine/ECS/ECS.c:28: case SPRITE_COMPONENT:
+    00000359                        825 00106$:
+                                    826 ;Source/Engine/ECS/ECS.c:29: nextPoolSlot = GetNextAvailableComponentPoolSlot(spriteComponent.entityID, SPRITE_POOL_SIZE);
+    00000359 3E 32            [ 8]  827 	ld	a, #0x32
+    0000035B 11r00r00         [12]  828 	ld	de, #_spriteComponent
+    0000035E CDr4Br05         [24]  829 	call	_GetNextAvailableComponentPoolSlot
+                                    830 ;Source/Engine/ECS/ECS.c:30: if (nextPoolSlot != 255) {
+    00000361 F8 03            [12]  831 	ldhl	sp,#3
+    00000363 77               [ 8]  832 	ld	(hl), a
+    00000364 3C               [ 4]  833 	inc	a
+    00000365 CAr50r04         [16]  834 	jp	Z, 00112$
+                                    835 ;Source/Engine/ECS/ECS.c:31: spriteComponent.entityID[nextPoolSlot] = entity->ID;
+    00000368 11r00r00         [12]  836 	ld	de, #_spriteComponent
+    0000036B F8 03            [12]  837 	ldhl	sp,	#3
+    0000036D 6E               [ 8]  838 	ld	l, (hl)
+    0000036E 26 00            [ 8]  839 	ld	h, #0x00
+    00000370 19               [ 8]  840 	add	hl, de
+    00000371 E5               [16]  841 	push	hl
+    00000372 7D               [ 4]  842 	ld	a, l
+    00000373 F8 06            [12]  843 	ldhl	sp,	#6
+    00000375 77               [ 8]  844 	ld	(hl), a
+    00000376 E1               [12]  845 	pop	hl
+    00000377 7C               [ 4]  846 	ld	a, h
+    00000378 F8 05            [12]  847 	ldhl	sp,	#5
+    0000037A 77               [ 8]  848 	ld	(hl), a
+    0000037B F8 01            [12]  849 	ldhl	sp,#1
+    0000037D 2A               [ 8]  850 	ld	a, (hl+)
+    0000037E 5F               [ 4]  851 	ld	e, a
+    0000037F 56               [ 8]  852 	ld	d, (hl)
+    00000380 1A               [ 8]  853 	ld	a, (de)
+    00000381 F8 06            [12]  854 	ldhl	sp,	#6
+    00000383 32               [ 8]  855 	ld	(hl-), a
+    00000384 2B               [ 8]  856 	dec	hl
+    00000385 2A               [ 8]  857 	ld	a, (hl+)
+    00000386 5F               [ 4]  858 	ld	e, a
+    00000387 2A               [ 8]  859 	ld	a, (hl+)
+    00000388 57               [ 4]  860 	ld	d, a
+    00000389 7E               [ 8]  861 	ld	a, (hl)
+    0000038A 12               [ 8]  862 	ld	(de), a
+                                    863 ;Source/Engine/ECS/ECS.c:32: spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
+    0000038B F8 03            [12]  864 	ldhl	sp,	#3
+    0000038D 7E               [ 8]  865 	ld	a, (hl)
+    0000038E 87               [ 4]  866 	add	a, a
+    0000038F F8 06            [12]  867 	ldhl	sp,	#6
+    00000391 77               [ 8]  868 	ld	(hl), a
+    00000392 11r32r00         [12]  869 	ld	de, #(_spriteComponent + 50)
+    00000395 6E               [ 8]  870 	ld	l, (hl)
+    00000396 26 00            [ 8]  871 	ld	h, #0x00
+    00000398 19               [ 8]  872 	add	hl, de
+    00000399 E5               [16]  873 	push	hl
+    0000039A 7D               [ 4]  874 	ld	a, l
+    0000039B F8 06            [12]  875 	ldhl	sp,	#6
+    0000039D 77               [ 8]  876 	ld	(hl), a
+    0000039E E1               [12]  877 	pop	hl
+    0000039F 7C               [ 4]  878 	ld	a, h
+    000003A0 F8 05            [12]  879 	ldhl	sp,	#5
+    000003A2 32               [ 8]  880 	ld	(hl-), a
+    000003A3 2A               [ 8]  881 	ld	a, (hl+)
+    000003A4 66               [ 8]  882 	ld	h, (hl)
+    000003A5 6F               [ 4]  883 	ld	l, a
+    000003A6 AF               [ 4]  884 	xor	a, a
+    000003A7 22               [ 8]  885 	ld	(hl+), a
+    000003A8 77               [ 8]  886 	ld	(hl), a
+                                    887 ;Source/Engine/ECS/ECS.c:33: spriteComponent.tileIndex[nextPoolSlot] = 0;
+    000003A9 11r96r00         [12]  888 	ld	de, #(_spriteComponent + 150)
+    000003AC F8 03            [12]  889 	ldhl	sp,	#3
+    000003AE 6E               [ 8]  890 	ld	l, (hl)
+    000003AF 26 00            [ 8]  891 	ld	h, #0x00
+    000003B1 19               [ 8]  892 	add	hl, de
+    000003B2 E5               [16]  893 	push	hl
+    000003B3 7D               [ 4]  894 	ld	a, l
+    000003B4 F8 06            [12]  895 	ldhl	sp,	#6
+    000003B6 77               [ 8]  896 	ld	(hl), a
+    000003B7 E1               [12]  897 	pop	hl
+    000003B8 7C               [ 4]  898 	ld	a, h
+    000003B9 F8 05            [12]  899 	ldhl	sp,	#5
+    000003BB 32               [ 8]  900 	ld	(hl-), a
+    000003BC 2A               [ 8]  901 	ld	a, (hl+)
+    000003BD 66               [ 8]  902 	ld	h, (hl)
+    000003BE 6F               [ 4]  903 	ld	l, a
+    000003BF 36 00            [12]  904 	ld	(hl), #0x00
+                                    905 ;Source/Engine/ECS/ECS.c:34: spriteComponent.width[nextPoolSlot] = 0;
+    000003C1 11rC8r00         [12]  906 	ld	de, #(_spriteComponent + 200)
+    000003C4 F8 03            [12]  907 	ldhl	sp,	#3
+    000003C6 6E               [ 8]  908 	ld	l, (hl)
+    000003C7 26 00            [ 8]  909 	ld	h, #0x00
+    000003C9 19               [ 8]  910 	add	hl, de
+    000003CA E5               [16]  911 	push	hl
+    000003CB 7D               [ 4]  912 	ld	a, l
+    000003CC F8 06            [12]  913 	ldhl	sp,	#6
+    000003CE 77               [ 8]  914 	ld	(hl), a
+    000003CF E1               [12]  915 	pop	hl
+    000003D0 7C               [ 4]  916 	ld	a, h
+    000003D1 F8 05            [12]  917 	ldhl	sp,	#5
+    000003D3 32               [ 8]  918 	ld	(hl-), a
+    000003D4 2A               [ 8]  919 	ld	a, (hl+)
+    000003D5 66               [ 8]  920 	ld	h, (hl)
+    000003D6 6F               [ 4]  921 	ld	l, a
+    000003D7 36 00            [12]  922 	ld	(hl), #0x00
+                                    923 ;Source/Engine/ECS/ECS.c:35: spriteComponent.height[nextPoolSlot] = 0;
+    000003D9 11rFAr00         [12]  924 	ld	de, #(_spriteComponent + 250)
+    000003DC F8 03            [12]  925 	ldhl	sp,	#3
+    000003DE 6E               [ 8]  926 	ld	l, (hl)
+    000003DF 26 00            [ 8]  927 	ld	h, #0x00
+    000003E1 19               [ 8]  928 	add	hl, de
+    000003E2 E5               [16]  929 	push	hl
+    000003E3 7D               [ 4]  930 	ld	a, l
+    000003E4 F8 06            [12]  931 	ldhl	sp,	#6
+    000003E6 77               [ 8]  932 	ld	(hl), a
+    000003E7 E1               [12]  933 	pop	hl
+    000003E8 7C               [ 4]  934 	ld	a, h
+    000003E9 F8 05            [12]  935 	ldhl	sp,	#5
+    000003EB 32               [ 8]  936 	ld	(hl-), a
+    000003EC 2A               [ 8]  937 	ld	a, (hl+)
+    000003ED 66               [ 8]  938 	ld	h, (hl)
+    000003EE 6F               [ 4]  939 	ld	l, a
+    000003EF 36 00            [12]  940 	ld	(hl), #0x00
+                                    941 ;Source/Engine/ECS/ECS.c:36: spriteComponent.offset[nextPoolSlot].x = 0;
+    000003F1 11r2Cr01         [12]  942 	ld	de, #(_spriteComponent + 300)
+    000003F4 F8 06            [12]  943 	ldhl	sp,	#6
+    000003F6 6E               [ 8]  944 	ld	l, (hl)
+    000003F7 26 00            [ 8]  945 	ld	h, #0x00
+    000003F9 19               [ 8]  946 	add	hl, de
+    000003FA E5               [16]  947 	push	hl
+    000003FB 7D               [ 4]  948 	ld	a, l
+    000003FC F8 03            [12]  949 	ldhl	sp,	#3
+    000003FE 77               [ 8]  950 	ld	(hl), a
+    000003FF E1               [12]  951 	pop	hl
+    00000400 7C               [ 4]  952 	ld	a, h
+    00000401 F8 02            [12]  953 	ldhl	sp,	#2
+    00000403 32               [ 8]  954 	ld	(hl-), a
+    00000404 2A               [ 8]  955 	ld	a, (hl+)
+    00000405 66               [ 8]  956 	ld	h, (hl)
+    00000406 6F               [ 4]  957 	ld	l, a
+    00000407 36 00            [12]  958 	ld	(hl), #0x00
+                                    959 ;Source/Engine/ECS/ECS.c:37: spriteComponent.offset[nextPoolSlot].y = 0;
+    00000409 F8 01            [12]  960 	ldhl	sp,#1
+    0000040B 2A               [ 8]  961 	ld	a, (hl+)
+    0000040C 5F               [ 4]  962 	ld	e, a
+    0000040D 56               [ 8]  963 	ld	d, (hl)
+    0000040E 6B               [ 4]  964 	ld	l, e
+    0000040F 62               [ 4]  965 	ld	h, d
+    00000410 23               [ 8]  966 	inc	hl
+    00000411 E5               [16]  967 	push	hl
+    00000412 7D               [ 4]  968 	ld	a, l
+    00000413 F8 07            [12]  969 	ldhl	sp,	#7
+    00000415 77               [ 8]  970 	ld	(hl), a
+    00000416 E1               [12]  971 	pop	hl
+    00000417 7C               [ 4]  972 	ld	a, h
+    00000418 F8 06            [12]  973 	ldhl	sp,	#6
+    0000041A 32               [ 8]  974 	ld	(hl-), a
+    0000041B 2A               [ 8]  975 	ld	a, (hl+)
+    0000041C 66               [ 8]  976 	ld	h, (hl)
+    0000041D 6F               [ 4]  977 	ld	l, a
+    0000041E 36 00            [12]  978 	ld	(hl), #0x00
+                                    979 ;Source/Engine/ECS/ECS.c:38: spriteComponent.flags[nextPoolSlot] = 0;
+    00000420 11r90r01         [12]  980 	ld	de, #(_spriteComponent + 400)
+    00000423 F8 03            [12]  981 	ldhl	sp,	#3
+    00000425 6E               [ 8]  982 	ld	l, (hl)
+    00000426 26 00            [ 8]  983 	ld	h, #0x00
+    00000428 19               [ 8]  984 	add	hl, de
+    00000429 E5               [16]  985 	push	hl
+    0000042A 7D               [ 4]  986 	ld	a, l
+    0000042B F8 07            [12]  987 	ldhl	sp,	#7
+    0000042D 77               [ 8]  988 	ld	(hl), a
+    0000042E E1               [12]  989 	pop	hl
+    0000042F 7C               [ 4]  990 	ld	a, h
+    00000430 F8 06            [12]  991 	ldhl	sp,	#6
+    00000432 32               [ 8]  992 	ld	(hl-), a
+    00000433 2A               [ 8]  993 	ld	a, (hl+)
+    00000434 66               [ 8]  994 	ld	h, (hl)
+    00000435 6F               [ 4]  995 	ld	l, a
+    00000436 36 00            [12]  996 	ld	(hl), #0x00
+                                    997 ;Source/Engine/ECS/ECS.c:39: spriteComponent.palette[nextPoolSlot] = 0;
+    00000438 11rC2r01         [12]  998 	ld	de, #(_spriteComponent + 450)
+    0000043B F8 03            [12]  999 	ldhl	sp,	#3
+    0000043D 6E               [ 8] 1000 	ld	l, (hl)
+    0000043E 26 00            [ 8] 1001 	ld	h, #0x00
+    00000440 19               [ 8] 1002 	add	hl, de
+    00000441 E5               [16] 1003 	push	hl
+    00000442 7D               [ 4] 1004 	ld	a, l
+    00000443 F8 07            [12] 1005 	ldhl	sp,	#7
+    00000445 77               [ 8] 1006 	ld	(hl), a
+    00000446 E1               [12] 1007 	pop	hl
+    00000447 7C               [ 4] 1008 	ld	a, h
+    00000448 F8 06            [12] 1009 	ldhl	sp,	#6
+    0000044A 32               [ 8] 1010 	ld	(hl-), a
+    0000044B 2A               [ 8] 1011 	ld	a, (hl+)
+    0000044C 66               [ 8] 1012 	ld	h, (hl)
+    0000044D 6F               [ 4] 1013 	ld	l, a
+    0000044E 36 00            [12] 1014 	ld	(hl), #0x00
+                                   1015 ;Source/Engine/ECS/ECS.c:46: }
+    00000450                       1016 00112$:
+                                   1017 ;Source/Engine/ECS/ECS.c:47: }
+    00000450 E8 0B            [16] 1018 	add	sp, #11
+    00000452 C9               [16] 1019 	ret
+                                   1020 ;Source/Engine/ECS/ECS.c:50: void EntityRemoveComponent(Entity *entity, uint16_t component) {
+                                   1021 ;	---------------------------------
+                                   1022 ; Function EntityRemoveComponent
+                                   1023 ; ---------------------------------
+    00000453                       1024 _EntityRemoveComponent::
+    00000453 E8 FA            [16] 1025 	add	sp, #-6
+    00000455 F8 04            [12] 1026 	ldhl	sp,	#4
+    00000457 7B               [ 4] 1027 	ld	a, e
+    00000458 22               [ 8] 1028 	ld	(hl+), a
+                                   1029 ;Source/Engine/ECS/ECS.c:52: entity->components &= ~component;
+    00000459 7A               [ 4] 1030 	ld	a, d
+    0000045A 32               [ 8] 1031 	ld	(hl-), a
+    0000045B 2A               [ 8] 1032 	ld	a, (hl+)
+    0000045C 5F               [ 4] 1033 	ld	e, a
+    0000045D 56               [ 8] 1034 	ld	d, (hl)
+    0000045E 6B               [ 4] 1035 	ld	l, e
+    0000045F 62               [ 4] 1036 	ld	h, d
+    00000460 23               [ 8] 1037 	inc	hl
+    00000461 33               [ 8] 1038 	inc	sp
+    00000462 33               [ 8] 1039 	inc	sp
+    00000463 5D               [ 4] 1040 	ld	e, l
+    00000464 54               [ 4] 1041 	ld	d, h
+    00000465 D5               [16] 1042 	push	de
+    00000466 1A               [ 8] 1043 	ld	a, (de)
+    00000467 6F               [ 4] 1044 	ld	l, a
+    00000468 13               [ 8] 1045 	inc	de
+    00000469 1A               [ 8] 1046 	ld	a, (de)
+    0000046A 67               [ 4] 1047 	ld	h, a
+    0000046B 79               [ 4] 1048 	ld	a, c
+    0000046C 2F               [ 4] 1049 	cpl
+    0000046D 5F               [ 4] 1050 	ld	e, a
+    0000046E 78               [ 4] 1051 	ld	a, b
+    0000046F 2F               [ 4] 1052 	cpl
+    00000470 57               [ 4] 1053 	ld	d, a
+    00000471 7D               [ 4] 1054 	ld	a, l
+    00000472 A3               [ 4] 1055 	and	a, e
+    00000473 E5               [16] 1056 	push	hl
+    00000474 F8 04            [12] 1057 	ldhl	sp,	#4
+    00000476 77               [ 8] 1058 	ld	(hl), a
+    00000477 E1               [12] 1059 	pop	hl
+    00000478 7C               [ 4] 1060 	ld	a, h
+    00000479 A2               [ 4] 1061 	and	a, d
+    0000047A F8 03            [12] 1062 	ldhl	sp,	#3
+    0000047C 77               [ 8] 1063 	ld	(hl), a
+    0000047D D1               [12] 1064 	pop	de
+    0000047E D5               [16] 1065 	push	de
+    0000047F F8 02            [12] 1066 	ldhl	sp,	#2
+    00000481 2A               [ 8] 1067 	ld	a, (hl+)
+    00000482 12               [ 8] 1068 	ld	(de), a
+    00000483 13               [ 8] 1069 	inc	de
+                                   1070 ;Source/Engine/ECS/ECS.c:58: if (transformComponent.entityID[i] == entity -> ID)  {
+    00000484 2A               [ 8] 1071 	ld	a, (hl+)
+    00000485 12               [ 8] 1072 	ld	(de), a
+    00000486 2A               [ 8] 1073 	ld	a, (hl+)
+    00000487 5F               [ 4] 1074 	ld	e, a
+    00000488 56               [ 8] 1075 	ld	d, (hl)
+                                   1076 ;Source/Engine/ECS/ECS.c:55: switch (component) {
+    00000489 79               [ 4] 1077 	ld	a, c
+    0000048A 3D               [ 4] 1078 	dec	a
+    0000048B B0               [ 4] 1079 	or	a, b
+    0000048C 28 09            [12] 1080 	jr	Z, 00101$
+    0000048E 79               [ 4] 1081 	ld	a, c
+    0000048F D6 02            [ 8] 1082 	sub	a, #0x02
+    00000491 B0               [ 4] 1083 	or	a, b
+    00000492 28 43            [12] 1084 	jr	Z, 00105$
+    00000494 C3r36r05         [16] 1085 	jp	00116$
+                                   1086 ;Source/Engine/ECS/ECS.c:56: case TRANSFORM_COMPONENT:
+    00000497                       1087 00101$:
+                                   1088 ;Source/Engine/ECS/ECS.c:57: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+    00000497 F8 03            [12] 1089 	ldhl	sp,	#3
+    00000499 36 00            [12] 1090 	ld	(hl), #0x00
+    0000049B 0E 00            [ 8] 1091 	ld	c, #0x00
+    0000049D                       1092 00112$:
+                                   1093 ;Source/Engine/ECS/ECS.c:58: if (transformComponent.entityID[i] == entity -> ID)  {
+    0000049D 21r00r00         [12] 1094 	ld	hl, #_transformComponent
+    000004A0 06 00            [ 8] 1095 	ld	b, #0x00
+    000004A2 09               [ 8] 1096 	add	hl, bc
+    000004A3 1A               [ 8] 1097 	ld	a, (de)
+    000004A4 46               [ 8] 1098 	ld	b, (hl)
+    000004A5 90               [ 4] 1099 	sub	a, b
+    000004A6 20 24            [12] 1100 	jr	NZ, 00113$
+                                   1101 ;Source/Engine/ECS/ECS.c:59: vec2_set(&transformComponent.position[i], 0, 0);
+    000004A8 01r64r00         [12] 1102 	ld	bc, #_transformComponent + 100
+    000004AB F8 03            [12] 1103 	ldhl	sp,	#3
+    000004AD 5E               [ 8] 1104 	ld	e, (hl)
+    000004AE 16 00            [ 8] 1105 	ld	d, #0x00
+    000004B0 6B               [ 4] 1106 	ld	l, e
+    000004B1 62               [ 4] 1107 	ld	h, d
+    000004B2 29               [ 8] 1108 	add	hl, hl
+    000004B3 29               [ 8] 1109 	add	hl, hl
+    000004B4 09               [ 8] 1110 	add	hl, bc
+                                   1111 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
+    000004B5 AF               [ 4] 1112 	xor	a, a
+    000004B6 22               [ 8] 1113 	ld	(hl+), a
+    000004B7 32               [ 8] 1114 	ld	(hl-), a
+                                   1115 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
+    000004B8 23               [ 8] 1116 	inc	hl
+    000004B9 23               [ 8] 1117 	inc	hl
+    000004BA AF               [ 4] 1118 	xor	a, a
+    000004BB 22               [ 8] 1119 	ld	(hl+), a
+    000004BC 77               [ 8] 1120 	ld	(hl), a
+                                   1121 ;Source/Engine/ECS/ECS.c:60: transformComponent.entityID[i] = 0;
+    000004BD 11r00r00         [12] 1122 	ld	de, #_transformComponent
+    000004C0 F8 03            [12] 1123 	ldhl	sp,	#3
+    000004C2 6E               [ 8] 1124 	ld	l, (hl)
+    000004C3 26 00            [ 8] 1125 	ld	h, #0x00
+    000004C5 19               [ 8] 1126 	add	hl, de
+    000004C6 4D               [ 4] 1127 	ld	c, l
+    000004C7 44               [ 4] 1128 	ld	b, h
+    000004C8 AF               [ 4] 1129 	xor	a, a
+    000004C9 02               [ 8] 1130 	ld	(bc), a
+                                   1131 ;Source/Engine/ECS/ECS.c:61: return;
+    000004CA 18 6A            [12] 1132 	jr	00116$
+    000004CC                       1133 00113$:
+                                   1134 ;Source/Engine/ECS/ECS.c:57: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+    000004CC 0C               [ 4] 1135 	inc	c
+    000004CD F8 03            [12] 1136 	ldhl	sp,	#3
+    000004CF 79               [ 4] 1137 	ld	a,c
+    000004D0 77               [ 8] 1138 	ld	(hl),a
+    000004D1 D6 64            [ 8] 1139 	sub	a, #0x64
+    000004D3 38 C8            [12] 1140 	jr	C, 00112$
+                                   1141 ;Source/Engine/ECS/ECS.c:64: break;
+    000004D5 18 5F            [12] 1142 	jr	00116$
+                                   1143 ;Source/Engine/ECS/ECS.c:65: case SPRITE_COMPONENT:
+    000004D7                       1144 00105$:
+                                   1145 ;Source/Engine/ECS/ECS.c:66: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
+    000004D7 01 00 00         [12] 1146 	ld	bc, #0x0
+    000004DA                       1147 00114$:
+                                   1148 ;Source/Engine/ECS/ECS.c:67: if (spriteComponent.entityID[i] == entity -> ID)  {
+    000004DA 3Er00            [ 8] 1149 	ld	a, #<(_spriteComponent)
+    000004DC 80               [ 4] 1150 	add	a, b
+    000004DD 6F               [ 4] 1151 	ld	l, a
+    000004DE 3Es00            [ 8] 1152 	ld	a, #>(_spriteComponent)
+    000004E0 CE 00            [ 8] 1153 	adc	a, #0x00
+    000004E2 67               [ 4] 1154 	ld	h, a
+    000004E3 1A               [ 8] 1155 	ld	a, (de)
+    000004E4 6E               [ 8] 1156 	ld	l, (hl)
+    000004E5 95               [ 4] 1157 	sub	a, l
+    000004E6 20 47            [12] 1158 	jr	NZ, 00115$
+                                   1159 ;Source/Engine/ECS/ECS.c:68: spriteComponent.entityID[i] = 0;
+    000004E8 21r00r00         [12] 1160 	ld	hl, #_spriteComponent
+    000004EB 06 00            [ 8] 1161 	ld	b, #0x00
+    000004ED 09               [ 8] 1162 	add	hl, bc
+    000004EE 36 00            [12] 1163 	ld	(hl), #0x00
+                                   1164 ;Source/Engine/ECS/ECS.c:69: spriteComponent.tileData[i] = 0;
+    000004F0 21r32r00         [12] 1165 	ld	hl, #_spriteComponent + 50
+    000004F3 79               [ 4] 1166 	ld	a, c
+    000004F4 87               [ 4] 1167 	add	a, a
+    000004F5 5F               [ 4] 1168 	ld	e, a
+    000004F6 16 00            [ 8] 1169 	ld	d, #0x00
+    000004F8 19               [ 8] 1170 	add	hl, de
+    000004F9 AF               [ 4] 1171 	xor	a, a
+    000004FA 22               [ 8] 1172 	ld	(hl+), a
+    000004FB 77               [ 8] 1173 	ld	(hl), a
+                                   1174 ;Source/Engine/ECS/ECS.c:70: spriteComponent.tileIndex[i] = 0;
+    000004FC 21r96r00         [12] 1175 	ld	hl, #_spriteComponent + 150
+    000004FF 06 00            [ 8] 1176 	ld	b, #0x00
+    00000501 09               [ 8] 1177 	add	hl, bc
+    00000502 36 00            [12] 1178 	ld	(hl), #0x00
+                                   1179 ;Source/Engine/ECS/ECS.c:71: spriteComponent.width[i] = 0;
+    00000504 21rC8r00         [12] 1180 	ld	hl, #_spriteComponent + 200
+    00000507 06 00            [ 8] 1181 	ld	b, #0x00
+    00000509 09               [ 8] 1182 	add	hl, bc
+    0000050A 36 00            [12] 1183 	ld	(hl), #0x00
+                                   1184 ;Source/Engine/ECS/ECS.c:72: spriteComponent.height[i] = 0;
+    0000050C 21rFAr00         [12] 1185 	ld	hl, #_spriteComponent + 250
+    0000050F 06 00            [ 8] 1186 	ld	b, #0x00
+    00000511 09               [ 8] 1187 	add	hl, bc
+    00000512 36 00            [12] 1188 	ld	(hl), #0x00
+                                   1189 ;Source/Engine/ECS/ECS.c:73: spriteComponent.offset[i].x = 0;
+    00000514 21r2Cr01         [12] 1190 	ld	hl, #_spriteComponent + 300
+    00000517 16 00            [ 8] 1191 	ld	d, #0x00
+    00000519 19               [ 8] 1192 	add	hl, de
+                                   1193 ;Source/Engine/ECS/ECS.c:74: spriteComponent.offset[i].y = 0;
+    0000051A AF               [ 4] 1194 	xor	a, a
+    0000051B 22               [ 8] 1195 	ld	(hl+), a
+    0000051C 77               [ 8] 1196 	ld	(hl), a
+                                   1197 ;Source/Engine/ECS/ECS.c:75: spriteComponent.flags[i] = 0;
+    0000051D 21r90r01         [12] 1198 	ld	hl, #(_spriteComponent + 400)
+    00000520 06 00            [ 8] 1199 	ld	b, #0x00
+    00000522 09               [ 8] 1200 	add	hl, bc
+    00000523 36 00            [12] 1201 	ld	(hl), #0x00
+                                   1202 ;Source/Engine/ECS/ECS.c:76: spriteComponent.palette[i] = 0;
+    00000525 21rC2r01         [12] 1203 	ld	hl, #(_spriteComponent + 450)
+    00000528 06 00            [ 8] 1204 	ld	b, #0x00
+    0000052A 09               [ 8] 1205 	add	hl, bc
+    0000052B 36 00            [12] 1206 	ld	(hl), #0x00
+                                   1207 ;Source/Engine/ECS/ECS.c:77: return;
+    0000052D 18 07            [12] 1208 	jr	00116$
+    0000052F                       1209 00115$:
+                                   1210 ;Source/Engine/ECS/ECS.c:66: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
+    0000052F 04               [ 4] 1211 	inc	b
+    00000530 48               [ 4] 1212 	ld	c, b
+    00000531 78               [ 4] 1213 	ld	a, b
+    00000532 D6 32            [ 8] 1214 	sub	a, #0x32
+    00000534 38 A4            [12] 1215 	jr	C, 00114$
+                                   1216 ;Source/Engine/ECS/ECS.c:85: }
+    00000536                       1217 00116$:
+                                   1218 ;Source/Engine/ECS/ECS.c:86: }
+    00000536 E8 06            [16] 1219 	add	sp, #6
+    00000538 C9               [16] 1220 	ret
+                                   1221 ;Source/Engine/ECS/ECS.c:89: bool EntityHasComponent(const Entity *entity, uint16_t component) {
+                                   1222 ;	---------------------------------
+                                   1223 ; Function EntityHasComponent
+                                   1224 ; ---------------------------------
+    00000539                       1225 _EntityHasComponent::
+                                   1226 ;Source/Engine/ECS/ECS.c:90: return (entity->components & component) != 0;
+    00000539 6B               [ 4] 1227 	ld	l, e
+    0000053A 62               [ 4] 1228 	ld	h, d
+    0000053B 23               [ 8] 1229 	inc	hl
+    0000053C 2A               [ 8] 1230 	ld	a, (hl+)
+    0000053D 6E               [ 8] 1231 	ld	l, (hl)
+    0000053E A1               [ 4] 1232 	and	a, c
+    0000053F 4F               [ 4] 1233 	ld	c, a
+    00000540 7D               [ 4] 1234 	ld	a, l
+    00000541 A0               [ 4] 1235 	and	a, b
+    00000542 B1               [ 4] 1236 	or	a, c
+    00000543 D6 01            [ 8] 1237 	sub	a, #0x01
+    00000545 3E 00            [ 8] 1238 	ld	a, #0x00
+    00000547 17               [ 4] 1239 	rla
+    00000548 EE 01            [ 8] 1240 	xor	a, #0x01
+                                   1241 ;Source/Engine/ECS/ECS.c:91: }
+    0000054A C9               [16] 1242 	ret
+                                   1243 ;Source/Engine/ECS/ECS.c:93: uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
+                                   1244 ;	---------------------------------
+                                   1245 ; Function GetNextAvailableComponentPoolSlot
+                                   1246 ; ---------------------------------
+    0000054B                       1247 _GetNextAvailableComponentPoolSlot::
+    0000054B 3B               [ 8] 1248 	dec	sp
+    0000054C 4F               [ 4] 1249 	ld	c, a
+                                   1250 ;Source/Engine/ECS/ECS.c:95: for (i = 0; i < poolSize; i++) {
+    0000054D F8 00            [12] 1251 	ldhl	sp,	#0
+    0000054F 36 00            [12] 1252 	ld	(hl), #0x00
+    00000551 06 00            [ 8] 1253 	ld	b, #0x00
+    00000553                       1254 00105$:
+    00000553 78               [ 4] 1255 	ld	a, b
+    00000554 91               [ 4] 1256 	sub	a, c
+    00000555 30 13            [12] 1257 	jr	NC, 00103$
+                                   1258 ;Source/Engine/ECS/ECS.c:96: if (poolPointer[i] == 0) {
+    00000557 68               [ 4] 1259 	ld	l, b
+    00000558 26 00            [ 8] 1260 	ld	h, #0x00
+    0000055A 19               [ 8] 1261 	add	hl, de
+    0000055B 7E               [ 8] 1262 	ld	a, (hl)
+    0000055C B7               [ 4] 1263 	or	a, a
+    0000055D 20 05            [12] 1264 	jr	NZ, 00106$
+                                   1265 ;Source/Engine/ECS/ECS.c:97: return i;
+    0000055F F8 00            [12] 1266 	ldhl	sp,	#0
+    00000561 7E               [ 8] 1267 	ld	a, (hl)
+    00000562 18 08            [12] 1268 	jr	00107$
+    00000564                       1269 00106$:
+                                   1270 ;Source/Engine/ECS/ECS.c:95: for (i = 0; i < poolSize; i++) {
+    00000564 04               [ 4] 1271 	inc	b
+    00000565 F8 00            [12] 1272 	ldhl	sp,	#0
+    00000567 70               [ 8] 1273 	ld	(hl), b
+    00000568 18 E9            [12] 1274 	jr	00105$
+    0000056A                       1275 00103$:
+                                   1276 ;Source/Engine/ECS/ECS.c:100: return 255;
+    0000056A 3E FF            [ 8] 1277 	ld	a, #0xff
+    0000056C                       1278 00107$:
+                                   1279 ;Source/Engine/ECS/ECS.c:101: }
+    0000056C 33               [ 8] 1280 	inc	sp
+    0000056D C9               [16] 1281 	ret
+                                   1282 ;Source/Engine/ECS/ECS.c:103: Entity* getEntityById (uint8_t id) {
+                                   1283 ;	---------------------------------
+                                   1284 ; Function getEntityById
+                                   1285 ; ---------------------------------
+    0000056E                       1286 _getEntityById::
+    0000056E 3B               [ 8] 1287 	dec	sp
+    0000056F F8 00            [12] 1288 	ldhl	sp,	#0
+    00000571 77               [ 8] 1289 	ld	(hl), a
+                                   1290 ;Source/Engine/ECS/ECS.c:104: for (int i = 0; i < MAX_ENTITIES; i++) {
+    00000572 01 00 00         [12] 1291 	ld	bc, #0x0000
+    00000575                       1292 00105$:
+    00000575 79               [ 4] 1293 	ld	a, c
+    00000576 D6 64            [ 8] 1294 	sub	a, #0x64
+    00000578 30 19            [12] 1295 	jr	NC, 00103$
+                                   1296 ;Source/Engine/ECS/ECS.c:105: if (entity[i].ID == id) {
+    0000057A 69               [ 4] 1297 	ld	l, c
+    0000057B 60               [ 4] 1298 	ld	h, b
+    0000057C 29               [ 8] 1299 	add	hl, hl
+    0000057D 09               [ 8] 1300 	add	hl, bc
+    0000057E 7D               [ 4] 1301 	ld	a, l
+    0000057F C6r00            [ 8] 1302 	add	a, #<(_entity)
+    00000581 5F               [ 4] 1303 	ld	e, a
+    00000582 7C               [ 4] 1304 	ld	a, h
+    00000583 CEs00            [ 8] 1305 	adc	a, #>(_entity)
+    00000585 57               [ 4] 1306 	ld	d, a
+    00000586 1A               [ 8] 1307 	ld	a, (de)
+    00000587 F8 00            [12] 1308 	ldhl	sp,	#0
+    00000589 96               [ 8] 1309 	sub	a, (hl)
+    0000058A 20 04            [12] 1310 	jr	NZ, 00106$
+                                   1311 ;Source/Engine/ECS/ECS.c:106: return &entity[i];
+    0000058C 4B               [ 4] 1312 	ld	c, e
+    0000058D 42               [ 4] 1313 	ld	b, d
+    0000058E 18 06            [12] 1314 	jr	00107$
+    00000590                       1315 00106$:
+                                   1316 ;Source/Engine/ECS/ECS.c:104: for (int i = 0; i < MAX_ENTITIES; i++) {
+    00000590 03               [ 8] 1317 	inc	bc
+    00000591 18 E2            [12] 1318 	jr	00105$
+    00000593                       1319 00103$:
+                                   1320 ;Source/Engine/ECS/ECS.c:109: return 0;
+    00000593 01 00 00         [12] 1321 	ld	bc, #0x0000
+    00000596                       1322 00107$:
+                                   1323 ;Source/Engine/ECS/ECS.c:110: }
+    00000596 33               [ 8] 1324 	inc	sp
+    00000597 C9               [16] 1325 	ret
+                                   1326 	.area _CODE
+                                   1327 	.area _INITIALIZER
+                                   1328 	.area _CABS (ABS)

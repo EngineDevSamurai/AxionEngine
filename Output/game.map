@@ -27,10 +27,10 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000007  l__HEADER |    00000008  l__HEADER |    0000000C  l__GSINIT
      00000030  l__HEADER |    00000060  l__HEADER |    000000AB  l__HEADER
      0000013D  l__DATA   |    00000162  l__HOME   |    00000200  s__CODE  
-     000003EA  l__INITIA |    000003EA  l__INITIA |    00001AF4  l__CODE  
-     00001CF4  s__HOME   |    00001E56  s__BASE   |    00001E56  s__CODE_0
-     00001E56  s__INITIA |    00001E56  s__LIT    |    00002000  _rROMB0  
-     00002240  s__GSINIT |    0000224C  s__GSFINA |    00003000  _rROMB1  
+     000003EA  l__INITIA |    000003EA  l__INITIA |    00001E2A  l__CODE  
+     00002000  _rROMB0   |    0000202A  s__HOME   |    0000218C  s__BASE  
+     0000218C  s__CODE_0 |    0000218C  s__INITIA |    0000218C  s__LIT   
+     00002576  s__GSINIT |    00002582  s__GSFINA |    00003000  _rROMB1  
      00004000  _rMBC7_SR |    00004000  _rRAMB    |    00008000  __VRAM   
      00008000  __VRAM800 |    00008800  __VRAM880 |    00009000  __VRAM900
      00009800  __SCRN0   |    00009C00  __SCRN1   |    0000A000  __SRAM   
@@ -75,19 +75,20 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE                  00000200    00001AF4 =        6900. bytes (REL,CON)
+_CODE                  00000200    00001E2A =        7722. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00000421  _RenderSp |    00000842  _EntityAd |    00000A1D  _EntityRe
-     00000B03  _EntityHa |    00000B15  _GetNextA |    00000B38  _getEntit
-     00000D83  _main     |    00001261  _std_data |    000012A1  _earth_da
-     00001461  _bkg_data |    00001731  _frame_da |    00001941  _frame_ti
-     000019E1  _door2_ti |    00001A65  _earth_ti |    00001A73  _door4_ti
-     00001AF7  _bkg_tile |    00001B37  _door3_ti |    00001BBB  _door1_ti
-     00001C4B  _film     |    00001C7D  __mulsuch |    00001C80  __mulusch
-     00001C89  __mulscha |    00001C91  __mulint  |    00001CB0  __mulucha
-     00001CC2  ___memcpy |    00001CC2  _memcpy  
+     0000048A  _RenderSp |    00000A2C  _EntityAd |    00000C07  _EntityRe
+     00000CED  _EntityHa |    00000CFF  _GetNextA |    00000D22  _getEntit
+     00000FC4  _main     |    00001547  _std_data |    00001587  _earth_da
+     00001747  _face     |    00001787  _smiley   |    00001797  _bkg_data
+     00001A67  _frame_da |    00001C77  _frame_ti |    00001D17  _door2_ti
+     00001D9B  _earth_ti |    00001DA9  _door4_ti |    00001E2D  _bkg_tile
+     00001E6D  _door3_ti |    00001EF1  _door1_ti |    00001F81  _film    
+     00001FB3  __mulsuch |    00001FB6  __mulusch |    00001FBF  __mulscha
+     00001FC7  __mulint  |    00001FE6  __mulucha |    00001FF8  ___memcpy
+     00001FF8  _memcpy  
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -265,19 +266,19 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_HOME                  00001CF4    00000162 =         354. bytes (REL,CON)
+_HOME                  0000202A    00000162 =         354. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00001CF4  .memset_s |    00001CFD  .memcpy_s |    00001D1A  .display_
-     00001D1A  _display_ |    00001D32  _set_tile |    00001D37  _set_bkg_
-     00001D37  _set_win_ |    00001D3F  _set_spri |    00001D6F  __mullong
+     0000202A  .memset_s |    00002033  .memcpy_s |    00002050  .display_
+     00002050  _display_ |    00002068  _set_tile |    0000206D  _set_bkg_
+     0000206D  _set_win_ |    00002075  _set_spri |    000020A5  __mullong
 ASxxxx Linker V03.00/V05.40 + sdld,  page 23.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00001E56    000003EA =        1002. bytes (REL,CON)
+_INITIALIZER           0000218C    000003EA =        1002. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -286,17 +287,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                00002240    0000000C =          12. bytes (REL,CON)
+_GSINIT                00002576    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00002240  gsinit   
+     00002576  gsinit   
 ASxxxx Linker V03.00/V05.40 + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               0000224C    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00002582    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -347,6 +348,8 @@ Output/Source/Engine/Components/sprite_component.o
                                           [ sprite_component ]
 Output/Source/Assets/Tiles/std_data.o     [ std_data ]
 Output/Source/Assets/Tiles/earth_data.o   [ earth_data ]
+Output/Source/Assets/Tiles/face.o         [ face ]
+Output/Source/Assets/Tiles/smiley.o       [ smiley ]
 Output/Source/Assets/Tiles/bkg_data.o     [ bkg_data ]
 Output/Source/Assets/Tiles/frame_data.o   [ frame_data ]
 Output/Source/Assets/Tilemaps/frame_tiles.o

@@ -13,14 +13,15 @@ Symbol Table
     _OBP0_REG                                                       ******** GX
     _OBP1_REG                                                       ******** GX
     _RenderSprites                                                  ******** GX
+    ___memcpy                                                       ******** GX
     __mullong                                                       ******** GX
     _bkg_data                                                       ******** GX
     _display_off                                                    ******** GX
-    _earth_data                                                     ******** GX
-  0 _main                                                           00000221 GR
+    _face                                                           ******** GX
+  0 _getTransformPos                                                00000221 R
+  0 _main                                                           00000278 GR
     _set_bkg_data                                                   ******** GX
-    _set_sprite_data                                                ******** GX
-    _shadow_OAM                                                     ******** GX
+    _smiley                                                         ******** GX
     _spriteComponent                                                ******** GX
     _std_data                                                       ******** GX
     _transformComponent                                             ******** GX
@@ -31,12 +32,13 @@ Symbol Table
   0 _vec2_set                                                       00000000 R
   0 _vec2_sub                                                       0000008C R
 
+
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      2BD   flags    0
+   0 _CODE                                      size      350   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

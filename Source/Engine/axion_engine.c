@@ -35,23 +35,32 @@ SOFTWARE. */
 
 void main(void)
 {
-  uint8_t i, j;
-
   Entity player =  { .ID = 1, .components = 0 }; // Write function to get next ID
   
   EntityAddComponent(&player, TRANSFORM_COMPONENT);
   transformComponent.position[0].x = F12(65);
   transformComponent.position[0].y = F12(65);
   EntityAddComponent(&player, SPRITE_COMPONENT);
-  spriteComponent.tileData[0] = earth_data[0];
+  spriteComponent.tileData[0] = face;
   spriteComponent.width[0] = 2;
   spriteComponent.height[0] = 2;
   spriteComponent.flags[0] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
 
 
+  Entity player2 =  { .ID = 2, .components = 0 }; // Write function to get next ID
+  
+  EntityAddComponent(&player2, TRANSFORM_COMPONENT);
+  transformComponent.position[1].x = F12(45);
+  transformComponent.position[1].y = F12(95);
+  EntityAddComponent(&player2, SPRITE_COMPONENT);
+  spriteComponent.tileData[1] = smiley;
+  spriteComponent.width[1] = 1;
+  spriteComponent.height[1] = 1;
+  spriteComponent.flags[1] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
+
   disable_interrupts();
   DISPLAY_OFF;
-  LCDC_REG = LCDCF_OFF | LCDCF_WIN9C00 | LCDCF_WINON | LCDCF_BG8800 | LCDCF_BG9800 | LCDCF_OBJ16 | LCDCF_OBJON | LCDCF_BGON;
+  LCDC_REG = LCDCF_OFF | LCDCF_WIN9C00 | LCDCF_WINON | LCDCF_BG8800 | LCDCF_BG9800 | LCDCF_OBJON | LCDCF_BGON;
   /*
    * LCD        = Off
    * WindowBank = 0x9C00
@@ -72,17 +81,14 @@ void main(void)
   set_bkg_data(0xFC, 0x04, std_data);
   set_bkg_data(0x00, 0x2D, bkg_data);
 
-  /* Initialize the sprite */
-  set_sprite_data(0x00, 0x1C, earth_data);
-  set_sprite_prop(0, 0x00);
-  set_sprite_prop(1, 0x00);
-
 
   DISPLAY_ON;
   enable_interrupts();
 
   while(true) {
     // Systems Function Calls Here
+
+    transformComponent.position[0].x += 10;
 
     // Render Function Calls Here
     RenderSprites();

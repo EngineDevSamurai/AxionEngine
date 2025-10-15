@@ -12,4 +12,17 @@ typedef struct {
 // Declare the global instance
 extern TransformComponent transformComponent;
 
+// Inline function for returning transform position
+static inline vec2 getTransformPosition(uint8_t entityID) {
+    vec2 result = {0, 0};
+    for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+        if (transformComponent.entityID[i] == entityID) {
+            result = transformComponent.position[i];
+            return result;
+        }
+    }
+    return result;
+}
+
+
 #endif

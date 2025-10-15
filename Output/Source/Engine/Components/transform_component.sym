@@ -7,8 +7,10 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
+    ___memcpy                                                       ******** GX
     __mullong                                                       ******** GX
   7 __xinit__transformComponent                                     00000000 R
+  0 _getTransformPosition                                           00000221 R
   2 _transformComponent                                             00000000 GR
   0 _vec2_add                                                       00000027 R
   0 _vec2_copy                                                      0000018A R
@@ -17,13 +19,12 @@ Symbol Table
   0 _vec2_set                                                       00000000 R
   0 _vec2_sub                                                       0000008C R
 
-
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      221   flags    0
+   0 _CODE                                      size      28A   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size      1F4   flags    0
    3 _DABS                                      size        0   flags    8

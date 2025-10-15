@@ -9,6 +9,7 @@
 ;--------------------------------------------------------
 	.globl _getEntityById
 	.globl _EntityHasComponent
+	.globl _set_sprite_data
 	.globl _camera
 	.globl _RenderSprites
 ;--------------------------------------------------------
@@ -554,24 +555,120 @@ _vec2_equal:
 ;Source/Engine/Systems/../Components/../Libraries/vec2.h:65: }
 	add	sp, #8
 	ret
-;Source/Engine/Systems/render_sprite_system.c:9: void RenderSprites(void) {
+;Source/Engine/Systems/../Components/transform_component.h:16: static inline vec2 getTransformPosition(uint8_t entityID) {
+;	---------------------------------
+; Function getTransformPosition
+; ---------------------------------
+_getTransformPosition:
+	add	sp, #-5
+	ldhl	sp,	#4
+	ld	(hl), a
+;Source/Engine/Systems/../Components/transform_component.h:17: vec2 result = {0, 0};
+	xor	a, a
+	ldhl	sp,	#0
+	ld	(hl+), a
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;Source/Engine/Systems/../Components/transform_component.h:18: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	ld	c, #0x00
+	ld	e, c
+00105$:
+	ld	a, e
+	sub	a, #0x64
+	jr	NC, 00103$
+;Source/Engine/Systems/../Components/transform_component.h:19: if (transformComponent.entityID[i] == entityID) {
+	ld	hl, #_transformComponent
+	ld	d, #0x00
+	add	hl, de
+	ld	b, (hl)
+	ldhl	sp,	#4
+	ld	a, (hl)
+	sub	a, b
+	jr	NZ, 00106$
+;Source/Engine/Systems/../Components/transform_component.h:20: result = transformComponent.position[i];
+	ld	de, #_transformComponent + 100
+	ld	l, c
+	xor	a, a
+	ld	h, a
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	c, l
+	ld	b, h
+	ld	hl, #0
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	ld	hl, #0x0004
+	push	hl
+	call	___memcpy
+;Source/Engine/Systems/../Components/transform_component.h:21: return result;
+	ldhl	sp,	#7
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ldhl	sp,	#0
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl)
+	ld	(bc), a
+	jr	00107$
+00106$:
+;Source/Engine/Systems/../Components/transform_component.h:18: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	inc	e
+	ld	c, e
+	jr	00105$
+00103$:
+;Source/Engine/Systems/../Components/transform_component.h:24: return result;
+	ldhl	sp,	#7
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ldhl	sp,	#0
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl)
+	ld	(bc), a
+00107$:
+;Source/Engine/Systems/../Components/transform_component.h:25: }
+	add	sp, #5
+	pop	hl
+	pop	af
+	jp	(hl)
+;Source/Engine/Systems/render_sprite_system.c:10: void RenderSprites(void) {
 ;	---------------------------------
 ; Function RenderSprites
 ; ---------------------------------
 _RenderSprites::
-	add	sp, #-24
-;Source/Engine/Systems/render_sprite_system.c:17: uint8_t spriteOAMIndex = 0;
-	ldhl	sp,	#19
-;Source/Engine/Systems/render_sprite_system.c:21: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+	add	sp, #-32
+;Source/Engine/Systems/render_sprite_system.c:18: uint8_t spriteOAMIndex = 0;
+	ldhl	sp,	#27
+;Source/Engine/Systems/render_sprite_system.c:23: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
 	xor	a, a
 	ld	(hl+), a
 	ld	(hl), a
-00120$:
-	ldhl	sp,	#20
+00127$:
+	ldhl	sp,	#28
 	ld	a, (hl)
 	sub	a, #0x32
-	jp	NC, 00122$
-;Source/Engine/Systems/render_sprite_system.c:22: id = spriteComponent.entityID[i];
+	jp	NC, 00129$
+;Source/Engine/Systems/render_sprite_system.c:24: id = spriteComponent.entityID[i];
 	ld	de, #_spriteComponent
 	ld	l, (hl)
 	ld	h, #0x00
@@ -579,70 +676,137 @@ _RenderSprites::
 	ld	c, l
 	ld	b, h
 	ld	a, (bc)
-	ld	c, a
-;Source/Engine/Systems/render_sprite_system.c:23: e = getEntityById(id);
-	push	bc
-	ld	a, c
+	ldhl	sp,	#31
+	ld	(hl), a
+;Source/Engine/Systems/render_sprite_system.c:25: e = getEntityById(id);
+	ld	a, (hl)
 	call	_getEntityById
-	pop	bc
-;Source/Engine/Systems/render_sprite_system.c:24: if (id != 0 &&
-	ld	a, c
+;Source/Engine/Systems/render_sprite_system.c:26: if (id != 0 &&
+	ldhl	sp,	#31
+	ld	a, (hl)
 	or	a, a
-	jp	Z, 00121$
-;Source/Engine/Systems/render_sprite_system.c:25: (spriteComponent.flags[i] & SPRITE_VISIBLE) &&
+	jp	Z, 00128$
+;Source/Engine/Systems/render_sprite_system.c:27: (spriteComponent.flags[i] & SPRITE_VISIBLE) &&
 	ld	de, #(_spriteComponent + 400)
-	ldhl	sp,	#20
+	ldhl	sp,	#28
 	ld	l, (hl)
 	ld	h, #0x00
 	add	hl, de
 	push	hl
 	ld	a, l
-	ldhl	sp,	#8
+	ldhl	sp,	#18
 	ld	(hl), a
 	pop	hl
 	ld	a, h
-	ldhl	sp,	#7
+	ldhl	sp,	#17
 	ld	(hl-), a
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
 	bit	6, a
-	jp	Z, 00121$
-;Source/Engine/Systems/render_sprite_system.c:26: EntityHasComponent(id, TRANSFORM_COMPONENT)) {
-	ld	e, c
+	jp	Z, 00128$
+;Source/Engine/Systems/render_sprite_system.c:28: EntityHasComponent(id, TRANSFORM_COMPONENT)) {
+	ldhl	sp,	#31
+	ld	e, (hl)
 	xor	a, a
 	ld	bc, #0x0001
 	ld	d, a
 	call	_EntityHasComponent
 	ld	c, a
 	bit	0, c
-	jp	Z, 00121$
-;Source/Engine/Systems/render_sprite_system.c:29: position = transformComponent.position[i];
-	ldhl	sp,	#20
-	ld	c, (hl)
+	jp	Z, 00128$
+;Source/Engine/Systems/render_sprite_system.c:31: position = getTransformPosition(id);
+;Source/Engine/Systems/../Components/transform_component.h:17: vec2 result = {0, 0};
 	xor	a, a
+	ldhl	sp,	#12
+	ld	(hl+), a
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;Source/Engine/Systems/../Components/transform_component.h:18: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	ld	c, #0x00
+	ld	e, c
+00118$:
+	ld	a, e
+	sub	a, #0x64
+	jr	NC, 00112$
+;Source/Engine/Systems/../Components/transform_component.h:19: if (transformComponent.entityID[i] == entityID) {
+	ld	hl, #_transformComponent
+	ld	d, #0x00
+	add	hl, de
+	ld	b, (hl)
+	ldhl	sp,	#31
+	ld	a, (hl)
+	sub	a, b
+	jr	NZ, 00119$
+;Source/Engine/Systems/../Components/transform_component.h:20: result = transformComponent.position[i];
 	ld	l, c
-	ld	h, a
+	ld	h, #0x00
 	add	hl, hl
 	add	hl, hl
 	ld	de, #(_transformComponent + 100)
 	add	hl, de
 	ld	c, l
+	ld	b, h
+	ld	hl, #12
+	add	hl, sp
+	push	hl
 	ld	de, #0x0004
 	push	de
+	ld	e, l
+	ld	d, h
+	call	___memcpy
+	pop	hl
+;Source/Engine/Systems/render_sprite_system.c:21: int tileDataIndex = 0;
+	ld	de, #0x0004
+	push	de
+	ld	c, l
 	ld	b, h
-	ld	hl, #2
+	ld	hl, #10
 	add	hl, sp
 	ld	e, l
 	ld	d, h
 	call	___memcpy
-;Source/Engine/Systems/render_sprite_system.c:32: offset = spriteComponent.offset[i];
+	jr	00113$
+00119$:
+;Source/Engine/Systems/../Components/transform_component.h:18: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	inc	e
+	ld	c, e
+	jr	00118$
+00112$:
+;Source/Engine/Systems/../Components/transform_component.h:24: return result;
+	ld	hl, #12
+	add	hl, sp
+	ld	de, #0x0004
+	push	de
+	ld	c, l
+	ld	b, h
+	ld	hl, #10
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	call	___memcpy
+;Source/Engine/Systems/render_sprite_system.c:31: position = getTransformPosition(id);
+00113$:
+	ld	de, #0x0004
+	push	de
+	ld	hl, #10
+	add	hl, sp
+	ld	c, l
+	ld	b, h
+	ld	hl, #4
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	call	___memcpy
+;Source/Engine/Systems/render_sprite_system.c:35: offset = spriteComponent.offset[i];
 	ld	bc, #_spriteComponent + 300
-	ldhl	sp,	#20
-	ld	a, (hl)
+	ldhl	sp,	#28
+	ld	a, (hl+)
+	inc	hl
 	add	a, a
-	ldhl	sp,	#8
 	ld	(hl), a
 	ld	l, (hl)
 	ld	h, #0x00
@@ -651,38 +815,43 @@ _RenderSprites::
 	ld	b, h
 	ld	de, #0x0002
 	push	de
-	ld	hl, #6
+	ld	hl, #8
 	add	hl, sp
 	ld	e, l
 	ld	d, h
 	call	___memcpy
-;Source/Engine/Systems/render_sprite_system.c:35: isWorld = spriteComponent.flags[i] & SPRITE_FLAG_WORLD;
-	ldhl	sp,#6
+;Source/Engine/Systems/render_sprite_system.c:38: isWorld = spriteComponent.flags[i] & SPRITE_FLAG_WORLD;
+	ldhl	sp,#16
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
 	and	a, #0x01
-	ld	b, a
-	ld	c, b
-;Source/Engine/Systems/render_sprite_system.c:36: int16_t screenX = isWorld ? (TO_INT(position.x) - camera.x + offset.x) : offset.x;
-	ldhl	sp,	#4
+	ldhl	sp,	#29
+	ld	(hl), a
+	ld	a, (hl+)
+	inc	hl
+	ld	(hl), a
+;Source/Engine/Systems/render_sprite_system.c:39: int16_t screenX = isWorld ? (TO_INT(position.x) - camera.x + offset.x) : position.x + offset.x;
+	ldhl	sp,	#2
 	ld	a, (hl)
-	ldhl	sp,	#17
+	ldhl	sp,	#25
+	ld	(hl), a
+	ldhl	sp,	#3
+	ld	a, (hl)
+	ldhl	sp,	#26
+	ld	(hl), a
+	ldhl	sp,	#6
+	ld	a, (hl)
+	ldhl	sp,	#21
 	ld	(hl+), a
 	rlca
 	sbc	a, a
 	ld	(hl), a
-	bit	0, b
-	jr	Z, 00124$
-	ldhl	sp,	#0
-	ld	a, (hl)
-	ldhl	sp,	#22
-	ld	(hl), a
-	ldhl	sp,	#1
-	ld	a, (hl)
-	ldhl	sp,	#23
-	ld	(hl), a
+	ldhl	sp,	#29
+	bit	0, (hl)
+	jr	Z, 00131$
+	ldhl	sp,	#26
 	sra	(hl)
 	dec	hl
 	rr	(hl)
@@ -699,256 +868,415 @@ _RenderSprites::
 	dec	hl
 	rr	(hl)
 	ld	a, (#_camera + 0)
-	ld	e, a
+	ldhl	sp,#29
+	ld	(hl), a
+	ld	a, (hl)
+	ldhl	sp,	#19
+	ld	(hl+), a
 	rlca
 	sbc	a, a
-	ld	d, a
+	ld	(hl), a
+	ldhl	sp,#25
 	ld	a, (hl+)
-	ld	b, (hl)
-	sub	a, e
 	ld	e, a
-	ld	a, b
-	sbc	a, d
-	ld	d, a
-	ldhl	sp,	#17
+	ld	d, (hl)
+	ldhl	sp,	#19
+	ld	a,	(hl+)
+	ld	h, (hl)
+	ld	l, a
+	ld	a, e
+	sub	a, l
+	ld	e, a
+	ld	a, d
+	sbc	a, h
+	ldhl	sp,	#24
+	ld	(hl-), a
+	ld	a, e
+	ld	(hl+), a
+	dec	hl
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ldhl	sp,	#21
 	ld	a,	(hl+)
 	ld	h, (hl)
 	ld	l, a
 	add	hl, de
-	ld	e, l
-	jr	00125$
-00124$:
-	ldhl	sp,	#17
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-00125$:
-	ldhl	sp,	#9
-	ld	(hl), e
-;Source/Engine/Systems/render_sprite_system.c:37: int16_t screenY = isWorld ? (TO_INT(position.y) - camera.y + offset.y) : offset.y;
-	bit	0, c
-	jr	Z, 00126$
-	ldhl	sp,	#2
+	push	hl
+	ld	a, l
+	ldhl	sp,	#27
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#26
+	ld	(hl), a
+	jr	00132$
+00131$:
+	ldhl	sp,	#25
 	ld	a, (hl+)
 	ld	c, a
-	ld	a, (hl+)
-	inc	hl
-	ld	b, a
-	sra	b
-	rr	c
-	sra	b
-	rr	c
-	sra	b
-	rr	c
-	sra	b
-	rr	c
-	ld	a, (#(_camera + 1) + 0)
-	ld	e, a
-	rlca
-	sbc	a, a
-	ld	d, a
-	ld	a, c
-	sub	a, e
-	ld	c, a
-	ld	a, b
-	sbc	a, d
-	ld	b, a
-	ld	a, (hl)
+	ld	b, (hl)
+	ldhl	sp,	#21
+	ld	a,	(hl+)
+	ld	h, (hl)
 	ld	l, a
+	add	hl, bc
+	push	hl
+	ld	a, l
+	ldhl	sp,	#27
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#26
+	ld	(hl), a
+00132$:
+	ldhl	sp,	#25
+	ld	a, (hl)
+	ldhl	sp,	#18
+	ld	(hl), a
+;Source/Engine/Systems/render_sprite_system.c:40: int16_t screenY = isWorld ? (TO_INT(position.y) - camera.y + offset.y) : position.y + offset.y;
+	ldhl	sp,	#31
+	bit	0, (hl)
+	jr	Z, 00133$
+	ldhl	sp,	#4
+	ld	a, (hl)
+	ldhl	sp,	#25
+	ld	(hl), a
+	ldhl	sp,	#5
+	ld	a, (hl)
+	ldhl	sp,	#26
+	ld	(hl), a
+	sra	(hl)
+	dec	hl
+	rr	(hl)
+	inc	hl
+	sra	(hl)
+	dec	hl
+	rr	(hl)
+	inc	hl
+	sra	(hl)
+	dec	hl
+	rr	(hl)
+	inc	hl
+	sra	(hl)
+	dec	hl
+	rr	(hl)
+	ld	a, (#(_camera + 1) + 0)
+	ldhl	sp,#31
+	ld	(hl), a
+	ld	a, (hl)
+	ldhl	sp,	#23
+	ld	(hl+), a
 	rlca
 	sbc	a, a
-	ld	h, a
-	add	hl, bc
-	ld	c, l
-	jr	00127$
-00126$:
-	ldhl	sp,	#5
-	ld	c, (hl)
-00127$:
-	ldhl	sp,	#10
-	ld	(hl), c
-;Source/Engine/Systems/render_sprite_system.c:41: for (uint8_t ty = 0; ty < spriteComponent.height[i]; ty++) {
-	ld	de, #(_spriteComponent + 250)
-	ldhl	sp,	#20
-	ld	l, (hl)
-	ld	h, #0x00
-	add	hl, de
-	push	hl
-	ld	a, l
-	ldhl	sp,	#13
-	ld	(hl), a
-	pop	hl
-	ld	a, h
-	ldhl	sp,	#12
-	ld	(hl), a
-	ldhl	sp,	#21
-	ld	(hl), #0x00
-00117$:
-	ldhl	sp,#11
-	ld	a, (hl+)
-	ld	e, a
-	ld	d, (hl)
-	ld	a, (de)
-	ld	c, a
-	ldhl	sp,	#21
-	ld	a, (hl)
-	sub	a, c
-	jp	NC, 00121$
-;Source/Engine/Systems/render_sprite_system.c:42: for (uint8_t tx = 0; tx < spriteComponent.width[i]; tx++) {
-	ld	de, #(_spriteComponent + 50)
-	ldhl	sp,	#8
-	ld	l, (hl)
-	ld	h, #0x00
-	add	hl, de
-	push	hl
-	ld	a, l
-	ldhl	sp,	#15
-	ld	(hl), a
-	pop	hl
-	ld	a, h
-	ldhl	sp,	#14
-	ld	(hl), a
-	ld	de, #(_spriteComponent + 200)
-	ldhl	sp,	#20
-	ld	l, (hl)
-	ld	h, #0x00
-	add	hl, de
-	push	hl
-	ld	a, l
-	ldhl	sp,	#17
-	ld	(hl), a
-	pop	hl
-	ld	a, h
-	ldhl	sp,	#16
-	ld	(hl), a
-	ldhl	sp,	#19
-	ld	a, (hl)
-	ldhl	sp,	#22
 	ld	(hl+), a
-	ld	(hl), #0x00
-00114$:
-	ldhl	sp,#15
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
-	ld	a, (de)
-	ld	c, a
 	ldhl	sp,	#23
-	ld	a, (hl)
-	sub	a, c
-	jr	NC, 00118$
-;Source/Engine/Systems/render_sprite_system.c:43: if (spriteOAMIndex >= 40) return; // Max hardware sprites
-	dec	hl
-	ld	a, (hl)
-	sub	a, #0x28
-	jp	NC, 00122$
-;Source/Engine/Systems/render_sprite_system.c:45: uint8_t tileIndex = ty * spriteComponent.width[i] + tx;
-	ld	e, c
-	ldhl	sp,	#21
-	ld	a, (hl)
-	call	__muluchar
-	ld	a, c
-	ldhl	sp,	#23
-	add	a, (hl)
-	ldhl	sp,	#17
-	ld	(hl), a
-;Source/Engine/Systems/render_sprite_system.c:46: move_sprite(spriteOAMIndex, screenX + tx * 8, screenY + ty * 8);
-	ldhl	sp,	#21
-	ld	a, (hl)
-	add	a, a
-	add	a, a
-	add	a, a
-	ldhl	sp,	#10
-	add	a, (hl)
-	ld	e, a
-	ldhl	sp,	#23
-	ld	a, (hl)
-	add	a, a
-	add	a, a
-	add	a, a
-	ldhl	sp,	#9
-	add	a, (hl)
-	ld	d, a
-;/opt/gbdk/include/gb/gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
-	ldhl	sp,	#22
-	ld	c, (hl)
-	xor	a, a
-	ld	b, a
-	sla	c
-	rl	b
-	sla	c
-	rl	b
-	ld	hl, #_shadow_OAM
-	add	hl, bc
-;/opt/gbdk/include/gb/gb.h:1974: itm->y=y, itm->x=x;
+	ld	a,	(hl+)
+	ld	h, (hl)
+	ld	l, a
 	ld	a, e
+	sub	a, l
+	ld	e, a
+	ld	a, d
+	sbc	a, h
+	ldhl	sp,	#22
+	ld	(hl-), a
+	ld	(hl), e
+	ldhl	sp,	#7
+	ld	a, (hl)
+	ldhl	sp,	#31
+	ld	(hl), a
+	ld	a, (hl)
+	ldhl	sp,	#23
 	ld	(hl+), a
-	ld	(hl), d
-;Source/Engine/Systems/render_sprite_system.c:47: set_sprite_tile(spriteOAMIndex, spriteComponent.tileData[i][tileIndex]);
-	ldhl	sp,#13
+	rlca
+	sbc	a, a
+	ld	(hl-), a
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
-	ld	a, (de)
-	ldhl	sp,	#18
+	ldhl	sp,	#21
+	ld	a,	(hl+)
+	ld	h, (hl)
+	ld	l, a
+	add	hl, de
+	push	hl
+	ld	a, l
+	ldhl	sp,	#27
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#26
+	ld	(hl), a
+	jr	00134$
+00133$:
+	ldhl	sp,	#4
+	ld	a, (hl)
+	ldhl	sp,	#25
+	ld	(hl), a
+	ldhl	sp,	#5
+	ld	a, (hl)
+	ldhl	sp,	#26
+	ld	(hl), a
+	ldhl	sp,	#7
+	ld	a, (hl)
+	ldhl	sp,	#21
 	ld	(hl+), a
-	inc	de
-	ld	a, (de)
+	rlca
+	sbc	a, a
+	ld	(hl), a
+	ldhl	sp,	#25
+	ld	a, (hl-)
+	dec	hl
+	ld	(hl), a
+	ldhl	sp,	#26
+	ld	a, (hl-)
+	dec	hl
+	ld	(hl-), a
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ldhl	sp,	#21
+	ld	a,	(hl+)
+	ld	h, (hl)
+	ld	l, a
+	add	hl, de
+	push	hl
+	ld	a, l
+	ldhl	sp,	#27
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#26
+	ld	(hl), a
+00134$:
+	ldhl	sp,	#25
+	ld	a, (hl)
+	ldhl	sp,	#19
+	ld	(hl), a
+;Source/Engine/Systems/render_sprite_system.c:42: uint8_t numTiles = spriteComponent.width[i] * spriteComponent.height[i];
+	ld	de, #(_spriteComponent + 200)
+	ldhl	sp,	#28
+	ld	l, (hl)
+	ld	h, #0x00
+	add	hl, de
+	push	hl
+	ld	a, l
+	ldhl	sp,	#22
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#21
+	ld	(hl), a
+	ld	de, #(_spriteComponent + 250)
+	ldhl	sp,	#28
+	ld	l, (hl)
+	ld	h, #0x00
+	add	hl, de
+	push	hl
+	ld	a, l
+	ldhl	sp,	#24
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#23
 	ld	(hl-), a
 	ld	a, (hl+)
 	ld	e, a
 	ld	a, (hl-)
 	dec	hl
+	dec	hl
 	ld	d, a
+	ld	a, (de)
+	ld	c, a
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	e, c
+;Source/Engine/Systems/render_sprite_system.c:43: set_sprite_data(spriteOAMIndex, numTiles, spriteComponent.tileData[i]);
+	call	__muluchar
+	ldhl	sp,	#31
+	ld	(hl), c
+	ld	de, #(_spriteComponent + 50)
+	ldhl	sp,	#30
 	ld	l, (hl)
 	ld	h, #0x00
 	add	hl, de
-	ld	e, l
-	ld	d, h
-	ld	a, (de)
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	push	bc
+	ldhl	sp,	#33
+	ld	a, (hl)
+	push	af
+	inc	sp
+	ldhl	sp,	#30
+	ld	a, (hl)
+	push	af
+	inc	sp
+	call	_set_sprite_data
+	add	sp, #4
+;Source/Engine/Systems/render_sprite_system.c:47: for (uint8_t tx = 0; tx < spriteComponent.width[i]; tx++) {
+	ldhl	sp,	#29
+	ld	(hl), #0x00
+00124$:
+	ldhl	sp,#20
+	ld	a, (hl+)
 	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	c, a
+	ldhl	sp,	#29
+	ld	a, (hl)
+	sub	a, c
+	jp	NC, 00128$
+;Source/Engine/Systems/render_sprite_system.c:48: for (uint8_t ty = 0; ty < spriteComponent.height[i]; ty++) {
+	dec	hl
+	dec	hl
+	ld	a, (hl)
+	ldhl	sp,	#30
+	ld	(hl+), a
+	ld	(hl), #0x00
+00121$:
+	ldhl	sp,#22
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	a, (de)
+	ld	c, a
+	ldhl	sp,	#31
+	ld	a, (hl)
+	sub	a, c
+	jp	NC, 00125$
+;Source/Engine/Systems/render_sprite_system.c:49: if (spriteOAMIndex >= 40) return; // Max hardware sprites
+	dec	hl
+	ld	a, (hl)
+	sub	a, #0x28
+	jp	NC, 00129$
 ;/opt/gbdk/include/gb/gb.h:1887: shadow_OAM[nb].tile=tile;
-	ld	hl,#_shadow_OAM + 1
-	add	hl,bc
+	ldhl	sp,	#30
+	ld	c, (hl)
+	xor	a, a
+	sla	c
+	adc	a, a
+	sla	c
+	adc	a, a
+	ldhl	sp,	#0
+	ld	(hl), c
 	inc	hl
-	ld	(hl), e
-;Source/Engine/Systems/render_sprite_system.c:48: set_sprite_prop(spriteOAMIndex, spriteComponent.flags[i] & (SPRITE_FLIP_X | SPRITE_FLIP_Y));
-	ldhl	sp,#6
+	ld	(hl), a
+	ld	de, #_shadow_OAM
+	pop	hl
+	push	hl
+	add	hl, de
+	inc	hl
+	inc	hl
+	ld	c, l
+	ld	b, h
+	ldhl	sp,	#30
+	ld	a, (hl)
+	ld	(bc), a
+;Source/Engine/Systems/render_sprite_system.c:53: set_sprite_prop(spriteOAMIndex, spriteComponent.flags[i] & (SPRITE_FLIP_X | SPRITE_FLIP_Y));
+	ldhl	sp,#16
 	ld	a, (hl+)
 	ld	e, a
 	ld	d, (hl)
 	ld	a, (de)
 	and	a, #0x06
-	ld	e, a
+	ld	c, a
 ;/opt/gbdk/include/gb/gb.h:1946: shadow_OAM[nb].prop=prop;
-	ld	hl,#_shadow_OAM + 1
-	add	hl,bc
+	ld	de, #_shadow_OAM
+	pop	hl
+	push	hl
+	add	hl, de
 	inc	hl
 	inc	hl
-	ld	(hl), e
-;Source/Engine/Systems/render_sprite_system.c:50: spriteOAMIndex++;
-	ldhl	sp,	#22
+	inc	hl
+	ld	e, l
+	ld	d, h
+	ld	a, c
+	ld	(de), a
+;Source/Engine/Systems/render_sprite_system.c:55: move_sprite(spriteOAMIndex, screenX + tx * 8, screenY + ty * 8);
+	ldhl	sp,	#31
+	ld	a, (hl)
+	add	a, a
+	add	a, a
+	add	a, a
+	ldhl	sp,	#19
+	add	a, (hl)
+	ldhl	sp,	#24
+	ld	(hl), a
+	ldhl	sp,	#29
+	ld	a, (hl)
+	add	a, a
+	add	a, a
+	add	a, a
+	ldhl	sp,	#18
+	add	a, (hl)
+	ldhl	sp,	#25
+	ld	(hl), a
+;/opt/gbdk/include/gb/gb.h:1973: OAM_item_t * itm = &shadow_OAM[nb];
+	ld	de, #_shadow_OAM
+	pop	hl
+	push	hl
+	add	hl, de
+	push	hl
+	ld	a, l
+	ldhl	sp,	#28
+	ld	(hl), a
+	pop	hl
+	ld	a, h
+	ldhl	sp,	#27
+;/opt/gbdk/include/gb/gb.h:1974: itm->y=y, itm->x=x;
+	ld	(hl-), a
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ldhl	sp,	#24
+	ld	a, (hl)
+	ld	(de), a
+	ldhl	sp,#26
+	ld	a, (hl+)
+	ld	e, a
+	ld	d, (hl)
+	ld	l, e
+	ld	h, d
+	inc	hl
+	inc	sp
+	inc	sp
+	ld	e, l
+	ld	d, h
+	push	de
+	ldhl	sp,	#25
+	ld	a, (hl)
+	ld	(de), a
+;Source/Engine/Systems/render_sprite_system.c:56: spriteOAMIndex++;
+	ldhl	sp,	#30
 	inc	(hl)
 	ld	a, (hl)
-	ldhl	sp,	#19
+	ldhl	sp,	#27
 	ld	(hl), a
-;Source/Engine/Systems/render_sprite_system.c:42: for (uint8_t tx = 0; tx < spriteComponent.width[i]; tx++) {
-	ldhl	sp,	#23
+;Source/Engine/Systems/render_sprite_system.c:48: for (uint8_t ty = 0; ty < spriteComponent.height[i]; ty++) {
+	ldhl	sp,	#31
 	inc	(hl)
-	jp	00114$
-00118$:
-;Source/Engine/Systems/render_sprite_system.c:41: for (uint8_t ty = 0; ty < spriteComponent.height[i]; ty++) {
-	ldhl	sp,	#21
+	jp	00121$
+00125$:
+;Source/Engine/Systems/render_sprite_system.c:47: for (uint8_t tx = 0; tx < spriteComponent.width[i]; tx++) {
+	ldhl	sp,	#29
 	inc	(hl)
-	jp	00117$
-00121$:
-;Source/Engine/Systems/render_sprite_system.c:21: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-	ldhl	sp,	#20
+	jp	00124$
+00128$:
+;Source/Engine/Systems/render_sprite_system.c:23: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+	ldhl	sp,	#28
 	inc	(hl)
-	jp	00120$
-00122$:
-;Source/Engine/Systems/render_sprite_system.c:55: }
-	add	sp, #24
+	jp	00127$
+00129$:
+;Source/Engine/Systems/render_sprite_system.c:61: }
+	add	sp, #32
 	ret
 	.area _CODE
 	.area _INITIALIZER

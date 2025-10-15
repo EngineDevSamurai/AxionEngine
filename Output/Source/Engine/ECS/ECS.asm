@@ -556,6 +556,84 @@ _vec2_equal:
 ;Source/Engine/ECS/../Libraries/vec2.h:65: }
 	add	sp, #8
 	ret
+;Source/Engine/ECS/../Components/transform_component.h:41: static inline vec2 getTransformPos(uint8_t entityID) {
+;	---------------------------------
+; Function getTransformPos
+; ---------------------------------
+_getTransformPos:
+	add	sp, #-5
+	ldhl	sp,	#4
+	ld	(hl), a
+;Source/Engine/ECS/../Components/transform_component.h:42: vec2 tmp = {0, 0};
+	xor	a, a
+	ldhl	sp,	#0
+	ld	(hl+), a
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;Source/Engine/ECS/../Components/transform_component.h:43: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	ld	c, #0x00
+	ld	e, c
+00105$:
+	ld	a, e
+	sub	a, #0x64
+	jr	NC, 00103$
+;Source/Engine/ECS/../Components/transform_component.h:44: if (transformComponent.entityID[i] == entityID) {
+	ld	hl, #_transformComponent
+	ld	d, #0x00
+	add	hl, de
+	ld	b, (hl)
+	ldhl	sp,	#4
+	ld	a, (hl)
+	sub	a, b
+	jr	NZ, 00106$
+;Source/Engine/ECS/../Components/transform_component.h:45: tmp = transformComponent.position[i];
+	ld	de, #_transformComponent + 100
+	ld	l, c
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	c, l
+	ld	b, h
+	ld	hl, #0
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	ld	hl, #0x0004
+	push	hl
+	call	___memcpy
+;Source/Engine/ECS/../Components/transform_component.h:46: break;
+	jr	00103$
+00106$:
+;Source/Engine/ECS/../Components/transform_component.h:43: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	inc	e
+	ld	c, e
+	jr	00105$
+00103$:
+;Source/Engine/ECS/../Components/transform_component.h:49: return tmp;
+	ldhl	sp,	#7
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ldhl	sp,	#0
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl)
+	ld	(bc), a
+;Source/Engine/ECS/../Components/transform_component.h:50: }
+	add	sp, #5
+	pop	hl
+	pop	af
+	jp	(hl)
 ;Source/Engine/ECS/ECS.c:9: void EntityAddComponent (Entity *entity, uint16_t component) {
 ;	---------------------------------
 ; Function EntityAddComponent

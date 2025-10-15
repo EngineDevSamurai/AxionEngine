@@ -8,13 +8,15 @@ Symbol Table
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
     _EntityHasComponent                                             ******** GX
-  0 _RenderSprites                                                  00000221 GR
+  0 _RenderSprites                                                  0000028A GR
     ___memcpy                                                       ******** GX
     __mullong                                                       ******** GX
     __muluchar                                                      ******** GX
   7 __xinit__camera                                                 00000000 R
   2 _camera                                                         00000000 GR
     _getEntityById                                                  ******** GX
+  0 _getTransformPosition                                           00000221 R
+    _set_sprite_data                                                ******** GX
     _shadow_OAM                                                     ******** GX
     _spriteComponent                                                ******** GX
     _transformComponent                                             ******** GX
@@ -25,12 +27,13 @@ Symbol Table
   0 _vec2_set                                                       00000000 R
   0 _vec2_sub                                                       0000008C R
 
+
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      421   flags    0
+   0 _CODE                                      size      5B4   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        2   flags    0
    3 _DABS                                      size        0   flags    8

@@ -7,13 +7,15 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
-  0 _EntityAddComponent                                             00000221 GR
-  0 _EntityHasComponent                                             000004E2 GR
-  0 _EntityRemoveComponent                                          000003FC GR
-  0 _GetNextAvailableComponentPoolSlot                              000004F4 GR
+  0 _EntityAddComponent                                             00000278 GR
+  0 _EntityHasComponent                                             00000539 GR
+  0 _EntityRemoveComponent                                          00000453 GR
+  0 _GetNextAvailableComponentPoolSlot                              0000054B GR
+    ___memcpy                                                       ******** GX
     __mullong                                                       ******** GX
   1 _entity                                                         00000000 GR
-  0 _getEntityById                                                  00000517 GR
+  0 _getEntityById                                                  0000056E GR
+  0 _getTransformPos                                                00000221 R
     _spriteComponent                                                ******** GX
     _transformComponent                                             ******** GX
   0 _vec2_add                                                       00000027 R
@@ -23,13 +25,12 @@ Symbol Table
   0 _vec2_set                                                       00000000 R
   0 _vec2_sub                                                       0000008C R
 
-
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      541   flags    0
+   0 _CODE                                      size      598   flags    0
    1 _DATA                                      size      12C   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

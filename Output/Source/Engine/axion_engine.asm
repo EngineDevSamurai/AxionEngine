@@ -10,7 +10,6 @@
 	.globl _main
 	.globl _RenderSprites
 	.globl _EntityAddComponent
-	.globl _set_sprite_data
 	.globl _set_bkg_data
 	.globl _display_off
 ;--------------------------------------------------------
@@ -554,17 +553,140 @@ _vec2_equal:
 ;Source/Engine/Components/../Libraries/vec2.h:65: }
 	add	sp, #8
 	ret
+;Source/Engine/Components/transform_component.h:41: static inline vec2 getTransformPos(uint8_t entityID) {
+;	---------------------------------
+; Function getTransformPos
+; ---------------------------------
+_getTransformPos:
+	add	sp, #-5
+	ldhl	sp,	#4
+	ld	(hl), a
+;Source/Engine/Components/transform_component.h:42: vec2 tmp = {0, 0};
+	xor	a, a
+	ldhl	sp,	#0
+	ld	(hl+), a
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;Source/Engine/Components/transform_component.h:43: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	ld	c, #0x00
+	ld	e, c
+00105$:
+	ld	a, e
+	sub	a, #0x64
+	jr	NC, 00103$
+;Source/Engine/Components/transform_component.h:44: if (transformComponent.entityID[i] == entityID) {
+	ld	hl, #_transformComponent
+	ld	d, #0x00
+	add	hl, de
+	ld	b, (hl)
+	ldhl	sp,	#4
+	ld	a, (hl)
+	sub	a, b
+	jr	NZ, 00106$
+;Source/Engine/Components/transform_component.h:45: tmp = transformComponent.position[i];
+	ld	de, #_transformComponent + 100
+	ld	l, c
+	ld	h, #0x00
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	c, l
+	ld	b, h
+	ld	hl, #0
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	ld	hl, #0x0004
+	push	hl
+	call	___memcpy
+;Source/Engine/Components/transform_component.h:46: break;
+	jr	00103$
+00106$:
+;Source/Engine/Components/transform_component.h:43: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	inc	e
+	ld	c, e
+	jr	00105$
+00103$:
+;Source/Engine/Components/transform_component.h:49: return tmp;
+	ldhl	sp,	#7
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ldhl	sp,	#0
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl)
+	ld	(bc), a
+;Source/Engine/Components/transform_component.h:50: }
+	add	sp, #5
+	pop	hl
+	pop	af
+	jp	(hl)
 ;Source/Engine/axion_engine.c:36: void main(void)
 ;	---------------------------------
 ; Function main
 ; ---------------------------------
 _main::
-	add	sp, #-3
-;Source/Engine/axion_engine.c:40: Entity player =  { .ID = 1, .components = 0 }; // Write function to get next ID
+	add	sp, #-6
+;Source/Engine/axion_engine.c:38: Entity player =  { .ID = 1, .components = 0 }; // Write function to get next ID
 	ldhl	sp,	#0
+	ld	a, #0x01
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;Source/Engine/axion_engine.c:40: EntityAddComponent(&player, TRANSFORM_COMPONENT);
+	ld	bc, #0x0001
+	ld	hl, #0
+	add	hl, sp
 	ld	e, l
 	ld	d, h
-	ld	(hl), #0x01
+	call	_EntityAddComponent
+;Source/Engine/axion_engine.c:41: transformComponent.position[0].x = F12(65);
+	ld	hl, #(_transformComponent + 100)
+	ld	a, #0x10
+	ld	(hl+), a
+;Source/Engine/axion_engine.c:42: transformComponent.position[0].y = F12(65);
+	ld	a, #0x04
+	ld	(hl+), a
+	ld	a, #0x10
+	ld	(hl+), a
+	ld	(hl), #0x04
+;Source/Engine/axion_engine.c:43: EntityAddComponent(&player, SPRITE_COMPONENT);
+	ld	bc, #0x0002
+	ld	hl, #0
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	call	_EntityAddComponent
+;Source/Engine/axion_engine.c:44: spriteComponent.tileData[0] = face;
+	ld	hl, #(_spriteComponent + 50)
+	ld	(hl), #<(_face)
+	inc	hl
+	ld	(hl), #>(_face)
+;Source/Engine/axion_engine.c:45: spriteComponent.width[0] = 2;
+	ld	hl, #_spriteComponent + 200
+	ld	(hl), #0x02
+;Source/Engine/axion_engine.c:46: spriteComponent.height[0] = 2;
+	ld	hl, #_spriteComponent + 250
+	ld	(hl), #0x02
+;Source/Engine/axion_engine.c:47: spriteComponent.flags[0] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
+	ld	hl, #_spriteComponent + 400
+	ld	(hl), #0x41
+;Source/Engine/axion_engine.c:50: Entity player2 =  { .ID = 2, .components = 0 }; // Write function to get next ID
+	ldhl	sp,	#3
+	ld	e, l
+	ld	d, h
+	ld	(hl), #0x02
 	ld	c, e
 	ld	b, d
 	inc	bc
@@ -572,94 +694,92 @@ _main::
 	ld	(bc), a
 	inc	bc
 	ld	(bc), a
-;Source/Engine/axion_engine.c:42: EntityAddComponent(&player, TRANSFORM_COMPONENT);
+;Source/Engine/axion_engine.c:52: EntityAddComponent(&player2, TRANSFORM_COMPONENT);
 	push	de
 	ld	bc, #0x0001
 	call	_EntityAddComponent
 	pop	de
-;Source/Engine/axion_engine.c:43: transformComponent.position[0].x = F12(65);
-	ld	hl, #_transformComponent + 100
-	ld	a, #0x10
+;Source/Engine/axion_engine.c:53: transformComponent.position[1].x = F12(45);
+	ld	hl, #_transformComponent + 104
+	ld	a, #0xd0
 	ld	(hl+), a
-	ld	(hl), #0x04
-;Source/Engine/axion_engine.c:44: transformComponent.position[0].y = F12(65);
-	ld	hl, #_transformComponent + 102
-	ld	a, #0x10
+	ld	(hl), #0x02
+;Source/Engine/axion_engine.c:54: transformComponent.position[1].y = F12(95);
+	ld	hl, #_transformComponent + 106
+	ld	a, #0xf0
 	ld	(hl+), a
-	ld	(hl), #0x04
-;Source/Engine/axion_engine.c:45: EntityAddComponent(&player, SPRITE_COMPONENT);
+	ld	(hl), #0x05
+;Source/Engine/axion_engine.c:55: EntityAddComponent(&player2, SPRITE_COMPONENT);
 	ld	bc, #0x0002
 	call	_EntityAddComponent
-;Source/Engine/axion_engine.c:46: spriteComponent.tileData[0] = earth_data[0];
-	ld	hl, #_earth_data
-	ld	c, (hl)
-	ld	b, #0x00
-	ld	hl, #(_spriteComponent + 50)
-	ld	(hl), c
+;Source/Engine/axion_engine.c:56: spriteComponent.tileData[1] = smiley;
+	ld	hl, #(_spriteComponent + 52)
+	ld	(hl), #<(_smiley)
 	inc	hl
-	ld	(hl), b
-;Source/Engine/axion_engine.c:47: spriteComponent.width[0] = 2;
-	ld	hl, #_spriteComponent + 200
-	ld	(hl), #0x02
-;Source/Engine/axion_engine.c:48: spriteComponent.height[0] = 2;
-	ld	hl, #_spriteComponent + 250
-	ld	(hl), #0x02
-;Source/Engine/axion_engine.c:49: spriteComponent.flags[0] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
-	ld	hl, #_spriteComponent + 400
+	ld	(hl), #>(_smiley)
+;Source/Engine/axion_engine.c:57: spriteComponent.width[1] = 1;
+	ld	hl, #_spriteComponent + 201
+	ld	(hl), #0x01
+;Source/Engine/axion_engine.c:58: spriteComponent.height[1] = 1;
+	ld	hl, #_spriteComponent + 251
+	ld	(hl), #0x01
+;Source/Engine/axion_engine.c:59: spriteComponent.flags[1] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
+	ld	hl, #_spriteComponent + 401
 	ld	(hl), #0x41
 ;/opt/gbdk/include/gb/gb.h:811: __asm__("di");
 	di
-;Source/Engine/axion_engine.c:53: DISPLAY_OFF;
+;Source/Engine/axion_engine.c:62: DISPLAY_OFF;
 	call	_display_off
-;Source/Engine/axion_engine.c:54: LCDC_REG = LCDCF_OFF | LCDCF_WIN9C00 | LCDCF_WINON | LCDCF_BG8800 | LCDCF_BG9800 | LCDCF_OBJ16 | LCDCF_OBJON | LCDCF_BGON;
-	ld	a, #0x67
+;Source/Engine/axion_engine.c:63: LCDC_REG = LCDCF_OFF | LCDCF_WIN9C00 | LCDCF_WINON | LCDCF_BG8800 | LCDCF_BG9800 | LCDCF_OBJON | LCDCF_BGON;
+	ld	a, #0x63
 	ldh	(_LCDC_REG + 0), a
-;Source/Engine/axion_engine.c:69: BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
+;Source/Engine/axion_engine.c:78: BGP_REG = OBP0_REG = OBP1_REG = 0xE4U;
 	ld	a, #0xe4
 	ldh	(_OBP1_REG + 0), a
 	ld	a, #0xe4
 	ldh	(_OBP0_REG + 0), a
 	ld	a, #0xe4
 	ldh	(_BGP_REG + 0), a
-;Source/Engine/axion_engine.c:72: set_bkg_data(0xFC, 0x04, std_data);
+;Source/Engine/axion_engine.c:81: set_bkg_data(0xFC, 0x04, std_data);
 	ld	de, #_std_data
 	push	de
 	ld	hl, #0x4fc
 	push	hl
 	call	_set_bkg_data
 	add	sp, #4
-;Source/Engine/axion_engine.c:73: set_bkg_data(0x00, 0x2D, bkg_data);
+;Source/Engine/axion_engine.c:82: set_bkg_data(0x00, 0x2D, bkg_data);
 	ld	de, #_bkg_data
 	push	de
 	ld	hl, #0x2d00
 	push	hl
 	call	_set_bkg_data
 	add	sp, #4
-;Source/Engine/axion_engine.c:76: set_sprite_data(0x00, 0x1C, earth_data);
-	ld	de, #_earth_data
-	push	de
-	ld	hl, #0x1c00
-	push	hl
-	call	_set_sprite_data
-	add	sp, #4
-;/opt/gbdk/include/gb/gb.h:1946: shadow_OAM[nb].prop=prop;
-	ld	hl, #(_shadow_OAM + 3)
-	ld	(hl), #0x00
-	ld	hl, #(_shadow_OAM + 7)
-	ld	(hl), #0x00
-;Source/Engine/axion_engine.c:81: DISPLAY_ON;
+;Source/Engine/axion_engine.c:85: DISPLAY_ON;
 	ldh	a, (_LCDC_REG + 0)
 	or	a, #0x80
 	ldh	(_LCDC_REG + 0), a
 ;/opt/gbdk/include/gb/gb.h:795: __asm__("ei");
 	ei
-;Source/Engine/axion_engine.c:84: while(true) {
+;Source/Engine/axion_engine.c:88: while(true) {
 00102$:
-;Source/Engine/axion_engine.c:88: RenderSprites();
+;Source/Engine/axion_engine.c:91: transformComponent.position[0].x += 10;
+	ld	hl, #(_transformComponent + 100)
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ld	hl, #0x000a
+	add	hl, bc
+	ld	c, l
+	ld	b, h
+	ld	hl, #(_transformComponent + 100)
+	ld	a, c
+	ld	(hl+), a
+	ld	(hl), b
+;Source/Engine/axion_engine.c:94: RenderSprites();
 	call	_RenderSprites
 	jr	00102$
-;Source/Engine/axion_engine.c:90: }
-	add	sp, #3
+;Source/Engine/axion_engine.c:96: }
+	add	sp, #6
 	ret
 	.area _CODE
 	.area _INITIALIZER

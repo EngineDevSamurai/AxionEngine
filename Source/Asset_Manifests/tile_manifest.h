@@ -5,5 +5,7 @@ extern const unsigned char bkg_data[];
 extern const unsigned char earth_data[];
 extern const unsigned char frame_data[];
 extern const unsigned char std_data[];
+extern const unsigned char smiley[];
+extern const unsigned char face[];
 
 #endif

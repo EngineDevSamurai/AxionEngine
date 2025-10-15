@@ -551,6 +551,102 @@ _vec2_equal:
 ;Source/Engine/Components/../Libraries/vec2.h:65: }
 	add	sp, #8
 	ret
+;Source/Engine/Components/transform_component.h:16: static inline vec2 getTransformPosition(uint8_t entityID) {
+;	---------------------------------
+; Function getTransformPosition
+; ---------------------------------
+_getTransformPosition:
+	add	sp, #-5
+	ldhl	sp,	#4
+	ld	(hl), a
+;Source/Engine/Components/transform_component.h:17: vec2 result = {0, 0};
+	xor	a, a
+	ldhl	sp,	#0
+	ld	(hl+), a
+	ld	(hl+), a
+	xor	a, a
+	ld	(hl+), a
+	ld	(hl), a
+;Source/Engine/Components/transform_component.h:18: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	ld	c, #0x00
+	ld	e, c
+00105$:
+	ld	a, e
+	sub	a, #0x64
+	jr	NC, 00103$
+;Source/Engine/Components/transform_component.h:19: if (transformComponent.entityID[i] == entityID) {
+	ld	hl, #_transformComponent
+	ld	d, #0x00
+	add	hl, de
+	ld	b, (hl)
+	ldhl	sp,	#4
+	ld	a, (hl)
+	sub	a, b
+	jr	NZ, 00106$
+;Source/Engine/Components/transform_component.h:20: result = transformComponent.position[i];
+	ld	de, #_transformComponent + 100
+	ld	l, c
+	xor	a, a
+	ld	h, a
+	add	hl, hl
+	add	hl, hl
+	add	hl, de
+	ld	c, l
+	ld	b, h
+	ld	hl, #0
+	add	hl, sp
+	ld	e, l
+	ld	d, h
+	ld	hl, #0x0004
+	push	hl
+	call	___memcpy
+;Source/Engine/Components/transform_component.h:21: return result;
+	ldhl	sp,	#7
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ldhl	sp,	#0
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl)
+	ld	(bc), a
+	jr	00107$
+00106$:
+;Source/Engine/Components/transform_component.h:18: for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+	inc	e
+	ld	c, e
+	jr	00105$
+00103$:
+;Source/Engine/Components/transform_component.h:24: return result;
+	ldhl	sp,	#7
+	ld	a, (hl+)
+	ld	c, a
+	ld	b, (hl)
+	ldhl	sp,	#0
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl+)
+	ld	(bc), a
+	inc	bc
+	ld	a, (hl)
+	ld	(bc), a
+00107$:
+;Source/Engine/Components/transform_component.h:25: }
+	add	sp, #5
+	pop	hl
+	pop	af
+	jp	(hl)
 	.area _CODE
 	.area _INITIALIZER
 __xinit__transformComponent:
