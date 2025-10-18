@@ -652,14 +652,14 @@
     00000287 E1               [12]  652 	pop	hl
     00000288 F1               [12]  653 	pop	af
     00000289 E9               [ 4]  654 	jp	(hl)
-                                    655 ;Source/Engine/ECS/../Components/sprite_component.h:44: static inline uint8_t getSpriteZIndex(uint8_t entityID) {
+                                    655 ;Source/Engine/ECS/../Components/sprite_component.h:132: static inline uint8_t getSpriteWidth(uint8_t entityID) {
                                     656 ;	---------------------------------
-                                    657 ; Function getSpriteZIndex
+                                    657 ; Function getSpriteWidth
                                     658 ; ---------------------------------
-    0000028A                        659 _getSpriteZIndex:
+    0000028A                        659 _getSpriteWidth:
     0000028A E8 FC            [16]  660 	add	sp, #-4
     0000028C F8 02            [12]  661 	ldhl	sp,	#2
-                                    662 ;Source/Engine/ECS/../Components/sprite_component.h:45: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+                                    662 ;Source/Engine/ECS/../Components/sprite_component.h:133: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
     0000028E 32               [ 8]  663 	ld	(hl-), a
     0000028F AF               [ 4]  664 	xor	a, a
     00000290 22               [ 8]  665 	ld	(hl+), a
@@ -669,8 +669,8 @@
     00000294 F8 03            [12]  669 	ldhl	sp,	#3
     00000296 7E               [ 8]  670 	ld	a, (hl)
     00000297 D6 32            [ 8]  671 	sub	a, #0x32
-    00000299 30 36            [12]  672 	jr	NC, 00103$
-                                    673 ;Source/Engine/ECS/../Components/sprite_component.h:46: if (spriteComponent.entityID[i] == entityID) {
+    00000299 30 2D            [12]  672 	jr	NC, 00103$
+                                    673 ;Source/Engine/ECS/../Components/sprite_component.h:134: if (spriteComponent.entityID[i] == entityID)
     0000029B 11r00r00         [12]  674 	ld	de, #_spriteComponent
     0000029E 6E               [ 8]  675 	ld	l, (hl)
     0000029F 26 00            [ 8]  676 	ld	h, #0x00
@@ -682,9 +682,9 @@
     000002A6 F8 02            [12]  682 	ldhl	sp,	#2
     000002A8 7E               [ 8]  683 	ld	a, (hl)
     000002A9 91               [ 4]  684 	sub	a, c
-    000002AA 20 1D            [12]  685 	jr	NZ, 00106$
-                                    686 ;Source/Engine/ECS/../Components/sprite_component.h:47: return SPRITE_GET_Z(spriteComponent.flags[i]);
-    000002AC 11r90r01         [12]  687 	ld	de, #(_spriteComponent + 400)
+    000002AA 20 14            [12]  685 	jr	NZ, 00106$
+                                    686 ;Source/Engine/ECS/../Components/sprite_component.h:135: return spriteComponent.width[i];
+    000002AC 11rC8r00         [12]  687 	ld	de, #(_spriteComponent + 200)
     000002AF F8 01            [12]  688 	ldhl	sp,	#1
     000002B1 6E               [ 8]  689 	ld	l, (hl)
     000002B2 26 00            [ 8]  690 	ld	h, #0x00
@@ -697,1293 +697,1859 @@
     000002BA 1A               [ 8]  697 	ld	a, (de)
     000002BB F8 03            [12]  698 	ldhl	sp,	#3
     000002BD 77               [ 8]  699 	ld	(hl), a
-    000002BE E6 38            [ 8]  700 	and	a, #0x38
-    000002C0 77               [ 8]  701 	ld	(hl), a
-    000002C1 CB 37            [ 8]  702 	swap	a
-    000002C3 07               [ 4]  703 	rlca
-    000002C4 E6 1F            [ 8]  704 	and	a, #0x1f
-    000002C6 77               [ 8]  705 	ld	(hl), a
-    000002C7 18 09            [12]  706 	jr	00107$
-    000002C9                        707 00106$:
-                                    708 ;Source/Engine/ECS/../Components/sprite_component.h:45: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000002C9 F8 03            [12]  709 	ldhl	sp,	#3
-    000002CB 34               [12]  710 	inc	(hl)
-    000002CC 3A               [ 8]  711 	ld	a, (hl-)
-    000002CD 2B               [ 8]  712 	dec	hl
-    000002CE 77               [ 8]  713 	ld	(hl), a
-    000002CF 18 C3            [12]  714 	jr	00105$
-    000002D1                        715 00103$:
-                                    716 ;Source/Engine/ECS/../Components/sprite_component.h:50: return 0;
-    000002D1 AF               [ 4]  717 	xor	a, a
-    000002D2                        718 00107$:
-                                    719 ;Source/Engine/ECS/../Components/sprite_component.h:51: }
-    000002D2 E8 04            [16]  720 	add	sp, #4
-    000002D4 C9               [16]  721 	ret
-                                    722 ;Source/Engine/ECS/../Components/sprite_component.h:54: static inline bool getSpriteWorldFlag(uint8_t entityID) {
-                                    723 ;	---------------------------------
-                                    724 ; Function getSpriteWorldFlag
-                                    725 ; ---------------------------------
-    000002D5                        726 _getSpriteWorldFlag:
-    000002D5 E8 FC            [16]  727 	add	sp, #-4
-    000002D7 F8 02            [12]  728 	ldhl	sp,	#2
-                                    729 ;Source/Engine/ECS/../Components/sprite_component.h:55: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000002D9 32               [ 8]  730 	ld	(hl-), a
-    000002DA AF               [ 4]  731 	xor	a, a
-    000002DB 22               [ 8]  732 	ld	(hl+), a
-    000002DC 23               [ 8]  733 	inc	hl
-    000002DD 36 00            [12]  734 	ld	(hl), #0x00
-    000002DF                        735 00105$:
-    000002DF F8 03            [12]  736 	ldhl	sp,	#3
-    000002E1 7E               [ 8]  737 	ld	a, (hl)
-    000002E2 D6 32            [ 8]  738 	sub	a, #0x32
-    000002E4 30 39            [12]  739 	jr	NC, 00103$
-                                    740 ;Source/Engine/ECS/../Components/sprite_component.h:56: if (spriteComponent.entityID[i] == entityID) {
-    000002E6 11r00r00         [12]  741 	ld	de, #_spriteComponent
-    000002E9 6E               [ 8]  742 	ld	l, (hl)
-    000002EA 26 00            [ 8]  743 	ld	h, #0x00
-    000002EC 19               [ 8]  744 	add	hl, de
-    000002ED 4D               [ 4]  745 	ld	c, l
-    000002EE 44               [ 4]  746 	ld	b, h
-    000002EF 0A               [ 8]  747 	ld	a, (bc)
-    000002F0 4F               [ 4]  748 	ld	c, a
-    000002F1 F8 02            [12]  749 	ldhl	sp,	#2
-    000002F3 7E               [ 8]  750 	ld	a, (hl)
-    000002F4 91               [ 4]  751 	sub	a, c
-    000002F5 20 20            [12]  752 	jr	NZ, 00106$
-                                    753 ;Source/Engine/ECS/../Components/sprite_component.h:57: return (spriteComponent.flags[i] & SPRITE_FLAG_WORLD) != 0;
-    000002F7 11r90r01         [12]  754 	ld	de, #(_spriteComponent + 400)
-    000002FA F8 01            [12]  755 	ldhl	sp,	#1
-    000002FC 6E               [ 8]  756 	ld	l, (hl)
-    000002FD 26 00            [ 8]  757 	ld	h, #0x00
-    000002FF 19               [ 8]  758 	add	hl, de
-    00000300 33               [ 8]  759 	inc	sp
-    00000301 33               [ 8]  760 	inc	sp
-    00000302 5D               [ 4]  761 	ld	e, l
-    00000303 54               [ 4]  762 	ld	d, h
-    00000304 D5               [16]  763 	push	de
-    00000305 1A               [ 8]  764 	ld	a, (de)
-    00000306 F8 03            [12]  765 	ldhl	sp,	#3
-    00000308 77               [ 8]  766 	ld	(hl), a
-    00000309 E6 01            [ 8]  767 	and	a, #0x01
-    0000030B 77               [ 8]  768 	ld	(hl), a
-    0000030C D6 01            [ 8]  769 	sub	a, #0x01
-    0000030E 3E 00            [ 8]  770 	ld	a, #0x00
-    00000310 17               [ 4]  771 	rla
-    00000311 77               [ 8]  772 	ld	(hl), a
-    00000312 EE 01            [ 8]  773 	xor	a, #0x01
-    00000314 77               [ 8]  774 	ld	(hl), a
-    00000315 18 09            [12]  775 	jr	00107$
-    00000317                        776 00106$:
-                                    777 ;Source/Engine/ECS/../Components/sprite_component.h:55: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000317 F8 03            [12]  778 	ldhl	sp,	#3
-    00000319 34               [12]  779 	inc	(hl)
-    0000031A 3A               [ 8]  780 	ld	a, (hl-)
-    0000031B 2B               [ 8]  781 	dec	hl
-    0000031C 77               [ 8]  782 	ld	(hl), a
-    0000031D 18 C0            [12]  783 	jr	00105$
-    0000031F                        784 00103$:
-                                    785 ;Source/Engine/ECS/../Components/sprite_component.h:60: return false;
-    0000031F AF               [ 4]  786 	xor	a, a
-    00000320                        787 00107$:
-                                    788 ;Source/Engine/ECS/../Components/sprite_component.h:61: }
-    00000320 E8 04            [16]  789 	add	sp, #4
-    00000322 C9               [16]  790 	ret
-                                    791 ;Source/Engine/ECS/../Components/sprite_component.h:64: static inline bool getSpriteFlipX(uint8_t entityID) {
-                                    792 ;	---------------------------------
-                                    793 ; Function getSpriteFlipX
-                                    794 ; ---------------------------------
-    00000323                        795 _getSpriteFlipX:
-    00000323 E8 FC            [16]  796 	add	sp, #-4
-    00000325 F8 02            [12]  797 	ldhl	sp,	#2
-                                    798 ;Source/Engine/ECS/../Components/sprite_component.h:65: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000327 32               [ 8]  799 	ld	(hl-), a
-    00000328 AF               [ 4]  800 	xor	a, a
-    00000329 22               [ 8]  801 	ld	(hl+), a
-    0000032A 23               [ 8]  802 	inc	hl
-    0000032B 36 00            [12]  803 	ld	(hl), #0x00
-    0000032D                        804 00105$:
-    0000032D F8 03            [12]  805 	ldhl	sp,	#3
-    0000032F 7E               [ 8]  806 	ld	a, (hl)
-    00000330 D6 32            [ 8]  807 	sub	a, #0x32
-    00000332 30 39            [12]  808 	jr	NC, 00103$
-                                    809 ;Source/Engine/ECS/../Components/sprite_component.h:66: if (spriteComponent.entityID[i] == entityID) {
-    00000334 11r00r00         [12]  810 	ld	de, #_spriteComponent
-    00000337 6E               [ 8]  811 	ld	l, (hl)
-    00000338 26 00            [ 8]  812 	ld	h, #0x00
-    0000033A 19               [ 8]  813 	add	hl, de
-    0000033B 4D               [ 4]  814 	ld	c, l
-    0000033C 44               [ 4]  815 	ld	b, h
-    0000033D 0A               [ 8]  816 	ld	a, (bc)
-    0000033E 4F               [ 4]  817 	ld	c, a
-    0000033F F8 02            [12]  818 	ldhl	sp,	#2
-    00000341 7E               [ 8]  819 	ld	a, (hl)
-    00000342 91               [ 4]  820 	sub	a, c
-    00000343 20 20            [12]  821 	jr	NZ, 00106$
-                                    822 ;Source/Engine/ECS/../Components/sprite_component.h:67: return (spriteComponent.flags[i] & SPRITE_FLIP_X) != 0;
-    00000345 11r90r01         [12]  823 	ld	de, #(_spriteComponent + 400)
-    00000348 F8 01            [12]  824 	ldhl	sp,	#1
-    0000034A 6E               [ 8]  825 	ld	l, (hl)
-    0000034B 26 00            [ 8]  826 	ld	h, #0x00
-    0000034D 19               [ 8]  827 	add	hl, de
-    0000034E 33               [ 8]  828 	inc	sp
-    0000034F 33               [ 8]  829 	inc	sp
-    00000350 5D               [ 4]  830 	ld	e, l
-    00000351 54               [ 4]  831 	ld	d, h
-    00000352 D5               [16]  832 	push	de
-    00000353 1A               [ 8]  833 	ld	a, (de)
-    00000354 F8 03            [12]  834 	ldhl	sp,	#3
-    00000356 77               [ 8]  835 	ld	(hl), a
-    00000357 E6 02            [ 8]  836 	and	a, #0x02
-    00000359 77               [ 8]  837 	ld	(hl), a
-    0000035A D6 01            [ 8]  838 	sub	a, #0x01
-    0000035C 3E 00            [ 8]  839 	ld	a, #0x00
-    0000035E 17               [ 4]  840 	rla
-    0000035F 77               [ 8]  841 	ld	(hl), a
-    00000360 EE 01            [ 8]  842 	xor	a, #0x01
-    00000362 77               [ 8]  843 	ld	(hl), a
-    00000363 18 09            [12]  844 	jr	00107$
-    00000365                        845 00106$:
-                                    846 ;Source/Engine/ECS/../Components/sprite_component.h:65: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000365 F8 03            [12]  847 	ldhl	sp,	#3
-    00000367 34               [12]  848 	inc	(hl)
-    00000368 3A               [ 8]  849 	ld	a, (hl-)
-    00000369 2B               [ 8]  850 	dec	hl
-    0000036A 77               [ 8]  851 	ld	(hl), a
-    0000036B 18 C0            [12]  852 	jr	00105$
-    0000036D                        853 00103$:
-                                    854 ;Source/Engine/ECS/../Components/sprite_component.h:70: return false;
-    0000036D AF               [ 4]  855 	xor	a, a
-    0000036E                        856 00107$:
-                                    857 ;Source/Engine/ECS/../Components/sprite_component.h:71: }
-    0000036E E8 04            [16]  858 	add	sp, #4
-    00000370 C9               [16]  859 	ret
-                                    860 ;Source/Engine/ECS/../Components/sprite_component.h:74: static inline bool getSpriteFlipY(uint8_t entityID) {
-                                    861 ;	---------------------------------
-                                    862 ; Function getSpriteFlipY
-                                    863 ; ---------------------------------
-    00000371                        864 _getSpriteFlipY:
-    00000371 E8 FC            [16]  865 	add	sp, #-4
-    00000373 F8 02            [12]  866 	ldhl	sp,	#2
-                                    867 ;Source/Engine/ECS/../Components/sprite_component.h:75: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000375 32               [ 8]  868 	ld	(hl-), a
-    00000376 AF               [ 4]  869 	xor	a, a
-    00000377 22               [ 8]  870 	ld	(hl+), a
-    00000378 23               [ 8]  871 	inc	hl
-    00000379 36 00            [12]  872 	ld	(hl), #0x00
-    0000037B                        873 00105$:
-    0000037B F8 03            [12]  874 	ldhl	sp,	#3
-    0000037D 7E               [ 8]  875 	ld	a, (hl)
-    0000037E D6 32            [ 8]  876 	sub	a, #0x32
-    00000380 30 39            [12]  877 	jr	NC, 00103$
-                                    878 ;Source/Engine/ECS/../Components/sprite_component.h:76: if (spriteComponent.entityID[i] == entityID) {
-    00000382 11r00r00         [12]  879 	ld	de, #_spriteComponent
-    00000385 6E               [ 8]  880 	ld	l, (hl)
-    00000386 26 00            [ 8]  881 	ld	h, #0x00
-    00000388 19               [ 8]  882 	add	hl, de
-    00000389 4D               [ 4]  883 	ld	c, l
-    0000038A 44               [ 4]  884 	ld	b, h
-    0000038B 0A               [ 8]  885 	ld	a, (bc)
-    0000038C 4F               [ 4]  886 	ld	c, a
-    0000038D F8 02            [12]  887 	ldhl	sp,	#2
-    0000038F 7E               [ 8]  888 	ld	a, (hl)
-    00000390 91               [ 4]  889 	sub	a, c
-    00000391 20 20            [12]  890 	jr	NZ, 00106$
-                                    891 ;Source/Engine/ECS/../Components/sprite_component.h:77: return (spriteComponent.flags[i] & SPRITE_FLIP_Y) != 0;
-    00000393 11r90r01         [12]  892 	ld	de, #(_spriteComponent + 400)
-    00000396 F8 01            [12]  893 	ldhl	sp,	#1
-    00000398 6E               [ 8]  894 	ld	l, (hl)
-    00000399 26 00            [ 8]  895 	ld	h, #0x00
-    0000039B 19               [ 8]  896 	add	hl, de
-    0000039C 33               [ 8]  897 	inc	sp
-    0000039D 33               [ 8]  898 	inc	sp
-    0000039E 5D               [ 4]  899 	ld	e, l
-    0000039F 54               [ 4]  900 	ld	d, h
-    000003A0 D5               [16]  901 	push	de
-    000003A1 1A               [ 8]  902 	ld	a, (de)
-    000003A2 F8 03            [12]  903 	ldhl	sp,	#3
-    000003A4 77               [ 8]  904 	ld	(hl), a
-    000003A5 E6 04            [ 8]  905 	and	a, #0x04
-    000003A7 77               [ 8]  906 	ld	(hl), a
-    000003A8 D6 01            [ 8]  907 	sub	a, #0x01
-    000003AA 3E 00            [ 8]  908 	ld	a, #0x00
-    000003AC 17               [ 4]  909 	rla
-    000003AD 77               [ 8]  910 	ld	(hl), a
-    000003AE EE 01            [ 8]  911 	xor	a, #0x01
-    000003B0 77               [ 8]  912 	ld	(hl), a
-    000003B1 18 09            [12]  913 	jr	00107$
-    000003B3                        914 00106$:
-                                    915 ;Source/Engine/ECS/../Components/sprite_component.h:75: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000003B3 F8 03            [12]  916 	ldhl	sp,	#3
-    000003B5 34               [12]  917 	inc	(hl)
-    000003B6 3A               [ 8]  918 	ld	a, (hl-)
-    000003B7 2B               [ 8]  919 	dec	hl
-    000003B8 77               [ 8]  920 	ld	(hl), a
-    000003B9 18 C0            [12]  921 	jr	00105$
-    000003BB                        922 00103$:
-                                    923 ;Source/Engine/ECS/../Components/sprite_component.h:80: return false;
-    000003BB AF               [ 4]  924 	xor	a, a
-    000003BC                        925 00107$:
-                                    926 ;Source/Engine/ECS/../Components/sprite_component.h:81: }
-    000003BC E8 04            [16]  927 	add	sp, #4
-    000003BE C9               [16]  928 	ret
-                                    929 ;Source/Engine/ECS/../Components/sprite_component.h:84: static inline bool getSpriteVisible(uint8_t entityID) {
-                                    930 ;	---------------------------------
-                                    931 ; Function getSpriteVisible
-                                    932 ; ---------------------------------
-    000003BF                        933 _getSpriteVisible:
-    000003BF E8 FC            [16]  934 	add	sp, #-4
-    000003C1 F8 02            [12]  935 	ldhl	sp,	#2
-                                    936 ;Source/Engine/ECS/../Components/sprite_component.h:85: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000003C3 32               [ 8]  937 	ld	(hl-), a
-    000003C4 AF               [ 4]  938 	xor	a, a
-    000003C5 22               [ 8]  939 	ld	(hl+), a
-    000003C6 23               [ 8]  940 	inc	hl
-    000003C7 36 00            [12]  941 	ld	(hl), #0x00
-    000003C9                        942 00105$:
-    000003C9 F8 03            [12]  943 	ldhl	sp,	#3
-    000003CB 7E               [ 8]  944 	ld	a, (hl)
-    000003CC D6 32            [ 8]  945 	sub	a, #0x32
-    000003CE 30 39            [12]  946 	jr	NC, 00103$
-                                    947 ;Source/Engine/ECS/../Components/sprite_component.h:86: if (spriteComponent.entityID[i] == entityID) {
-    000003D0 11r00r00         [12]  948 	ld	de, #_spriteComponent
-    000003D3 6E               [ 8]  949 	ld	l, (hl)
-    000003D4 26 00            [ 8]  950 	ld	h, #0x00
-    000003D6 19               [ 8]  951 	add	hl, de
-    000003D7 4D               [ 4]  952 	ld	c, l
-    000003D8 44               [ 4]  953 	ld	b, h
-    000003D9 0A               [ 8]  954 	ld	a, (bc)
-    000003DA 4F               [ 4]  955 	ld	c, a
-    000003DB F8 02            [12]  956 	ldhl	sp,	#2
-    000003DD 7E               [ 8]  957 	ld	a, (hl)
-    000003DE 91               [ 4]  958 	sub	a, c
-    000003DF 20 20            [12]  959 	jr	NZ, 00106$
-                                    960 ;Source/Engine/ECS/../Components/sprite_component.h:87: return (spriteComponent.flags[i] & SPRITE_VISIBLE) != 0;
-    000003E1 11r90r01         [12]  961 	ld	de, #(_spriteComponent + 400)
-    000003E4 F8 01            [12]  962 	ldhl	sp,	#1
-    000003E6 6E               [ 8]  963 	ld	l, (hl)
-    000003E7 26 00            [ 8]  964 	ld	h, #0x00
-    000003E9 19               [ 8]  965 	add	hl, de
-    000003EA 33               [ 8]  966 	inc	sp
-    000003EB 33               [ 8]  967 	inc	sp
-    000003EC 5D               [ 4]  968 	ld	e, l
-    000003ED 54               [ 4]  969 	ld	d, h
-    000003EE D5               [16]  970 	push	de
-    000003EF 1A               [ 8]  971 	ld	a, (de)
-    000003F0 F8 03            [12]  972 	ldhl	sp,	#3
-    000003F2 77               [ 8]  973 	ld	(hl), a
-    000003F3 E6 40            [ 8]  974 	and	a, #0x40
-    000003F5 77               [ 8]  975 	ld	(hl), a
-    000003F6 D6 01            [ 8]  976 	sub	a, #0x01
-    000003F8 3E 00            [ 8]  977 	ld	a, #0x00
-    000003FA 17               [ 4]  978 	rla
-    000003FB 77               [ 8]  979 	ld	(hl), a
-    000003FC EE 01            [ 8]  980 	xor	a, #0x01
-    000003FE 77               [ 8]  981 	ld	(hl), a
-    000003FF 18 09            [12]  982 	jr	00107$
-    00000401                        983 00106$:
-                                    984 ;Source/Engine/ECS/../Components/sprite_component.h:85: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000401 F8 03            [12]  985 	ldhl	sp,	#3
-    00000403 34               [12]  986 	inc	(hl)
-    00000404 3A               [ 8]  987 	ld	a, (hl-)
-    00000405 2B               [ 8]  988 	dec	hl
-    00000406 77               [ 8]  989 	ld	(hl), a
-    00000407 18 C0            [12]  990 	jr	00105$
-    00000409                        991 00103$:
-                                    992 ;Source/Engine/ECS/../Components/sprite_component.h:90: return false;
-    00000409 AF               [ 4]  993 	xor	a, a
-    0000040A                        994 00107$:
-                                    995 ;Source/Engine/ECS/../Components/sprite_component.h:91: }
-    0000040A E8 04            [16]  996 	add	sp, #4
-    0000040C C9               [16]  997 	ret
-                                    998 ;Source/Engine/ECS/../Components/sprite_component.h:94: static inline void setSpriteZIndex(uint8_t entityID, uint8_t z) {
-                                    999 ;	---------------------------------
-                                   1000 ; Function setSpriteZIndex
-                                   1001 ; ---------------------------------
-    0000040D                       1002 _setSpriteZIndex:
-    0000040D E8 F9            [16] 1003 	add	sp, #-7
-    0000040F F8 06            [12] 1004 	ldhl	sp,	#6
-    00000411 32               [ 8] 1005 	ld	(hl-), a
-                                   1006 ;Source/Engine/ECS/../Components/sprite_component.h:95: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000412 7B               [ 4] 1007 	ld	a, e
-    00000413 32               [ 8] 1008 	ld	(hl-), a
-    00000414 2B               [ 8] 1009 	dec	hl
-    00000415 AF               [ 4] 1010 	xor	a, a
-    00000416 22               [ 8] 1011 	ld	(hl+), a
-    00000417 77               [ 8] 1012 	ld	(hl), a
-    00000418                       1013 00105$:
-    00000418 F8 04            [12] 1014 	ldhl	sp,	#4
-    0000041A 7E               [ 8] 1015 	ld	a, (hl)
-    0000041B D6 32            [ 8] 1016 	sub	a, #0x32
-    0000041D 30 43            [12] 1017 	jr	NC, 00107$
-                                   1018 ;Source/Engine/ECS/../Components/sprite_component.h:96: if (spriteComponent.entityID[i] == entityID) {
-    0000041F 11r00r00         [12] 1019 	ld	de, #_spriteComponent
-    00000422 6E               [ 8] 1020 	ld	l, (hl)
-    00000423 26 00            [ 8] 1021 	ld	h, #0x00
-    00000425 19               [ 8] 1022 	add	hl, de
-    00000426 4D               [ 4] 1023 	ld	c, l
-    00000427 44               [ 4] 1024 	ld	b, h
-    00000428 0A               [ 8] 1025 	ld	a, (bc)
-    00000429 4F               [ 4] 1026 	ld	c, a
-    0000042A F8 06            [12] 1027 	ldhl	sp,	#6
-    0000042C 7E               [ 8] 1028 	ld	a, (hl)
-    0000042D 91               [ 4] 1029 	sub	a, c
-    0000042E 20 2B            [12] 1030 	jr	NZ, 00106$
-                                   1031 ;Source/Engine/ECS/../Components/sprite_component.h:97: spriteComponent.flags[i] = SPRITE_SET_Z(spriteComponent.flags[i], z);
-    00000430 11r90r01         [12] 1032 	ld	de, #(_spriteComponent + 400)
-    00000433 F8 03            [12] 1033 	ldhl	sp,	#3
-    00000435 6E               [ 8] 1034 	ld	l, (hl)
-    00000436 26 00            [ 8] 1035 	ld	h, #0x00
-    00000438 19               [ 8] 1036 	add	hl, de
-    00000439 33               [ 8] 1037 	inc	sp
-    0000043A 33               [ 8] 1038 	inc	sp
-    0000043B 5D               [ 4] 1039 	ld	e, l
-    0000043C 54               [ 4] 1040 	ld	d, h
-    0000043D D5               [16] 1041 	push	de
-    0000043E 1A               [ 8] 1042 	ld	a, (de)
-    0000043F F8 04            [12] 1043 	ldhl	sp,	#4
-    00000441 32               [ 8] 1044 	ld	(hl-), a
-    00000442 2B               [ 8] 1045 	dec	hl
-    00000443 E6 C7            [ 8] 1046 	and	a, #0xc7
-    00000445 77               [ 8] 1047 	ld	(hl), a
-    00000446 F8 05            [12] 1048 	ldhl	sp,	#5
-    00000448 3A               [ 8] 1049 	ld	a, (hl-)
-    00000449 87               [ 4] 1050 	add	a, a
-    0000044A 87               [ 4] 1051 	add	a, a
-    0000044B 87               [ 4] 1052 	add	a, a
-    0000044C E6 38            [ 8] 1053 	and	a, #0x38
-    0000044E 77               [ 8] 1054 	ld	(hl), a
-    0000044F 3A               [ 8] 1055 	ld	a, (hl-)
-    00000450 2B               [ 8] 1056 	dec	hl
-    00000451 B6               [ 8] 1057 	or	a, (hl)
-    00000452 23               [ 8] 1058 	inc	hl
-    00000453 23               [ 8] 1059 	inc	hl
-    00000454 77               [ 8] 1060 	ld	(hl), a
-    00000455 D1               [12] 1061 	pop	de
-    00000456 D5               [16] 1062 	push	de
-    00000457 7E               [ 8] 1063 	ld	a, (hl)
-    00000458 12               [ 8] 1064 	ld	(de), a
-                                   1065 ;Source/Engine/ECS/../Components/sprite_component.h:98: return;
-    00000459 18 07            [12] 1066 	jr	00107$
-    0000045B                       1067 00106$:
-                                   1068 ;Source/Engine/ECS/../Components/sprite_component.h:95: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    0000045B F8 04            [12] 1069 	ldhl	sp,	#4
-    0000045D 34               [12] 1070 	inc	(hl)
-    0000045E 3A               [ 8] 1071 	ld	a, (hl-)
-    0000045F 77               [ 8] 1072 	ld	(hl), a
-    00000460 18 B6            [12] 1073 	jr	00105$
-    00000462                       1074 00107$:
-                                   1075 ;Source/Engine/ECS/../Components/sprite_component.h:101: }
-    00000462 E8 07            [16] 1076 	add	sp, #7
-    00000464 C9               [16] 1077 	ret
-                                   1078 ;Source/Engine/ECS/../Components/sprite_component.h:104: static inline void setSpriteWorldFlag(uint8_t entityID, bool isWorld) {
-                                   1079 ;	---------------------------------
-                                   1080 ; Function setSpriteWorldFlag
-                                   1081 ; ---------------------------------
-    00000465                       1082 _setSpriteWorldFlag:
-    00000465 3B               [ 8] 1083 	dec	sp
-    00000466 F8 00            [12] 1084 	ldhl	sp,	#0
-    00000468 77               [ 8] 1085 	ld	(hl), a
-    00000469 4B               [ 4] 1086 	ld	c, e
-                                   1087 ;Source/Engine/ECS/../Components/sprite_component.h:105: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    0000046A 06 00            [ 8] 1088 	ld	b, #0x00
-    0000046C 58               [ 4] 1089 	ld	e, b
-    0000046D                       1090 00108$:
-    0000046D 7B               [ 4] 1091 	ld	a, e
-    0000046E D6 32            [ 8] 1092 	sub	a, #0x32
-    00000470 30 29            [12] 1093 	jr	NC, 00110$
-                                   1094 ;Source/Engine/ECS/../Components/sprite_component.h:106: if (spriteComponent.entityID[i] == entityID) {
-    00000472 21r00r00         [12] 1095 	ld	hl, #_spriteComponent
-    00000475 16 00            [ 8] 1096 	ld	d, #0x00
-    00000477 19               [ 8] 1097 	add	hl, de
-    00000478 56               [ 8] 1098 	ld	d, (hl)
-    00000479 F8 00            [12] 1099 	ldhl	sp,	#0
-    0000047B 7E               [ 8] 1100 	ld	a, (hl)
-    0000047C 92               [ 4] 1101 	sub	a, d
-    0000047D 20 18            [12] 1102 	jr	NZ, 00109$
-                                   1103 ;Source/Engine/ECS/../Components/sprite_component.h:108: spriteComponent.flags[i] |= SPRITE_FLAG_WORLD;
-    0000047F 3Er90            [ 8] 1104 	ld	a, #<((_spriteComponent + 400))
-    00000481 80               [ 4] 1105 	add	a, b
-    00000482 5F               [ 4] 1106 	ld	e, a
-    00000483 3Es01            [ 8] 1107 	ld	a, #>((_spriteComponent + 400))
-    00000485 CE 00            [ 8] 1108 	adc	a, #0x00
-    00000487 57               [ 4] 1109 	ld	d, a
-    00000488 1A               [ 8] 1110 	ld	a, (de)
-                                   1111 ;Source/Engine/ECS/../Components/sprite_component.h:107: if (isWorld) {
-    00000489 CB 41            [ 8] 1112 	bit	0, c
-    0000048B 28 05            [12] 1113 	jr	Z, 00102$
-                                   1114 ;Source/Engine/ECS/../Components/sprite_component.h:108: spriteComponent.flags[i] |= SPRITE_FLAG_WORLD;
-    0000048D CB C7            [ 8] 1115 	set	0, a
-    0000048F 12               [ 8] 1116 	ld	(de), a
-    00000490 18 09            [12] 1117 	jr	00110$
-    00000492                       1118 00102$:
-                                   1119 ;Source/Engine/ECS/../Components/sprite_component.h:110: spriteComponent.flags[i] &= ~SPRITE_FLAG_WORLD;
-    00000492 CB 87            [ 8] 1120 	res	0, a
-    00000494 12               [ 8] 1121 	ld	(de), a
-                                   1122 ;Source/Engine/ECS/../Components/sprite_component.h:112: return;
-    00000495 18 04            [12] 1123 	jr	00110$
-    00000497                       1124 00109$:
-                                   1125 ;Source/Engine/ECS/../Components/sprite_component.h:105: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000497 1C               [ 4] 1126 	inc	e
-    00000498 43               [ 4] 1127 	ld	b, e
-    00000499 18 D2            [12] 1128 	jr	00108$
-    0000049B                       1129 00110$:
-                                   1130 ;Source/Engine/ECS/../Components/sprite_component.h:115: }
-    0000049B 33               [ 8] 1131 	inc	sp
-    0000049C C9               [16] 1132 	ret
-                                   1133 ;Source/Engine/ECS/../Components/sprite_component.h:118: static inline void setSpriteFlipX(uint8_t entityID, bool flip) {
-                                   1134 ;	---------------------------------
-                                   1135 ; Function setSpriteFlipX
-                                   1136 ; ---------------------------------
-    0000049D                       1137 _setSpriteFlipX:
-    0000049D 3B               [ 8] 1138 	dec	sp
-    0000049E F8 00            [12] 1139 	ldhl	sp,	#0
-    000004A0 77               [ 8] 1140 	ld	(hl), a
-    000004A1 4B               [ 4] 1141 	ld	c, e
-                                   1142 ;Source/Engine/ECS/../Components/sprite_component.h:119: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000004A2 06 00            [ 8] 1143 	ld	b, #0x00
-    000004A4 58               [ 4] 1144 	ld	e, b
-    000004A5                       1145 00108$:
-    000004A5 7B               [ 4] 1146 	ld	a, e
-    000004A6 D6 32            [ 8] 1147 	sub	a, #0x32
-    000004A8 30 29            [12] 1148 	jr	NC, 00110$
-                                   1149 ;Source/Engine/ECS/../Components/sprite_component.h:120: if (spriteComponent.entityID[i] == entityID) {
-    000004AA 21r00r00         [12] 1150 	ld	hl, #_spriteComponent
-    000004AD 16 00            [ 8] 1151 	ld	d, #0x00
-    000004AF 19               [ 8] 1152 	add	hl, de
-    000004B0 56               [ 8] 1153 	ld	d, (hl)
-    000004B1 F8 00            [12] 1154 	ldhl	sp,	#0
-    000004B3 7E               [ 8] 1155 	ld	a, (hl)
-    000004B4 92               [ 4] 1156 	sub	a, d
-    000004B5 20 18            [12] 1157 	jr	NZ, 00109$
-                                   1158 ;Source/Engine/ECS/../Components/sprite_component.h:122: spriteComponent.flags[i] |= SPRITE_FLIP_X;
-    000004B7 3Er90            [ 8] 1159 	ld	a, #<((_spriteComponent + 400))
-    000004B9 80               [ 4] 1160 	add	a, b
-    000004BA 5F               [ 4] 1161 	ld	e, a
-    000004BB 3Es01            [ 8] 1162 	ld	a, #>((_spriteComponent + 400))
-    000004BD CE 00            [ 8] 1163 	adc	a, #0x00
-    000004BF 57               [ 4] 1164 	ld	d, a
-    000004C0 1A               [ 8] 1165 	ld	a, (de)
-                                   1166 ;Source/Engine/ECS/../Components/sprite_component.h:121: if (flip) {
-    000004C1 CB 41            [ 8] 1167 	bit	0, c
-    000004C3 28 05            [12] 1168 	jr	Z, 00102$
-                                   1169 ;Source/Engine/ECS/../Components/sprite_component.h:122: spriteComponent.flags[i] |= SPRITE_FLIP_X;
-    000004C5 CB CF            [ 8] 1170 	set	1, a
-    000004C7 12               [ 8] 1171 	ld	(de), a
-    000004C8 18 09            [12] 1172 	jr	00110$
-    000004CA                       1173 00102$:
-                                   1174 ;Source/Engine/ECS/../Components/sprite_component.h:124: spriteComponent.flags[i] &= ~SPRITE_FLIP_X;
-    000004CA CB 8F            [ 8] 1175 	res	1, a
-    000004CC 12               [ 8] 1176 	ld	(de), a
-                                   1177 ;Source/Engine/ECS/../Components/sprite_component.h:126: return;
-    000004CD 18 04            [12] 1178 	jr	00110$
-    000004CF                       1179 00109$:
-                                   1180 ;Source/Engine/ECS/../Components/sprite_component.h:119: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000004CF 1C               [ 4] 1181 	inc	e
-    000004D0 43               [ 4] 1182 	ld	b, e
-    000004D1 18 D2            [12] 1183 	jr	00108$
-    000004D3                       1184 00110$:
-                                   1185 ;Source/Engine/ECS/../Components/sprite_component.h:129: }
-    000004D3 33               [ 8] 1186 	inc	sp
-    000004D4 C9               [16] 1187 	ret
-                                   1188 ;Source/Engine/ECS/../Components/sprite_component.h:132: static inline void setSpriteFlipY(uint8_t entityID, bool flip) {
-                                   1189 ;	---------------------------------
-                                   1190 ; Function setSpriteFlipY
-                                   1191 ; ---------------------------------
-    000004D5                       1192 _setSpriteFlipY:
-    000004D5 3B               [ 8] 1193 	dec	sp
-    000004D6 F8 00            [12] 1194 	ldhl	sp,	#0
-    000004D8 77               [ 8] 1195 	ld	(hl), a
-    000004D9 4B               [ 4] 1196 	ld	c, e
-                                   1197 ;Source/Engine/ECS/../Components/sprite_component.h:133: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000004DA 06 00            [ 8] 1198 	ld	b, #0x00
-    000004DC 58               [ 4] 1199 	ld	e, b
-    000004DD                       1200 00108$:
-    000004DD 7B               [ 4] 1201 	ld	a, e
-    000004DE D6 32            [ 8] 1202 	sub	a, #0x32
-    000004E0 30 29            [12] 1203 	jr	NC, 00110$
-                                   1204 ;Source/Engine/ECS/../Components/sprite_component.h:134: if (spriteComponent.entityID[i] == entityID) {
-    000004E2 21r00r00         [12] 1205 	ld	hl, #_spriteComponent
-    000004E5 16 00            [ 8] 1206 	ld	d, #0x00
-    000004E7 19               [ 8] 1207 	add	hl, de
-    000004E8 56               [ 8] 1208 	ld	d, (hl)
-    000004E9 F8 00            [12] 1209 	ldhl	sp,	#0
-    000004EB 7E               [ 8] 1210 	ld	a, (hl)
-    000004EC 92               [ 4] 1211 	sub	a, d
-    000004ED 20 18            [12] 1212 	jr	NZ, 00109$
-                                   1213 ;Source/Engine/ECS/../Components/sprite_component.h:136: spriteComponent.flags[i] |= SPRITE_FLIP_Y;
-    000004EF 3Er90            [ 8] 1214 	ld	a, #<((_spriteComponent + 400))
-    000004F1 80               [ 4] 1215 	add	a, b
-    000004F2 5F               [ 4] 1216 	ld	e, a
-    000004F3 3Es01            [ 8] 1217 	ld	a, #>((_spriteComponent + 400))
-    000004F5 CE 00            [ 8] 1218 	adc	a, #0x00
-    000004F7 57               [ 4] 1219 	ld	d, a
-    000004F8 1A               [ 8] 1220 	ld	a, (de)
-                                   1221 ;Source/Engine/ECS/../Components/sprite_component.h:135: if (flip) {
-    000004F9 CB 41            [ 8] 1222 	bit	0, c
-    000004FB 28 05            [12] 1223 	jr	Z, 00102$
-                                   1224 ;Source/Engine/ECS/../Components/sprite_component.h:136: spriteComponent.flags[i] |= SPRITE_FLIP_Y;
-    000004FD CB D7            [ 8] 1225 	set	2, a
-    000004FF 12               [ 8] 1226 	ld	(de), a
-    00000500 18 09            [12] 1227 	jr	00110$
-    00000502                       1228 00102$:
-                                   1229 ;Source/Engine/ECS/../Components/sprite_component.h:138: spriteComponent.flags[i] &= ~SPRITE_FLIP_Y;
-    00000502 CB 97            [ 8] 1230 	res	2, a
-    00000504 12               [ 8] 1231 	ld	(de), a
-                                   1232 ;Source/Engine/ECS/../Components/sprite_component.h:140: return;
-    00000505 18 04            [12] 1233 	jr	00110$
-    00000507                       1234 00109$:
-                                   1235 ;Source/Engine/ECS/../Components/sprite_component.h:133: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000507 1C               [ 4] 1236 	inc	e
-    00000508 43               [ 4] 1237 	ld	b, e
-    00000509 18 D2            [12] 1238 	jr	00108$
-    0000050B                       1239 00110$:
-                                   1240 ;Source/Engine/ECS/../Components/sprite_component.h:143: }
-    0000050B 33               [ 8] 1241 	inc	sp
-    0000050C C9               [16] 1242 	ret
-                                   1243 ;Source/Engine/ECS/../Components/sprite_component.h:146: static inline void setSpriteVisible(uint8_t entityID, bool visible) {
-                                   1244 ;	---------------------------------
-                                   1245 ; Function setSpriteVisible
-                                   1246 ; ---------------------------------
-    0000050D                       1247 _setSpriteVisible:
-    0000050D 3B               [ 8] 1248 	dec	sp
-    0000050E F8 00            [12] 1249 	ldhl	sp,	#0
-    00000510 77               [ 8] 1250 	ld	(hl), a
-    00000511 4B               [ 4] 1251 	ld	c, e
-                                   1252 ;Source/Engine/ECS/../Components/sprite_component.h:147: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    00000512 06 00            [ 8] 1253 	ld	b, #0x00
-    00000514 58               [ 4] 1254 	ld	e, b
-    00000515                       1255 00108$:
-    00000515 7B               [ 4] 1256 	ld	a, e
-    00000516 D6 32            [ 8] 1257 	sub	a, #0x32
-    00000518 30 29            [12] 1258 	jr	NC, 00110$
-                                   1259 ;Source/Engine/ECS/../Components/sprite_component.h:148: if (spriteComponent.entityID[i] == entityID) {
-    0000051A 21r00r00         [12] 1260 	ld	hl, #_spriteComponent
-    0000051D 16 00            [ 8] 1261 	ld	d, #0x00
-    0000051F 19               [ 8] 1262 	add	hl, de
-    00000520 56               [ 8] 1263 	ld	d, (hl)
-    00000521 F8 00            [12] 1264 	ldhl	sp,	#0
-    00000523 7E               [ 8] 1265 	ld	a, (hl)
-    00000524 92               [ 4] 1266 	sub	a, d
-    00000525 20 18            [12] 1267 	jr	NZ, 00109$
-                                   1268 ;Source/Engine/ECS/../Components/sprite_component.h:150: spriteComponent.flags[i] |= SPRITE_VISIBLE;
-    00000527 3Er90            [ 8] 1269 	ld	a, #<((_spriteComponent + 400))
-    00000529 80               [ 4] 1270 	add	a, b
-    0000052A 5F               [ 4] 1271 	ld	e, a
-    0000052B 3Es01            [ 8] 1272 	ld	a, #>((_spriteComponent + 400))
-    0000052D CE 00            [ 8] 1273 	adc	a, #0x00
-    0000052F 57               [ 4] 1274 	ld	d, a
-    00000530 1A               [ 8] 1275 	ld	a, (de)
-                                   1276 ;Source/Engine/ECS/../Components/sprite_component.h:149: if (visible) {
-    00000531 CB 41            [ 8] 1277 	bit	0, c
-    00000533 28 05            [12] 1278 	jr	Z, 00102$
-                                   1279 ;Source/Engine/ECS/../Components/sprite_component.h:150: spriteComponent.flags[i] |= SPRITE_VISIBLE;
-    00000535 CB F7            [ 8] 1280 	set	6, a
-    00000537 12               [ 8] 1281 	ld	(de), a
-    00000538 18 09            [12] 1282 	jr	00110$
-    0000053A                       1283 00102$:
-                                   1284 ;Source/Engine/ECS/../Components/sprite_component.h:152: spriteComponent.flags[i] &= ~SPRITE_VISIBLE;
-    0000053A CB B7            [ 8] 1285 	res	6, a
-    0000053C 12               [ 8] 1286 	ld	(de), a
-                                   1287 ;Source/Engine/ECS/../Components/sprite_component.h:154: return;
-    0000053D 18 04            [12] 1288 	jr	00110$
-    0000053F                       1289 00109$:
-                                   1290 ;Source/Engine/ECS/../Components/sprite_component.h:147: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-    0000053F 1C               [ 4] 1291 	inc	e
-    00000540 43               [ 4] 1292 	ld	b, e
-    00000541 18 D2            [12] 1293 	jr	00108$
-    00000543                       1294 00110$:
-                                   1295 ;Source/Engine/ECS/../Components/sprite_component.h:157: }
-    00000543 33               [ 8] 1296 	inc	sp
-    00000544 C9               [16] 1297 	ret
-                                   1298 ;Source/Engine/ECS/ECS.c:9: void EntityAddComponent (Entity *entity, uint16_t component) {
-                                   1299 ;	---------------------------------
-                                   1300 ; Function EntityAddComponent
-                                   1301 ; ---------------------------------
-    00000545                       1302 _EntityAddComponent::
-    00000545 E8 F5            [16] 1303 	add	sp, #-11
-    00000547 F8 09            [12] 1304 	ldhl	sp,	#9
-    00000549 7B               [ 4] 1305 	ld	a, e
-    0000054A 22               [ 8] 1306 	ld	(hl+), a
-    0000054B 72               [ 8] 1307 	ld	(hl), d
-    0000054C F8 07            [12] 1308 	ldhl	sp,	#7
-    0000054E 79               [ 4] 1309 	ld	a, c
-    0000054F 22               [ 8] 1310 	ld	(hl+), a
-                                   1311 ;Source/Engine/ECS/ECS.c:13: if (EntityHasComponent(entity, component)){
-    00000550 78               [ 4] 1312 	ld	a, b
-    00000551 32               [ 8] 1313 	ld	(hl-), a
-    00000552 2A               [ 8] 1314 	ld	a, (hl+)
-    00000553 4F               [ 4] 1315 	ld	c, a
-    00000554 2A               [ 8] 1316 	ld	a, (hl+)
-    00000555 47               [ 4] 1317 	ld	b, a
-    00000556 2A               [ 8] 1318 	ld	a, (hl+)
-    00000557 5F               [ 4] 1319 	ld	e, a
-    00000558 56               [ 8] 1320 	ld	d, (hl)
-    00000559 CDr06r08         [24] 1321 	call	_EntityHasComponent
-    0000055C F8 06            [12] 1322 	ldhl	sp,#6
-    0000055E 77               [ 8] 1323 	ld	(hl), a
-    0000055F CB 46            [12] 1324 	bit	0, (hl)
-                                   1325 ;Source/Engine/ECS/ECS.c:14: return;
-    00000561 C2r1Dr07         [16] 1326 	jp	NZ, 00112$
-                                   1327 ;Source/Engine/ECS/ECS.c:17: entity->components |= component;
-    00000564 F8 09            [12] 1328 	ldhl	sp,	#9
-    00000566 2A               [ 8] 1329 	ld	a, (hl+)
-    00000567 4F               [ 4] 1330 	ld	c, a
-    00000568 46               [ 8] 1331 	ld	b, (hl)
-    00000569 03               [ 8] 1332 	inc	bc
-    0000056A 69               [ 4] 1333 	ld	l, c
-    0000056B 60               [ 4] 1334 	ld	h, b
-    0000056C 23               [ 8] 1335 	inc	hl
-    0000056D 3A               [ 8] 1336 	ld	a,	(hl-)
-    0000056E 6E               [ 8] 1337 	ld	l, (hl)
-    0000056F F5               [16] 1338 	push	af
-    00000570 7D               [ 4] 1339 	ld	a, l
-    00000571 E5               [16] 1340 	push	hl
-    00000572 F8 0B            [12] 1341 	ldhl	sp,	#11
-    00000574 B6               [ 8] 1342 	or	a, (hl)
-    00000575 E1               [12] 1343 	pop	hl
-    00000576 5F               [ 4] 1344 	ld	e, a
-    00000577 F1               [12] 1345 	pop	af
-    00000578 F8 08            [12] 1346 	ldhl	sp,	#8
-    0000057A B6               [ 8] 1347 	or	a, (hl)
-                                   1348 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
-    0000057B 23               [ 8] 1349 	inc	hl
-    0000057C 57               [ 4] 1350 	ld	d, a
-    0000057D 7B               [ 4] 1351 	ld	a, e
-    0000057E 02               [ 8] 1352 	ld	(bc), a
-    0000057F 03               [ 8] 1353 	inc	bc
-    00000580 7A               [ 4] 1354 	ld	a, d
-    00000581 02               [ 8] 1355 	ld	(bc), a
-    00000582 7E               [ 8] 1356 	ld	a, (hl)
-    00000583 F8 01            [12] 1357 	ldhl	sp,	#1
-    00000585 77               [ 8] 1358 	ld	(hl), a
-    00000586 F8 0A            [12] 1359 	ldhl	sp,	#10
-    00000588 7E               [ 8] 1360 	ld	a, (hl)
-    00000589 F8 02            [12] 1361 	ldhl	sp,	#2
-    0000058B 77               [ 8] 1362 	ld	(hl), a
-                                   1363 ;Source/Engine/ECS/ECS.c:20: switch (component) {
-    0000058C F8 07            [12] 1364 	ldhl	sp,	#7
-    0000058E 2A               [ 8] 1365 	ld	a, (hl+)
-    0000058F 3D               [ 4] 1366 	dec	a
-    00000590 B6               [ 8] 1367 	or	a, (hl)
-    00000591 28 0C            [12] 1368 	jr	Z, 00103$
-    00000593 F8 07            [12] 1369 	ldhl	sp,	#7
-    00000595 2A               [ 8] 1370 	ld	a, (hl+)
-    00000596 D6 02            [ 8] 1371 	sub	a, #0x02
-    00000598 B6               [ 8] 1372 	or	a, (hl)
-    00000599 CAr26r06         [16] 1373 	jp	Z, 00106$
-    0000059C C3r1Dr07         [16] 1374 	jp	00112$
-                                   1375 ;Source/Engine/ECS/ECS.c:21: case TRANSFORM_COMPONENT:
-    0000059F                       1376 00103$:
-                                   1377 ;Source/Engine/ECS/ECS.c:22: nextPoolSlot = GetNextAvailableComponentPoolSlot(transformComponent.entityID, TRANSFORM_POOL_SIZE);
-    0000059F 3E 64            [ 8] 1378 	ld	a, #0x64
-    000005A1 11r00r00         [12] 1379 	ld	de, #_transformComponent
-    000005A4 CDr18r08         [24] 1380 	call	_GetNextAvailableComponentPoolSlot
-                                   1381 ;Source/Engine/ECS/ECS.c:23: if (nextPoolSlot != 255) {
-    000005A7 F8 00            [12] 1382 	ldhl	sp,#0
-    000005A9 77               [ 8] 1383 	ld	(hl), a
-    000005AA 3C               [ 4] 1384 	inc	a
-    000005AB CAr1Dr07         [16] 1385 	jp	Z, 00112$
-                                   1386 ;Source/Engine/ECS/ECS.c:24: vec2_set(&transformComponent.position[nextPoolSlot], 0, 0);
-    000005AE F8 00            [12] 1387 	ldhl	sp,	#0
-    000005B0 7E               [ 8] 1388 	ld	a, (hl)
-    000005B1 F8 05            [12] 1389 	ldhl	sp,	#5
-    000005B3 22               [ 8] 1390 	ld	(hl+), a
-    000005B4 AF               [ 4] 1391 	xor	a, a
-    000005B5 32               [ 8] 1392 	ld	(hl-), a
-    000005B6 3A               [ 8] 1393 	ld	a, (hl-)
-    000005B7 2B               [ 8] 1394 	dec	hl
-    000005B8 22               [ 8] 1395 	ld	(hl+), a
-    000005B9 36 00            [12] 1396 	ld	(hl), #0x00
-    000005BB 3E 02            [ 8] 1397 	ld	a, #0x02
-    000005BD                       1398 00152$:
-    000005BD F8 03            [12] 1399 	ldhl	sp,	#3
-    000005BF CB 26            [16] 1400 	sla	(hl)
-    000005C1 23               [ 8] 1401 	inc	hl
-    000005C2 CB 16            [16] 1402 	rl	(hl)
-    000005C4 3D               [ 4] 1403 	dec	a
-    000005C5 20 F6            [12] 1404 	jr	NZ, 00152$
-    000005C7 2B               [ 8] 1405 	dec	hl
-    000005C8 2A               [ 8] 1406 	ld	a, (hl+)
-    000005C9 5F               [ 4] 1407 	ld	e, a
-    000005CA 56               [ 8] 1408 	ld	d, (hl)
-    000005CB 21r64r00         [12] 1409 	ld	hl, #(_transformComponent + 100)
-    000005CE 19               [ 8] 1410 	add	hl, de
-    000005CF E5               [16] 1411 	push	hl
-    000005D0 7D               [ 4] 1412 	ld	a, l
-    000005D1 F8 07            [12] 1413 	ldhl	sp,	#7
-    000005D3 77               [ 8] 1414 	ld	(hl), a
-    000005D4 E1               [12] 1415 	pop	hl
-    000005D5 7C               [ 4] 1416 	ld	a, h
-    000005D6 F8 06            [12] 1417 	ldhl	sp,	#6
-    000005D8 32               [ 8] 1418 	ld	(hl-), a
-    000005D9 3A               [ 8] 1419 	ld	a, (hl-)
-    000005DA 2B               [ 8] 1420 	dec	hl
-    000005DB 77               [ 8] 1421 	ld	(hl), a
-    000005DC F8 06            [12] 1422 	ldhl	sp,	#6
-    000005DE 3A               [ 8] 1423 	ld	a, (hl-)
-    000005DF 2B               [ 8] 1424 	dec	hl
-                                   1425 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
-    000005E0 32               [ 8] 1426 	ld	(hl-), a
-    000005E1 2A               [ 8] 1427 	ld	a, (hl+)
-    000005E2 66               [ 8] 1428 	ld	h, (hl)
-    000005E3 6F               [ 4] 1429 	ld	l, a
-    000005E4 AF               [ 4] 1430 	xor	a, a
-    000005E5 22               [ 8] 1431 	ld	(hl+), a
-    000005E6 77               [ 8] 1432 	ld	(hl), a
-                                   1433 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
-    000005E7 F8 03            [12] 1434 	ldhl	sp,#3
-    000005E9 2A               [ 8] 1435 	ld	a, (hl+)
-    000005EA 5F               [ 4] 1436 	ld	e, a
-    000005EB 56               [ 8] 1437 	ld	d, (hl)
-    000005EC 21 02 00         [12] 1438 	ld	hl, #0x0002
-    000005EF 19               [ 8] 1439 	add	hl, de
-    000005F0 E5               [16] 1440 	push	hl
-    000005F1 7D               [ 4] 1441 	ld	a, l
-    000005F2 F8 07            [12] 1442 	ldhl	sp,	#7
-    000005F4 77               [ 8] 1443 	ld	(hl), a
-    000005F5 E1               [12] 1444 	pop	hl
-    000005F6 7C               [ 4] 1445 	ld	a, h
-    000005F7 F8 06            [12] 1446 	ldhl	sp,	#6
-    000005F9 32               [ 8] 1447 	ld	(hl-), a
-    000005FA 2A               [ 8] 1448 	ld	a, (hl+)
-    000005FB 66               [ 8] 1449 	ld	h, (hl)
-    000005FC 6F               [ 4] 1450 	ld	l, a
-    000005FD AF               [ 4] 1451 	xor	a, a
-    000005FE 22               [ 8] 1452 	ld	(hl+), a
-    000005FF 77               [ 8] 1453 	ld	(hl), a
-                                   1454 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
-    00000600 11r00r00         [12] 1455 	ld	de, #_transformComponent
-    00000603 F8 00            [12] 1456 	ldhl	sp,	#0
-    00000605 6E               [ 8] 1457 	ld	l, (hl)
-    00000606 26 00            [ 8] 1458 	ld	h, #0x00
-    00000608 19               [ 8] 1459 	add	hl, de
-    00000609 E5               [16] 1460 	push	hl
-    0000060A 7D               [ 4] 1461 	ld	a, l
-    0000060B F8 07            [12] 1462 	ldhl	sp,	#7
-    0000060D 77               [ 8] 1463 	ld	(hl), a
-    0000060E E1               [12] 1464 	pop	hl
-    0000060F 7C               [ 4] 1465 	ld	a, h
-    00000610 F8 06            [12] 1466 	ldhl	sp,	#6
-    00000612 77               [ 8] 1467 	ld	(hl), a
-    00000613 F8 01            [12] 1468 	ldhl	sp,#1
-    00000615 2A               [ 8] 1469 	ld	a, (hl+)
-    00000616 5F               [ 4] 1470 	ld	e, a
-    00000617 2A               [ 8] 1471 	ld	a, (hl+)
-    00000618 23               [ 8] 1472 	inc	hl
-    00000619 57               [ 4] 1473 	ld	d, a
-    0000061A 1A               [ 8] 1474 	ld	a, (de)
-    0000061B 22               [ 8] 1475 	ld	(hl+), a
-    0000061C 2A               [ 8] 1476 	ld	a, (hl+)
-    0000061D 5F               [ 4] 1477 	ld	e, a
-    0000061E 3A               [ 8] 1478 	ld	a, (hl-)
-    0000061F 2B               [ 8] 1479 	dec	hl
-    00000620 57               [ 4] 1480 	ld	d, a
-    00000621 7E               [ 8] 1481 	ld	a, (hl)
-    00000622 12               [ 8] 1482 	ld	(de), a
-                                   1483 ;Source/Engine/ECS/ECS.c:27: break;
-    00000623 C3r1Dr07         [16] 1484 	jp	00112$
-                                   1485 ;Source/Engine/ECS/ECS.c:28: case SPRITE_COMPONENT:
-    00000626                       1486 00106$:
-                                   1487 ;Source/Engine/ECS/ECS.c:29: nextPoolSlot = GetNextAvailableComponentPoolSlot(spriteComponent.entityID, SPRITE_POOL_SIZE);
-    00000626 3E 32            [ 8] 1488 	ld	a, #0x32
-    00000628 11r00r00         [12] 1489 	ld	de, #_spriteComponent
-    0000062B CDr18r08         [24] 1490 	call	_GetNextAvailableComponentPoolSlot
-                                   1491 ;Source/Engine/ECS/ECS.c:30: if (nextPoolSlot != 255) {
-    0000062E F8 03            [12] 1492 	ldhl	sp,#3
-    00000630 77               [ 8] 1493 	ld	(hl), a
-    00000631 3C               [ 4] 1494 	inc	a
-    00000632 CAr1Dr07         [16] 1495 	jp	Z, 00112$
-                                   1496 ;Source/Engine/ECS/ECS.c:31: spriteComponent.entityID[nextPoolSlot] = entity->ID;
-    00000635 11r00r00         [12] 1497 	ld	de, #_spriteComponent
-    00000638 F8 03            [12] 1498 	ldhl	sp,	#3
-    0000063A 6E               [ 8] 1499 	ld	l, (hl)
-    0000063B 26 00            [ 8] 1500 	ld	h, #0x00
-    0000063D 19               [ 8] 1501 	add	hl, de
-    0000063E E5               [16] 1502 	push	hl
-    0000063F 7D               [ 4] 1503 	ld	a, l
-    00000640 F8 06            [12] 1504 	ldhl	sp,	#6
-    00000642 77               [ 8] 1505 	ld	(hl), a
-    00000643 E1               [12] 1506 	pop	hl
-    00000644 7C               [ 4] 1507 	ld	a, h
-    00000645 F8 05            [12] 1508 	ldhl	sp,	#5
-    00000647 77               [ 8] 1509 	ld	(hl), a
-    00000648 F8 01            [12] 1510 	ldhl	sp,#1
-    0000064A 2A               [ 8] 1511 	ld	a, (hl+)
-    0000064B 5F               [ 4] 1512 	ld	e, a
-    0000064C 56               [ 8] 1513 	ld	d, (hl)
-    0000064D 1A               [ 8] 1514 	ld	a, (de)
-    0000064E F8 06            [12] 1515 	ldhl	sp,	#6
-    00000650 32               [ 8] 1516 	ld	(hl-), a
-    00000651 2B               [ 8] 1517 	dec	hl
-    00000652 2A               [ 8] 1518 	ld	a, (hl+)
-    00000653 5F               [ 4] 1519 	ld	e, a
-    00000654 2A               [ 8] 1520 	ld	a, (hl+)
-    00000655 57               [ 4] 1521 	ld	d, a
-    00000656 7E               [ 8] 1522 	ld	a, (hl)
-    00000657 12               [ 8] 1523 	ld	(de), a
-                                   1524 ;Source/Engine/ECS/ECS.c:32: spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
-    00000658 F8 03            [12] 1525 	ldhl	sp,	#3
-    0000065A 7E               [ 8] 1526 	ld	a, (hl)
-    0000065B 87               [ 4] 1527 	add	a, a
-    0000065C F8 06            [12] 1528 	ldhl	sp,	#6
-    0000065E 77               [ 8] 1529 	ld	(hl), a
-    0000065F 11r32r00         [12] 1530 	ld	de, #(_spriteComponent + 50)
-    00000662 6E               [ 8] 1531 	ld	l, (hl)
-    00000663 26 00            [ 8] 1532 	ld	h, #0x00
-    00000665 19               [ 8] 1533 	add	hl, de
-    00000666 E5               [16] 1534 	push	hl
-    00000667 7D               [ 4] 1535 	ld	a, l
-    00000668 F8 06            [12] 1536 	ldhl	sp,	#6
-    0000066A 77               [ 8] 1537 	ld	(hl), a
-    0000066B E1               [12] 1538 	pop	hl
-    0000066C 7C               [ 4] 1539 	ld	a, h
-    0000066D F8 05            [12] 1540 	ldhl	sp,	#5
-    0000066F 32               [ 8] 1541 	ld	(hl-), a
-    00000670 2A               [ 8] 1542 	ld	a, (hl+)
-    00000671 66               [ 8] 1543 	ld	h, (hl)
-    00000672 6F               [ 4] 1544 	ld	l, a
-    00000673 AF               [ 4] 1545 	xor	a, a
-    00000674 22               [ 8] 1546 	ld	(hl+), a
-    00000675 77               [ 8] 1547 	ld	(hl), a
-                                   1548 ;Source/Engine/ECS/ECS.c:33: spriteComponent.tileIndex[nextPoolSlot] = 0;
-    00000676 11r96r00         [12] 1549 	ld	de, #(_spriteComponent + 150)
-    00000679 F8 03            [12] 1550 	ldhl	sp,	#3
-    0000067B 6E               [ 8] 1551 	ld	l, (hl)
-    0000067C 26 00            [ 8] 1552 	ld	h, #0x00
-    0000067E 19               [ 8] 1553 	add	hl, de
-    0000067F E5               [16] 1554 	push	hl
-    00000680 7D               [ 4] 1555 	ld	a, l
-    00000681 F8 06            [12] 1556 	ldhl	sp,	#6
-    00000683 77               [ 8] 1557 	ld	(hl), a
-    00000684 E1               [12] 1558 	pop	hl
-    00000685 7C               [ 4] 1559 	ld	a, h
-    00000686 F8 05            [12] 1560 	ldhl	sp,	#5
-    00000688 32               [ 8] 1561 	ld	(hl-), a
-    00000689 2A               [ 8] 1562 	ld	a, (hl+)
-    0000068A 66               [ 8] 1563 	ld	h, (hl)
-    0000068B 6F               [ 4] 1564 	ld	l, a
-    0000068C 36 00            [12] 1565 	ld	(hl), #0x00
-                                   1566 ;Source/Engine/ECS/ECS.c:34: spriteComponent.width[nextPoolSlot] = 0;
-    0000068E 11rC8r00         [12] 1567 	ld	de, #(_spriteComponent + 200)
-    00000691 F8 03            [12] 1568 	ldhl	sp,	#3
-    00000693 6E               [ 8] 1569 	ld	l, (hl)
-    00000694 26 00            [ 8] 1570 	ld	h, #0x00
-    00000696 19               [ 8] 1571 	add	hl, de
-    00000697 E5               [16] 1572 	push	hl
-    00000698 7D               [ 4] 1573 	ld	a, l
-    00000699 F8 06            [12] 1574 	ldhl	sp,	#6
-    0000069B 77               [ 8] 1575 	ld	(hl), a
-    0000069C E1               [12] 1576 	pop	hl
-    0000069D 7C               [ 4] 1577 	ld	a, h
-    0000069E F8 05            [12] 1578 	ldhl	sp,	#5
-    000006A0 32               [ 8] 1579 	ld	(hl-), a
-    000006A1 2A               [ 8] 1580 	ld	a, (hl+)
-    000006A2 66               [ 8] 1581 	ld	h, (hl)
-    000006A3 6F               [ 4] 1582 	ld	l, a
-    000006A4 36 00            [12] 1583 	ld	(hl), #0x00
-                                   1584 ;Source/Engine/ECS/ECS.c:35: spriteComponent.height[nextPoolSlot] = 0;
-    000006A6 11rFAr00         [12] 1585 	ld	de, #(_spriteComponent + 250)
-    000006A9 F8 03            [12] 1586 	ldhl	sp,	#3
-    000006AB 6E               [ 8] 1587 	ld	l, (hl)
-    000006AC 26 00            [ 8] 1588 	ld	h, #0x00
-    000006AE 19               [ 8] 1589 	add	hl, de
-    000006AF E5               [16] 1590 	push	hl
-    000006B0 7D               [ 4] 1591 	ld	a, l
-    000006B1 F8 06            [12] 1592 	ldhl	sp,	#6
-    000006B3 77               [ 8] 1593 	ld	(hl), a
-    000006B4 E1               [12] 1594 	pop	hl
-    000006B5 7C               [ 4] 1595 	ld	a, h
-    000006B6 F8 05            [12] 1596 	ldhl	sp,	#5
-    000006B8 32               [ 8] 1597 	ld	(hl-), a
-    000006B9 2A               [ 8] 1598 	ld	a, (hl+)
-    000006BA 66               [ 8] 1599 	ld	h, (hl)
-    000006BB 6F               [ 4] 1600 	ld	l, a
-    000006BC 36 00            [12] 1601 	ld	(hl), #0x00
-                                   1602 ;Source/Engine/ECS/ECS.c:36: spriteComponent.offset[nextPoolSlot].x = 0;
-    000006BE 11r2Cr01         [12] 1603 	ld	de, #(_spriteComponent + 300)
-    000006C1 F8 06            [12] 1604 	ldhl	sp,	#6
-    000006C3 6E               [ 8] 1605 	ld	l, (hl)
-    000006C4 26 00            [ 8] 1606 	ld	h, #0x00
-    000006C6 19               [ 8] 1607 	add	hl, de
-    000006C7 E5               [16] 1608 	push	hl
-    000006C8 7D               [ 4] 1609 	ld	a, l
-    000006C9 F8 03            [12] 1610 	ldhl	sp,	#3
-    000006CB 77               [ 8] 1611 	ld	(hl), a
-    000006CC E1               [12] 1612 	pop	hl
-    000006CD 7C               [ 4] 1613 	ld	a, h
-    000006CE F8 02            [12] 1614 	ldhl	sp,	#2
-    000006D0 32               [ 8] 1615 	ld	(hl-), a
-    000006D1 2A               [ 8] 1616 	ld	a, (hl+)
-    000006D2 66               [ 8] 1617 	ld	h, (hl)
-    000006D3 6F               [ 4] 1618 	ld	l, a
-    000006D4 36 00            [12] 1619 	ld	(hl), #0x00
-                                   1620 ;Source/Engine/ECS/ECS.c:37: spriteComponent.offset[nextPoolSlot].y = 0;
-    000006D6 F8 01            [12] 1621 	ldhl	sp,#1
-    000006D8 2A               [ 8] 1622 	ld	a, (hl+)
-    000006D9 5F               [ 4] 1623 	ld	e, a
-    000006DA 56               [ 8] 1624 	ld	d, (hl)
-    000006DB 6B               [ 4] 1625 	ld	l, e
-    000006DC 62               [ 4] 1626 	ld	h, d
-    000006DD 23               [ 8] 1627 	inc	hl
-    000006DE E5               [16] 1628 	push	hl
-    000006DF 7D               [ 4] 1629 	ld	a, l
-    000006E0 F8 07            [12] 1630 	ldhl	sp,	#7
-    000006E2 77               [ 8] 1631 	ld	(hl), a
-    000006E3 E1               [12] 1632 	pop	hl
-    000006E4 7C               [ 4] 1633 	ld	a, h
-    000006E5 F8 06            [12] 1634 	ldhl	sp,	#6
-    000006E7 32               [ 8] 1635 	ld	(hl-), a
-    000006E8 2A               [ 8] 1636 	ld	a, (hl+)
-    000006E9 66               [ 8] 1637 	ld	h, (hl)
-    000006EA 6F               [ 4] 1638 	ld	l, a
-    000006EB 36 00            [12] 1639 	ld	(hl), #0x00
-                                   1640 ;Source/Engine/ECS/ECS.c:38: spriteComponent.flags[nextPoolSlot] = 0;
-    000006ED 11r90r01         [12] 1641 	ld	de, #(_spriteComponent + 400)
-    000006F0 F8 03            [12] 1642 	ldhl	sp,	#3
-    000006F2 6E               [ 8] 1643 	ld	l, (hl)
-    000006F3 26 00            [ 8] 1644 	ld	h, #0x00
-    000006F5 19               [ 8] 1645 	add	hl, de
-    000006F6 E5               [16] 1646 	push	hl
-    000006F7 7D               [ 4] 1647 	ld	a, l
-    000006F8 F8 07            [12] 1648 	ldhl	sp,	#7
-    000006FA 77               [ 8] 1649 	ld	(hl), a
-    000006FB E1               [12] 1650 	pop	hl
-    000006FC 7C               [ 4] 1651 	ld	a, h
-    000006FD F8 06            [12] 1652 	ldhl	sp,	#6
-    000006FF 32               [ 8] 1653 	ld	(hl-), a
-    00000700 2A               [ 8] 1654 	ld	a, (hl+)
-    00000701 66               [ 8] 1655 	ld	h, (hl)
-    00000702 6F               [ 4] 1656 	ld	l, a
-    00000703 36 00            [12] 1657 	ld	(hl), #0x00
-                                   1658 ;Source/Engine/ECS/ECS.c:39: spriteComponent.palette[nextPoolSlot] = 0;
-    00000705 11rC2r01         [12] 1659 	ld	de, #(_spriteComponent + 450)
-    00000708 F8 03            [12] 1660 	ldhl	sp,	#3
-    0000070A 6E               [ 8] 1661 	ld	l, (hl)
-    0000070B 26 00            [ 8] 1662 	ld	h, #0x00
-    0000070D 19               [ 8] 1663 	add	hl, de
-    0000070E E5               [16] 1664 	push	hl
-    0000070F 7D               [ 4] 1665 	ld	a, l
-    00000710 F8 07            [12] 1666 	ldhl	sp,	#7
-    00000712 77               [ 8] 1667 	ld	(hl), a
-    00000713 E1               [12] 1668 	pop	hl
-    00000714 7C               [ 4] 1669 	ld	a, h
-    00000715 F8 06            [12] 1670 	ldhl	sp,	#6
-    00000717 32               [ 8] 1671 	ld	(hl-), a
-    00000718 2A               [ 8] 1672 	ld	a, (hl+)
-    00000719 66               [ 8] 1673 	ld	h, (hl)
-    0000071A 6F               [ 4] 1674 	ld	l, a
-    0000071B 36 00            [12] 1675 	ld	(hl), #0x00
-                                   1676 ;Source/Engine/ECS/ECS.c:46: }
-    0000071D                       1677 00112$:
-                                   1678 ;Source/Engine/ECS/ECS.c:47: }
-    0000071D E8 0B            [16] 1679 	add	sp, #11
-    0000071F C9               [16] 1680 	ret
-                                   1681 ;Source/Engine/ECS/ECS.c:50: void EntityRemoveComponent(Entity *entity, uint16_t component) {
-                                   1682 ;	---------------------------------
-                                   1683 ; Function EntityRemoveComponent
-                                   1684 ; ---------------------------------
-    00000720                       1685 _EntityRemoveComponent::
-    00000720 E8 FA            [16] 1686 	add	sp, #-6
-    00000722 F8 04            [12] 1687 	ldhl	sp,	#4
-    00000724 7B               [ 4] 1688 	ld	a, e
-    00000725 22               [ 8] 1689 	ld	(hl+), a
-                                   1690 ;Source/Engine/ECS/ECS.c:52: entity->components &= ~component;
-    00000726 7A               [ 4] 1691 	ld	a, d
-    00000727 32               [ 8] 1692 	ld	(hl-), a
-    00000728 2A               [ 8] 1693 	ld	a, (hl+)
-    00000729 5F               [ 4] 1694 	ld	e, a
-    0000072A 56               [ 8] 1695 	ld	d, (hl)
-    0000072B 6B               [ 4] 1696 	ld	l, e
-    0000072C 62               [ 4] 1697 	ld	h, d
-    0000072D 23               [ 8] 1698 	inc	hl
-    0000072E 33               [ 8] 1699 	inc	sp
-    0000072F 33               [ 8] 1700 	inc	sp
-    00000730 5D               [ 4] 1701 	ld	e, l
-    00000731 54               [ 4] 1702 	ld	d, h
-    00000732 D5               [16] 1703 	push	de
-    00000733 1A               [ 8] 1704 	ld	a, (de)
-    00000734 6F               [ 4] 1705 	ld	l, a
-    00000735 13               [ 8] 1706 	inc	de
-    00000736 1A               [ 8] 1707 	ld	a, (de)
-    00000737 67               [ 4] 1708 	ld	h, a
-    00000738 79               [ 4] 1709 	ld	a, c
-    00000739 2F               [ 4] 1710 	cpl
-    0000073A 5F               [ 4] 1711 	ld	e, a
-    0000073B 78               [ 4] 1712 	ld	a, b
-    0000073C 2F               [ 4] 1713 	cpl
-    0000073D 57               [ 4] 1714 	ld	d, a
-    0000073E 7D               [ 4] 1715 	ld	a, l
-    0000073F A3               [ 4] 1716 	and	a, e
-    00000740 E5               [16] 1717 	push	hl
-    00000741 F8 04            [12] 1718 	ldhl	sp,	#4
-    00000743 77               [ 8] 1719 	ld	(hl), a
-    00000744 E1               [12] 1720 	pop	hl
-    00000745 7C               [ 4] 1721 	ld	a, h
-    00000746 A2               [ 4] 1722 	and	a, d
-    00000747 F8 03            [12] 1723 	ldhl	sp,	#3
-    00000749 77               [ 8] 1724 	ld	(hl), a
-    0000074A D1               [12] 1725 	pop	de
-    0000074B D5               [16] 1726 	push	de
-    0000074C F8 02            [12] 1727 	ldhl	sp,	#2
-    0000074E 2A               [ 8] 1728 	ld	a, (hl+)
-    0000074F 12               [ 8] 1729 	ld	(de), a
-    00000750 13               [ 8] 1730 	inc	de
-                                   1731 ;Source/Engine/ECS/ECS.c:58: if (transformComponent.entityID[i] == entity -> ID)  {
-    00000751 2A               [ 8] 1732 	ld	a, (hl+)
-    00000752 12               [ 8] 1733 	ld	(de), a
-    00000753 2A               [ 8] 1734 	ld	a, (hl+)
-    00000754 5F               [ 4] 1735 	ld	e, a
-    00000755 56               [ 8] 1736 	ld	d, (hl)
-                                   1737 ;Source/Engine/ECS/ECS.c:55: switch (component) {
-    00000756 79               [ 4] 1738 	ld	a, c
-    00000757 3D               [ 4] 1739 	dec	a
-    00000758 B0               [ 4] 1740 	or	a, b
-    00000759 28 09            [12] 1741 	jr	Z, 00101$
-    0000075B 79               [ 4] 1742 	ld	a, c
-    0000075C D6 02            [ 8] 1743 	sub	a, #0x02
-    0000075E B0               [ 4] 1744 	or	a, b
-    0000075F 28 43            [12] 1745 	jr	Z, 00105$
-    00000761 C3r03r08         [16] 1746 	jp	00116$
-                                   1747 ;Source/Engine/ECS/ECS.c:56: case TRANSFORM_COMPONENT:
-    00000764                       1748 00101$:
-                                   1749 ;Source/Engine/ECS/ECS.c:57: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
-    00000764 F8 03            [12] 1750 	ldhl	sp,	#3
-    00000766 36 00            [12] 1751 	ld	(hl), #0x00
-    00000768 0E 00            [ 8] 1752 	ld	c, #0x00
-    0000076A                       1753 00112$:
-                                   1754 ;Source/Engine/ECS/ECS.c:58: if (transformComponent.entityID[i] == entity -> ID)  {
-    0000076A 21r00r00         [12] 1755 	ld	hl, #_transformComponent
-    0000076D 06 00            [ 8] 1756 	ld	b, #0x00
-    0000076F 09               [ 8] 1757 	add	hl, bc
-    00000770 1A               [ 8] 1758 	ld	a, (de)
-    00000771 46               [ 8] 1759 	ld	b, (hl)
-    00000772 90               [ 4] 1760 	sub	a, b
-    00000773 20 24            [12] 1761 	jr	NZ, 00113$
-                                   1762 ;Source/Engine/ECS/ECS.c:59: vec2_set(&transformComponent.position[i], 0, 0);
-    00000775 01r64r00         [12] 1763 	ld	bc, #_transformComponent + 100
-    00000778 F8 03            [12] 1764 	ldhl	sp,	#3
-    0000077A 5E               [ 8] 1765 	ld	e, (hl)
-    0000077B 16 00            [ 8] 1766 	ld	d, #0x00
-    0000077D 6B               [ 4] 1767 	ld	l, e
-    0000077E 62               [ 4] 1768 	ld	h, d
-    0000077F 29               [ 8] 1769 	add	hl, hl
-    00000780 29               [ 8] 1770 	add	hl, hl
-    00000781 09               [ 8] 1771 	add	hl, bc
-                                   1772 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
-    00000782 AF               [ 4] 1773 	xor	a, a
-    00000783 22               [ 8] 1774 	ld	(hl+), a
-    00000784 32               [ 8] 1775 	ld	(hl-), a
-                                   1776 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
-    00000785 23               [ 8] 1777 	inc	hl
-    00000786 23               [ 8] 1778 	inc	hl
-    00000787 AF               [ 4] 1779 	xor	a, a
-    00000788 22               [ 8] 1780 	ld	(hl+), a
-    00000789 77               [ 8] 1781 	ld	(hl), a
-                                   1782 ;Source/Engine/ECS/ECS.c:60: transformComponent.entityID[i] = 0;
-    0000078A 11r00r00         [12] 1783 	ld	de, #_transformComponent
-    0000078D F8 03            [12] 1784 	ldhl	sp,	#3
-    0000078F 6E               [ 8] 1785 	ld	l, (hl)
-    00000790 26 00            [ 8] 1786 	ld	h, #0x00
-    00000792 19               [ 8] 1787 	add	hl, de
-    00000793 4D               [ 4] 1788 	ld	c, l
-    00000794 44               [ 4] 1789 	ld	b, h
-    00000795 AF               [ 4] 1790 	xor	a, a
-    00000796 02               [ 8] 1791 	ld	(bc), a
-                                   1792 ;Source/Engine/ECS/ECS.c:61: return;
-    00000797 18 6A            [12] 1793 	jr	00116$
-    00000799                       1794 00113$:
-                                   1795 ;Source/Engine/ECS/ECS.c:57: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
-    00000799 0C               [ 4] 1796 	inc	c
-    0000079A F8 03            [12] 1797 	ldhl	sp,	#3
-    0000079C 79               [ 4] 1798 	ld	a,c
-    0000079D 77               [ 8] 1799 	ld	(hl),a
-    0000079E D6 64            [ 8] 1800 	sub	a, #0x64
-    000007A0 38 C8            [12] 1801 	jr	C, 00112$
-                                   1802 ;Source/Engine/ECS/ECS.c:64: break;
-    000007A2 18 5F            [12] 1803 	jr	00116$
-                                   1804 ;Source/Engine/ECS/ECS.c:65: case SPRITE_COMPONENT:
-    000007A4                       1805 00105$:
-                                   1806 ;Source/Engine/ECS/ECS.c:66: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000007A4 01 00 00         [12] 1807 	ld	bc, #0x0
-    000007A7                       1808 00114$:
-                                   1809 ;Source/Engine/ECS/ECS.c:67: if (spriteComponent.entityID[i] == entity -> ID)  {
-    000007A7 3Er00            [ 8] 1810 	ld	a, #<(_spriteComponent)
-    000007A9 80               [ 4] 1811 	add	a, b
-    000007AA 6F               [ 4] 1812 	ld	l, a
-    000007AB 3Es00            [ 8] 1813 	ld	a, #>(_spriteComponent)
-    000007AD CE 00            [ 8] 1814 	adc	a, #0x00
-    000007AF 67               [ 4] 1815 	ld	h, a
-    000007B0 1A               [ 8] 1816 	ld	a, (de)
-    000007B1 6E               [ 8] 1817 	ld	l, (hl)
-    000007B2 95               [ 4] 1818 	sub	a, l
-    000007B3 20 47            [12] 1819 	jr	NZ, 00115$
-                                   1820 ;Source/Engine/ECS/ECS.c:68: spriteComponent.entityID[i] = 0;
-    000007B5 21r00r00         [12] 1821 	ld	hl, #_spriteComponent
-    000007B8 06 00            [ 8] 1822 	ld	b, #0x00
-    000007BA 09               [ 8] 1823 	add	hl, bc
-    000007BB 36 00            [12] 1824 	ld	(hl), #0x00
-                                   1825 ;Source/Engine/ECS/ECS.c:69: spriteComponent.tileData[i] = 0;
-    000007BD 21r32r00         [12] 1826 	ld	hl, #_spriteComponent + 50
-    000007C0 79               [ 4] 1827 	ld	a, c
-    000007C1 87               [ 4] 1828 	add	a, a
-    000007C2 5F               [ 4] 1829 	ld	e, a
-    000007C3 16 00            [ 8] 1830 	ld	d, #0x00
-    000007C5 19               [ 8] 1831 	add	hl, de
-    000007C6 AF               [ 4] 1832 	xor	a, a
-    000007C7 22               [ 8] 1833 	ld	(hl+), a
-    000007C8 77               [ 8] 1834 	ld	(hl), a
-                                   1835 ;Source/Engine/ECS/ECS.c:70: spriteComponent.tileIndex[i] = 0;
-    000007C9 21r96r00         [12] 1836 	ld	hl, #_spriteComponent + 150
-    000007CC 06 00            [ 8] 1837 	ld	b, #0x00
-    000007CE 09               [ 8] 1838 	add	hl, bc
-    000007CF 36 00            [12] 1839 	ld	(hl), #0x00
-                                   1840 ;Source/Engine/ECS/ECS.c:71: spriteComponent.width[i] = 0;
-    000007D1 21rC8r00         [12] 1841 	ld	hl, #_spriteComponent + 200
-    000007D4 06 00            [ 8] 1842 	ld	b, #0x00
-    000007D6 09               [ 8] 1843 	add	hl, bc
-    000007D7 36 00            [12] 1844 	ld	(hl), #0x00
-                                   1845 ;Source/Engine/ECS/ECS.c:72: spriteComponent.height[i] = 0;
-    000007D9 21rFAr00         [12] 1846 	ld	hl, #_spriteComponent + 250
-    000007DC 06 00            [ 8] 1847 	ld	b, #0x00
-    000007DE 09               [ 8] 1848 	add	hl, bc
-    000007DF 36 00            [12] 1849 	ld	(hl), #0x00
-                                   1850 ;Source/Engine/ECS/ECS.c:73: spriteComponent.offset[i].x = 0;
-    000007E1 21r2Cr01         [12] 1851 	ld	hl, #_spriteComponent + 300
-    000007E4 16 00            [ 8] 1852 	ld	d, #0x00
-    000007E6 19               [ 8] 1853 	add	hl, de
-                                   1854 ;Source/Engine/ECS/ECS.c:74: spriteComponent.offset[i].y = 0;
-    000007E7 AF               [ 4] 1855 	xor	a, a
-    000007E8 22               [ 8] 1856 	ld	(hl+), a
-    000007E9 77               [ 8] 1857 	ld	(hl), a
-                                   1858 ;Source/Engine/ECS/ECS.c:75: spriteComponent.flags[i] = 0;
-    000007EA 21r90r01         [12] 1859 	ld	hl, #(_spriteComponent + 400)
-    000007ED 06 00            [ 8] 1860 	ld	b, #0x00
-    000007EF 09               [ 8] 1861 	add	hl, bc
-    000007F0 36 00            [12] 1862 	ld	(hl), #0x00
-                                   1863 ;Source/Engine/ECS/ECS.c:76: spriteComponent.palette[i] = 0;
-    000007F2 21rC2r01         [12] 1864 	ld	hl, #(_spriteComponent + 450)
-    000007F5 06 00            [ 8] 1865 	ld	b, #0x00
-    000007F7 09               [ 8] 1866 	add	hl, bc
-    000007F8 36 00            [12] 1867 	ld	(hl), #0x00
-                                   1868 ;Source/Engine/ECS/ECS.c:77: return;
-    000007FA 18 07            [12] 1869 	jr	00116$
-    000007FC                       1870 00115$:
-                                   1871 ;Source/Engine/ECS/ECS.c:66: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
-    000007FC 04               [ 4] 1872 	inc	b
-    000007FD 48               [ 4] 1873 	ld	c, b
-    000007FE 78               [ 4] 1874 	ld	a, b
-    000007FF D6 32            [ 8] 1875 	sub	a, #0x32
-    00000801 38 A4            [12] 1876 	jr	C, 00114$
-                                   1877 ;Source/Engine/ECS/ECS.c:85: }
-    00000803                       1878 00116$:
-                                   1879 ;Source/Engine/ECS/ECS.c:86: }
-    00000803 E8 06            [16] 1880 	add	sp, #6
-    00000805 C9               [16] 1881 	ret
-                                   1882 ;Source/Engine/ECS/ECS.c:89: bool EntityHasComponent(const Entity *entity, uint16_t component) {
-                                   1883 ;	---------------------------------
-                                   1884 ; Function EntityHasComponent
-                                   1885 ; ---------------------------------
-    00000806                       1886 _EntityHasComponent::
-                                   1887 ;Source/Engine/ECS/ECS.c:90: return (entity->components & component) != 0;
-    00000806 6B               [ 4] 1888 	ld	l, e
-    00000807 62               [ 4] 1889 	ld	h, d
-    00000808 23               [ 8] 1890 	inc	hl
-    00000809 2A               [ 8] 1891 	ld	a, (hl+)
-    0000080A 6E               [ 8] 1892 	ld	l, (hl)
-    0000080B A1               [ 4] 1893 	and	a, c
-    0000080C 4F               [ 4] 1894 	ld	c, a
-    0000080D 7D               [ 4] 1895 	ld	a, l
-    0000080E A0               [ 4] 1896 	and	a, b
-    0000080F B1               [ 4] 1897 	or	a, c
-    00000810 D6 01            [ 8] 1898 	sub	a, #0x01
-    00000812 3E 00            [ 8] 1899 	ld	a, #0x00
-    00000814 17               [ 4] 1900 	rla
-    00000815 EE 01            [ 8] 1901 	xor	a, #0x01
-                                   1902 ;Source/Engine/ECS/ECS.c:91: }
-    00000817 C9               [16] 1903 	ret
-                                   1904 ;Source/Engine/ECS/ECS.c:93: uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
-                                   1905 ;	---------------------------------
-                                   1906 ; Function GetNextAvailableComponentPoolSlot
-                                   1907 ; ---------------------------------
-    00000818                       1908 _GetNextAvailableComponentPoolSlot::
-    00000818 3B               [ 8] 1909 	dec	sp
-    00000819 4F               [ 4] 1910 	ld	c, a
-                                   1911 ;Source/Engine/ECS/ECS.c:95: for (i = 0; i < poolSize; i++) {
-    0000081A F8 00            [12] 1912 	ldhl	sp,	#0
-    0000081C 36 00            [12] 1913 	ld	(hl), #0x00
-    0000081E 06 00            [ 8] 1914 	ld	b, #0x00
-    00000820                       1915 00105$:
-    00000820 78               [ 4] 1916 	ld	a, b
-    00000821 91               [ 4] 1917 	sub	a, c
-    00000822 30 13            [12] 1918 	jr	NC, 00103$
-                                   1919 ;Source/Engine/ECS/ECS.c:96: if (poolPointer[i] == 0) {
-    00000824 68               [ 4] 1920 	ld	l, b
-    00000825 26 00            [ 8] 1921 	ld	h, #0x00
-    00000827 19               [ 8] 1922 	add	hl, de
-    00000828 7E               [ 8] 1923 	ld	a, (hl)
-    00000829 B7               [ 4] 1924 	or	a, a
-    0000082A 20 05            [12] 1925 	jr	NZ, 00106$
-                                   1926 ;Source/Engine/ECS/ECS.c:97: return i;
-    0000082C F8 00            [12] 1927 	ldhl	sp,	#0
-    0000082E 7E               [ 8] 1928 	ld	a, (hl)
-    0000082F 18 08            [12] 1929 	jr	00107$
-    00000831                       1930 00106$:
-                                   1931 ;Source/Engine/ECS/ECS.c:95: for (i = 0; i < poolSize; i++) {
-    00000831 04               [ 4] 1932 	inc	b
-    00000832 F8 00            [12] 1933 	ldhl	sp,	#0
-    00000834 70               [ 8] 1934 	ld	(hl), b
-    00000835 18 E9            [12] 1935 	jr	00105$
-    00000837                       1936 00103$:
-                                   1937 ;Source/Engine/ECS/ECS.c:100: return 255;
-    00000837 3E FF            [ 8] 1938 	ld	a, #0xff
-    00000839                       1939 00107$:
-                                   1940 ;Source/Engine/ECS/ECS.c:101: }
-    00000839 33               [ 8] 1941 	inc	sp
-    0000083A C9               [16] 1942 	ret
-                                   1943 ;Source/Engine/ECS/ECS.c:103: Entity* getEntityById (uint8_t id) {
-                                   1944 ;	---------------------------------
-                                   1945 ; Function getEntityById
-                                   1946 ; ---------------------------------
-    0000083B                       1947 _getEntityById::
-    0000083B 3B               [ 8] 1948 	dec	sp
-    0000083C F8 00            [12] 1949 	ldhl	sp,	#0
-    0000083E 77               [ 8] 1950 	ld	(hl), a
-                                   1951 ;Source/Engine/ECS/ECS.c:104: for (int i = 0; i < MAX_ENTITIES; i++) {
-    0000083F 01 00 00         [12] 1952 	ld	bc, #0x0000
-    00000842                       1953 00105$:
-    00000842 79               [ 4] 1954 	ld	a, c
-    00000843 D6 64            [ 8] 1955 	sub	a, #0x64
-    00000845 30 19            [12] 1956 	jr	NC, 00103$
-                                   1957 ;Source/Engine/ECS/ECS.c:105: if (entity[i].ID == id) {
-    00000847 69               [ 4] 1958 	ld	l, c
-    00000848 60               [ 4] 1959 	ld	h, b
-    00000849 29               [ 8] 1960 	add	hl, hl
-    0000084A 09               [ 8] 1961 	add	hl, bc
-    0000084B 7D               [ 4] 1962 	ld	a, l
-    0000084C C6r00            [ 8] 1963 	add	a, #<(_entity)
-    0000084E 5F               [ 4] 1964 	ld	e, a
-    0000084F 7C               [ 4] 1965 	ld	a, h
-    00000850 CEs00            [ 8] 1966 	adc	a, #>(_entity)
-    00000852 57               [ 4] 1967 	ld	d, a
-    00000853 1A               [ 8] 1968 	ld	a, (de)
-    00000854 F8 00            [12] 1969 	ldhl	sp,	#0
-    00000856 96               [ 8] 1970 	sub	a, (hl)
-    00000857 20 04            [12] 1971 	jr	NZ, 00106$
-                                   1972 ;Source/Engine/ECS/ECS.c:106: return &entity[i];
-    00000859 4B               [ 4] 1973 	ld	c, e
-    0000085A 42               [ 4] 1974 	ld	b, d
-    0000085B 18 06            [12] 1975 	jr	00107$
-    0000085D                       1976 00106$:
-                                   1977 ;Source/Engine/ECS/ECS.c:104: for (int i = 0; i < MAX_ENTITIES; i++) {
-    0000085D 03               [ 8] 1978 	inc	bc
-    0000085E 18 E2            [12] 1979 	jr	00105$
-    00000860                       1980 00103$:
-                                   1981 ;Source/Engine/ECS/ECS.c:109: return 0;
-    00000860 01 00 00         [12] 1982 	ld	bc, #0x0000
-    00000863                       1983 00107$:
-                                   1984 ;Source/Engine/ECS/ECS.c:110: }
-    00000863 33               [ 8] 1985 	inc	sp
-    00000864 C9               [16] 1986 	ret
-                                   1987 	.area _CODE
-                                   1988 	.area _INITIALIZER
-                                   1989 	.area _CABS (ABS)
+    000002BE 18 09            [12]  700 	jr	00107$
+    000002C0                        701 00106$:
+                                    702 ;Source/Engine/ECS/../Components/sprite_component.h:133: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000002C0 F8 03            [12]  703 	ldhl	sp,	#3
+    000002C2 34               [12]  704 	inc	(hl)
+    000002C3 3A               [ 8]  705 	ld	a, (hl-)
+    000002C4 2B               [ 8]  706 	dec	hl
+    000002C5 77               [ 8]  707 	ld	(hl), a
+    000002C6 18 CC            [12]  708 	jr	00105$
+    000002C8                        709 00103$:
+                                    710 ;Source/Engine/ECS/../Components/sprite_component.h:136: return 0;
+    000002C8 AF               [ 4]  711 	xor	a, a
+    000002C9                        712 00107$:
+                                    713 ;Source/Engine/ECS/../Components/sprite_component.h:137: }
+    000002C9 E8 04            [16]  714 	add	sp, #4
+    000002CB C9               [16]  715 	ret
+                                    716 ;Source/Engine/ECS/../Components/sprite_component.h:139: static inline void setSpriteWidth(uint8_t entityID, uint8_t width) {
+                                    717 ;	---------------------------------
+                                    718 ; Function setSpriteWidth
+                                    719 ; ---------------------------------
+    000002CC                        720 _setSpriteWidth:
+    000002CC E8 FB            [16]  721 	add	sp, #-5
+    000002CE F8 03            [12]  722 	ldhl	sp,	#3
+    000002D0 32               [ 8]  723 	ld	(hl-), a
+                                    724 ;Source/Engine/ECS/../Components/sprite_component.h:140: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000002D1 7B               [ 4]  725 	ld	a, e
+    000002D2 32               [ 8]  726 	ld	(hl-), a
+    000002D3 36 00            [12]  727 	ld	(hl), #0x00
+    000002D5 F8 04            [12]  728 	ldhl	sp,	#4
+    000002D7 36 00            [12]  729 	ld	(hl), #0x00
+    000002D9                        730 00105$:
+    000002D9 F8 04            [12]  731 	ldhl	sp,	#4
+    000002DB 7E               [ 8]  732 	ld	a, (hl)
+    000002DC D6 32            [ 8]  733 	sub	a, #0x32
+    000002DE 30 2E            [12]  734 	jr	NC, 00107$
+                                    735 ;Source/Engine/ECS/../Components/sprite_component.h:141: if (spriteComponent.entityID[i] == entityID) {
+    000002E0 11r00r00         [12]  736 	ld	de, #_spriteComponent
+    000002E3 6E               [ 8]  737 	ld	l, (hl)
+    000002E4 26 00            [ 8]  738 	ld	h, #0x00
+    000002E6 19               [ 8]  739 	add	hl, de
+    000002E7 4D               [ 4]  740 	ld	c, l
+    000002E8 44               [ 4]  741 	ld	b, h
+    000002E9 0A               [ 8]  742 	ld	a, (bc)
+    000002EA 4F               [ 4]  743 	ld	c, a
+    000002EB F8 03            [12]  744 	ldhl	sp,	#3
+    000002ED 7E               [ 8]  745 	ld	a, (hl)
+    000002EE 91               [ 4]  746 	sub	a, c
+    000002EF 20 14            [12]  747 	jr	NZ, 00106$
+                                    748 ;Source/Engine/ECS/../Components/sprite_component.h:142: spriteComponent.width[i] = width;
+    000002F1 11rC8r00         [12]  749 	ld	de, #(_spriteComponent + 200)
+    000002F4 F8 01            [12]  750 	ldhl	sp,	#1
+    000002F6 6E               [ 8]  751 	ld	l, (hl)
+    000002F7 26 00            [ 8]  752 	ld	h, #0x00
+    000002F9 19               [ 8]  753 	add	hl, de
+    000002FA 33               [ 8]  754 	inc	sp
+    000002FB 33               [ 8]  755 	inc	sp
+    000002FC 5D               [ 4]  756 	ld	e, l
+    000002FD 54               [ 4]  757 	ld	d, h
+    000002FE D5               [16]  758 	push	de
+    000002FF F8 02            [12]  759 	ldhl	sp,	#2
+    00000301 7E               [ 8]  760 	ld	a, (hl)
+    00000302 12               [ 8]  761 	ld	(de), a
+                                    762 ;Source/Engine/ECS/../Components/sprite_component.h:143: return;
+    00000303 18 09            [12]  763 	jr	00107$
+    00000305                        764 00106$:
+                                    765 ;Source/Engine/ECS/../Components/sprite_component.h:140: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000305 F8 04            [12]  766 	ldhl	sp,	#4
+    00000307 34               [12]  767 	inc	(hl)
+    00000308 7E               [ 8]  768 	ld	a, (hl)
+    00000309 F8 01            [12]  769 	ldhl	sp,	#1
+    0000030B 77               [ 8]  770 	ld	(hl), a
+    0000030C 18 CB            [12]  771 	jr	00105$
+    0000030E                        772 00107$:
+                                    773 ;Source/Engine/ECS/../Components/sprite_component.h:145: }
+    0000030E E8 05            [16]  774 	add	sp, #5
+    00000310 C9               [16]  775 	ret
+                                    776 ;Source/Engine/ECS/../Components/sprite_component.h:147: static inline uint8_t getSpriteHeight(uint8_t entityID) {
+                                    777 ;	---------------------------------
+                                    778 ; Function getSpriteHeight
+                                    779 ; ---------------------------------
+    00000311                        780 _getSpriteHeight:
+    00000311 E8 FC            [16]  781 	add	sp, #-4
+    00000313 F8 02            [12]  782 	ldhl	sp,	#2
+                                    783 ;Source/Engine/ECS/../Components/sprite_component.h:148: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000315 32               [ 8]  784 	ld	(hl-), a
+    00000316 AF               [ 4]  785 	xor	a, a
+    00000317 22               [ 8]  786 	ld	(hl+), a
+    00000318 23               [ 8]  787 	inc	hl
+    00000319 36 00            [12]  788 	ld	(hl), #0x00
+    0000031B                        789 00105$:
+    0000031B F8 03            [12]  790 	ldhl	sp,	#3
+    0000031D 7E               [ 8]  791 	ld	a, (hl)
+    0000031E D6 32            [ 8]  792 	sub	a, #0x32
+    00000320 30 2D            [12]  793 	jr	NC, 00103$
+                                    794 ;Source/Engine/ECS/../Components/sprite_component.h:149: if (spriteComponent.entityID[i] == entityID)
+    00000322 11r00r00         [12]  795 	ld	de, #_spriteComponent
+    00000325 6E               [ 8]  796 	ld	l, (hl)
+    00000326 26 00            [ 8]  797 	ld	h, #0x00
+    00000328 19               [ 8]  798 	add	hl, de
+    00000329 4D               [ 4]  799 	ld	c, l
+    0000032A 44               [ 4]  800 	ld	b, h
+    0000032B 0A               [ 8]  801 	ld	a, (bc)
+    0000032C 4F               [ 4]  802 	ld	c, a
+    0000032D F8 02            [12]  803 	ldhl	sp,	#2
+    0000032F 7E               [ 8]  804 	ld	a, (hl)
+    00000330 91               [ 4]  805 	sub	a, c
+    00000331 20 14            [12]  806 	jr	NZ, 00106$
+                                    807 ;Source/Engine/ECS/../Components/sprite_component.h:150: return spriteComponent.height[i];
+    00000333 11rFAr00         [12]  808 	ld	de, #(_spriteComponent + 250)
+    00000336 F8 01            [12]  809 	ldhl	sp,	#1
+    00000338 6E               [ 8]  810 	ld	l, (hl)
+    00000339 26 00            [ 8]  811 	ld	h, #0x00
+    0000033B 19               [ 8]  812 	add	hl, de
+    0000033C 33               [ 8]  813 	inc	sp
+    0000033D 33               [ 8]  814 	inc	sp
+    0000033E 5D               [ 4]  815 	ld	e, l
+    0000033F 54               [ 4]  816 	ld	d, h
+    00000340 D5               [16]  817 	push	de
+    00000341 1A               [ 8]  818 	ld	a, (de)
+    00000342 F8 03            [12]  819 	ldhl	sp,	#3
+    00000344 77               [ 8]  820 	ld	(hl), a
+    00000345 18 09            [12]  821 	jr	00107$
+    00000347                        822 00106$:
+                                    823 ;Source/Engine/ECS/../Components/sprite_component.h:148: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000347 F8 03            [12]  824 	ldhl	sp,	#3
+    00000349 34               [12]  825 	inc	(hl)
+    0000034A 3A               [ 8]  826 	ld	a, (hl-)
+    0000034B 2B               [ 8]  827 	dec	hl
+    0000034C 77               [ 8]  828 	ld	(hl), a
+    0000034D 18 CC            [12]  829 	jr	00105$
+    0000034F                        830 00103$:
+                                    831 ;Source/Engine/ECS/../Components/sprite_component.h:151: return 0;
+    0000034F AF               [ 4]  832 	xor	a, a
+    00000350                        833 00107$:
+                                    834 ;Source/Engine/ECS/../Components/sprite_component.h:152: }
+    00000350 E8 04            [16]  835 	add	sp, #4
+    00000352 C9               [16]  836 	ret
+                                    837 ;Source/Engine/ECS/../Components/sprite_component.h:154: static inline void setSpriteHeight(uint8_t entityID, uint8_t height) {
+                                    838 ;	---------------------------------
+                                    839 ; Function setSpriteHeight
+                                    840 ; ---------------------------------
+    00000353                        841 _setSpriteHeight:
+    00000353 E8 FB            [16]  842 	add	sp, #-5
+    00000355 F8 03            [12]  843 	ldhl	sp,	#3
+    00000357 32               [ 8]  844 	ld	(hl-), a
+                                    845 ;Source/Engine/ECS/../Components/sprite_component.h:155: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000358 7B               [ 4]  846 	ld	a, e
+    00000359 32               [ 8]  847 	ld	(hl-), a
+    0000035A 36 00            [12]  848 	ld	(hl), #0x00
+    0000035C F8 04            [12]  849 	ldhl	sp,	#4
+    0000035E 36 00            [12]  850 	ld	(hl), #0x00
+    00000360                        851 00105$:
+    00000360 F8 04            [12]  852 	ldhl	sp,	#4
+    00000362 7E               [ 8]  853 	ld	a, (hl)
+    00000363 D6 32            [ 8]  854 	sub	a, #0x32
+    00000365 30 2E            [12]  855 	jr	NC, 00107$
+                                    856 ;Source/Engine/ECS/../Components/sprite_component.h:156: if (spriteComponent.entityID[i] == entityID) {
+    00000367 11r00r00         [12]  857 	ld	de, #_spriteComponent
+    0000036A 6E               [ 8]  858 	ld	l, (hl)
+    0000036B 26 00            [ 8]  859 	ld	h, #0x00
+    0000036D 19               [ 8]  860 	add	hl, de
+    0000036E 4D               [ 4]  861 	ld	c, l
+    0000036F 44               [ 4]  862 	ld	b, h
+    00000370 0A               [ 8]  863 	ld	a, (bc)
+    00000371 4F               [ 4]  864 	ld	c, a
+    00000372 F8 03            [12]  865 	ldhl	sp,	#3
+    00000374 7E               [ 8]  866 	ld	a, (hl)
+    00000375 91               [ 4]  867 	sub	a, c
+    00000376 20 14            [12]  868 	jr	NZ, 00106$
+                                    869 ;Source/Engine/ECS/../Components/sprite_component.h:157: spriteComponent.height[i] = height;
+    00000378 11rFAr00         [12]  870 	ld	de, #(_spriteComponent + 250)
+    0000037B F8 01            [12]  871 	ldhl	sp,	#1
+    0000037D 6E               [ 8]  872 	ld	l, (hl)
+    0000037E 26 00            [ 8]  873 	ld	h, #0x00
+    00000380 19               [ 8]  874 	add	hl, de
+    00000381 33               [ 8]  875 	inc	sp
+    00000382 33               [ 8]  876 	inc	sp
+    00000383 5D               [ 4]  877 	ld	e, l
+    00000384 54               [ 4]  878 	ld	d, h
+    00000385 D5               [16]  879 	push	de
+    00000386 F8 02            [12]  880 	ldhl	sp,	#2
+    00000388 7E               [ 8]  881 	ld	a, (hl)
+    00000389 12               [ 8]  882 	ld	(de), a
+                                    883 ;Source/Engine/ECS/../Components/sprite_component.h:158: return;
+    0000038A 18 09            [12]  884 	jr	00107$
+    0000038C                        885 00106$:
+                                    886 ;Source/Engine/ECS/../Components/sprite_component.h:155: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000038C F8 04            [12]  887 	ldhl	sp,	#4
+    0000038E 34               [12]  888 	inc	(hl)
+    0000038F 7E               [ 8]  889 	ld	a, (hl)
+    00000390 F8 01            [12]  890 	ldhl	sp,	#1
+    00000392 77               [ 8]  891 	ld	(hl), a
+    00000393 18 CB            [12]  892 	jr	00105$
+    00000395                        893 00107$:
+                                    894 ;Source/Engine/ECS/../Components/sprite_component.h:160: }
+    00000395 E8 05            [16]  895 	add	sp, #5
+    00000397 C9               [16]  896 	ret
+                                    897 ;Source/Engine/ECS/../Components/sprite_component.h:163: static inline uint8_t getSpritePalette(uint8_t entityID) {
+                                    898 ;	---------------------------------
+                                    899 ; Function getSpritePalette
+                                    900 ; ---------------------------------
+    00000398                        901 _getSpritePalette:
+    00000398 E8 FA            [16]  902 	add	sp, #-6
+    0000039A F8 04            [12]  903 	ldhl	sp,	#4
+                                    904 ;Source/Engine/ECS/../Components/sprite_component.h:164: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000039C 32               [ 8]  905 	ld	(hl-), a
+    0000039D AF               [ 4]  906 	xor	a, a
+    0000039E 22               [ 8]  907 	ld	(hl+), a
+    0000039F 23               [ 8]  908 	inc	hl
+    000003A0 36 00            [12]  909 	ld	(hl), #0x00
+    000003A2                        910 00105$:
+    000003A2 F8 05            [12]  911 	ldhl	sp,	#5
+    000003A4 7E               [ 8]  912 	ld	a, (hl)
+    000003A5 D6 32            [ 8]  913 	sub	a, #0x32
+    000003A7 30 5B            [12]  914 	jr	NC, 00103$
+                                    915 ;Source/Engine/ECS/../Components/sprite_component.h:165: if (spriteComponent.entityID[i] == entityID)
+    000003A9 11r00r00         [12]  916 	ld	de, #_spriteComponent
+    000003AC 6E               [ 8]  917 	ld	l, (hl)
+    000003AD 26 00            [ 8]  918 	ld	h, #0x00
+    000003AF 19               [ 8]  919 	add	hl, de
+    000003B0 4D               [ 4]  920 	ld	c, l
+    000003B1 44               [ 4]  921 	ld	b, h
+    000003B2 0A               [ 8]  922 	ld	a, (bc)
+    000003B3 4F               [ 4]  923 	ld	c, a
+    000003B4 F8 04            [12]  924 	ldhl	sp,	#4
+    000003B6 7E               [ 8]  925 	ld	a, (hl)
+    000003B7 91               [ 4]  926 	sub	a, c
+    000003B8 20 42            [12]  927 	jr	NZ, 00106$
+                                    928 ;Source/Engine/ECS/../Components/sprite_component.h:166: return SPRITE_GET_PALETTE(spriteComponent.flags[i]);
+    000003BA 11r90r01         [12]  929 	ld	de, #(_spriteComponent + 400)
+    000003BD F8 03            [12]  930 	ldhl	sp,	#3
+    000003BF 6E               [ 8]  931 	ld	l, (hl)
+    000003C0 26 00            [ 8]  932 	ld	h, #0x00
+    000003C2 19               [ 8]  933 	add	hl, de
+    000003C3 E5               [16]  934 	push	hl
+    000003C4 7D               [ 4]  935 	ld	a, l
+    000003C5 F8 04            [12]  936 	ldhl	sp,	#4
+    000003C7 77               [ 8]  937 	ld	(hl), a
+    000003C8 E1               [12]  938 	pop	hl
+    000003C9 7C               [ 4]  939 	ld	a, h
+    000003CA F8 03            [12]  940 	ldhl	sp,	#3
+    000003CC 32               [ 8]  941 	ld	(hl-), a
+    000003CD 2A               [ 8]  942 	ld	a, (hl+)
+    000003CE 5F               [ 4]  943 	ld	e, a
+    000003CF 2A               [ 8]  944 	ld	a, (hl+)
+    000003D0 23               [ 8]  945 	inc	hl
+    000003D1 57               [ 4]  946 	ld	d, a
+    000003D2 1A               [ 8]  947 	ld	a, (de)
+    000003D3 77               [ 8]  948 	ld	(hl), a
+    000003D4 F8 02            [12]  949 	ldhl	sp,	#2
+    000003D6 22               [ 8]  950 	ld	(hl+), a
+    000003D7 AF               [ 4]  951 	xor	a, a
+    000003D8 32               [ 8]  952 	ld	(hl-), a
+    000003D9 3A               [ 8]  953 	ld	a, (hl-)
+    000003DA 2B               [ 8]  954 	dec	hl
+    000003DB E6 38            [ 8]  955 	and	a, #0x38
+    000003DD 22               [ 8]  956 	ld	(hl+), a
+    000003DE AF               [ 4]  957 	xor	a, a
+    000003DF 32               [ 8]  958 	ld	(hl-), a
+    000003E0 2A               [ 8]  959 	ld	a, (hl+)
+    000003E1 23               [ 8]  960 	inc	hl
+    000003E2 22               [ 8]  961 	ld	(hl+), a
+    000003E3 36 00            [12]  962 	ld	(hl), #0x00
+    000003E5 CB 2E            [16]  963 	sra	(hl)
+    000003E7 2B               [ 8]  964 	dec	hl
+    000003E8 CB 1E            [16]  965 	rr	(hl)
+    000003EA 23               [ 8]  966 	inc	hl
+    000003EB CB 2E            [16]  967 	sra	(hl)
+    000003ED 2B               [ 8]  968 	dec	hl
+    000003EE CB 1E            [16]  969 	rr	(hl)
+    000003F0 23               [ 8]  970 	inc	hl
+    000003F1 CB 2E            [16]  971 	sra	(hl)
+    000003F3 2B               [ 8]  972 	dec	hl
+    000003F4 CB 1E            [16]  973 	rr	(hl)
+    000003F6 7E               [ 8]  974 	ld	a, (hl)
+    000003F7 F8 05            [12]  975 	ldhl	sp,	#5
+    000003F9 77               [ 8]  976 	ld	(hl), a
+    000003FA 18 09            [12]  977 	jr	00107$
+    000003FC                        978 00106$:
+                                    979 ;Source/Engine/ECS/../Components/sprite_component.h:164: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000003FC F8 05            [12]  980 	ldhl	sp,	#5
+    000003FE 34               [12]  981 	inc	(hl)
+    000003FF 3A               [ 8]  982 	ld	a, (hl-)
+    00000400 2B               [ 8]  983 	dec	hl
+    00000401 77               [ 8]  984 	ld	(hl), a
+    00000402 18 9E            [12]  985 	jr	00105$
+    00000404                        986 00103$:
+                                    987 ;Source/Engine/ECS/../Components/sprite_component.h:167: return 0;
+    00000404 AF               [ 4]  988 	xor	a, a
+    00000405                        989 00107$:
+                                    990 ;Source/Engine/ECS/../Components/sprite_component.h:168: }
+    00000405 E8 06            [16]  991 	add	sp, #6
+    00000407 C9               [16]  992 	ret
+                                    993 ;Source/Engine/ECS/../Components/sprite_component.h:170: static inline void setSpritePalette(uint8_t entityID, uint8_t palette) {
+                                    994 ;	---------------------------------
+                                    995 ; Function setSpritePalette
+                                    996 ; ---------------------------------
+    00000408                        997 _setSpritePalette:
+    00000408 E8 F9            [16]  998 	add	sp, #-7
+    0000040A F8 06            [12]  999 	ldhl	sp,	#6
+    0000040C 32               [ 8] 1000 	ld	(hl-), a
+                                   1001 ;Source/Engine/ECS/../Components/sprite_component.h:171: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000040D 7B               [ 4] 1002 	ld	a, e
+    0000040E 32               [ 8] 1003 	ld	(hl-), a
+    0000040F 2B               [ 8] 1004 	dec	hl
+    00000410 AF               [ 4] 1005 	xor	a, a
+    00000411 22               [ 8] 1006 	ld	(hl+), a
+    00000412 77               [ 8] 1007 	ld	(hl), a
+    00000413                       1008 00105$:
+    00000413 F8 04            [12] 1009 	ldhl	sp,	#4
+    00000415 7E               [ 8] 1010 	ld	a, (hl)
+    00000416 D6 32            [ 8] 1011 	sub	a, #0x32
+    00000418 30 44            [12] 1012 	jr	NC, 00107$
+                                   1013 ;Source/Engine/ECS/../Components/sprite_component.h:172: if (spriteComponent.entityID[i] == entityID) {
+    0000041A 11r00r00         [12] 1014 	ld	de, #_spriteComponent
+    0000041D 6E               [ 8] 1015 	ld	l, (hl)
+    0000041E 26 00            [ 8] 1016 	ld	h, #0x00
+    00000420 19               [ 8] 1017 	add	hl, de
+    00000421 4D               [ 4] 1018 	ld	c, l
+    00000422 44               [ 4] 1019 	ld	b, h
+    00000423 0A               [ 8] 1020 	ld	a, (bc)
+    00000424 4F               [ 4] 1021 	ld	c, a
+    00000425 F8 06            [12] 1022 	ldhl	sp,	#6
+    00000427 7E               [ 8] 1023 	ld	a, (hl)
+    00000428 91               [ 4] 1024 	sub	a, c
+    00000429 20 2C            [12] 1025 	jr	NZ, 00106$
+                                   1026 ;Source/Engine/ECS/../Components/sprite_component.h:173: SPRITE_SET_PALETTE(spriteComponent.flags[i], palette);
+    0000042B 11r90r01         [12] 1027 	ld	de, #(_spriteComponent + 400)
+    0000042E F8 03            [12] 1028 	ldhl	sp,	#3
+    00000430 6E               [ 8] 1029 	ld	l, (hl)
+    00000431 26 00            [ 8] 1030 	ld	h, #0x00
+    00000433 19               [ 8] 1031 	add	hl, de
+    00000434 33               [ 8] 1032 	inc	sp
+    00000435 33               [ 8] 1033 	inc	sp
+    00000436 5D               [ 4] 1034 	ld	e, l
+    00000437 54               [ 4] 1035 	ld	d, h
+    00000438 D5               [16] 1036 	push	de
+    00000439 1A               [ 8] 1037 	ld	a, (de)
+    0000043A F8 04            [12] 1038 	ldhl	sp,	#4
+    0000043C 32               [ 8] 1039 	ld	(hl-), a
+    0000043D 2B               [ 8] 1040 	dec	hl
+    0000043E E6 C7            [ 8] 1041 	and	a, #0xc7
+    00000440 77               [ 8] 1042 	ld	(hl), a
+    00000441 F8 05            [12] 1043 	ldhl	sp,	#5
+    00000443 3A               [ 8] 1044 	ld	a, (hl-)
+    00000444 E6 07            [ 8] 1045 	and	a, #0x07
+    00000446 77               [ 8] 1046 	ld	(hl), a
+    00000447 87               [ 4] 1047 	add	a, a
+    00000448 87               [ 4] 1048 	add	a, a
+    00000449 87               [ 4] 1049 	add	a, a
+    0000044A 77               [ 8] 1050 	ld	(hl), a
+    0000044B 3A               [ 8] 1051 	ld	a, (hl-)
+    0000044C 2B               [ 8] 1052 	dec	hl
+    0000044D B6               [ 8] 1053 	or	a, (hl)
+    0000044E 23               [ 8] 1054 	inc	hl
+    0000044F 23               [ 8] 1055 	inc	hl
+    00000450 77               [ 8] 1056 	ld	(hl), a
+    00000451 D1               [12] 1057 	pop	de
+    00000452 D5               [16] 1058 	push	de
+    00000453 7E               [ 8] 1059 	ld	a, (hl)
+    00000454 12               [ 8] 1060 	ld	(de), a
+                                   1061 ;Source/Engine/ECS/../Components/sprite_component.h:174: return;
+    00000455 18 07            [12] 1062 	jr	00107$
+    00000457                       1063 00106$:
+                                   1064 ;Source/Engine/ECS/../Components/sprite_component.h:171: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000457 F8 04            [12] 1065 	ldhl	sp,	#4
+    00000459 34               [12] 1066 	inc	(hl)
+    0000045A 3A               [ 8] 1067 	ld	a, (hl-)
+    0000045B 77               [ 8] 1068 	ld	(hl), a
+    0000045C 18 B5            [12] 1069 	jr	00105$
+    0000045E                       1070 00107$:
+                                   1071 ;Source/Engine/ECS/../Components/sprite_component.h:176: }
+    0000045E E8 07            [16] 1072 	add	sp, #7
+    00000460 C9               [16] 1073 	ret
+                                   1074 ;Source/Engine/ECS/../Components/sprite_component.h:187: static inline void setSpriteOffset(uint8_t entityID, vec2_i newOffset) {
+                                   1075 ;	---------------------------------
+                                   1076 ; Function setSpriteOffset
+                                   1077 ; ---------------------------------
+    00000461                       1078 _setSpriteOffset:
+    00000461 3B               [ 8] 1079 	dec	sp
+    00000462 F8 00            [12] 1080 	ldhl	sp,	#0
+    00000464 77               [ 8] 1081 	ld	(hl), a
+                                   1082 ;Source/Engine/ECS/../Components/sprite_component.h:188: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000465 1E 00            [ 8] 1083 	ld	e, #0x00
+    00000467 4B               [ 4] 1084 	ld	c, e
+    00000468                       1085 00105$:
+    00000468 79               [ 4] 1086 	ld	a, c
+    00000469 D6 32            [ 8] 1087 	sub	a, #0x32
+    0000046B 30 28            [12] 1088 	jr	NC, 00107$
+                                   1089 ;Source/Engine/ECS/../Components/sprite_component.h:189: if (spriteComponent.entityID[i] == entityID) {
+    0000046D 21r00r00         [12] 1090 	ld	hl, #_spriteComponent
+    00000470 06 00            [ 8] 1091 	ld	b, #0x00
+    00000472 09               [ 8] 1092 	add	hl, bc
+    00000473 46               [ 8] 1093 	ld	b, (hl)
+    00000474 F8 00            [12] 1094 	ldhl	sp,	#0
+    00000476 7E               [ 8] 1095 	ld	a, (hl)
+    00000477 90               [ 4] 1096 	sub	a, b
+    00000478 20 17            [12] 1097 	jr	NZ, 00106$
+                                   1098 ;Source/Engine/ECS/../Components/sprite_component.h:190: spriteComponent.offset[i] = newOffset;
+    0000047A F8 03            [12] 1099 	ldhl	sp,	#3
+    0000047C 4D               [ 4] 1100 	ld	c, l
+    0000047D 44               [ 4] 1101 	ld	b, h
+    0000047E 7B               [ 4] 1102 	ld	a, e
+    0000047F 87               [ 4] 1103 	add	a, a
+    00000480 C6r2C            [ 8] 1104 	add	a, #<((_spriteComponent + 300))
+    00000482 5F               [ 4] 1105 	ld	e, a
+    00000483 3E 00            [ 8] 1106 	ld	a, #0x00
+    00000485 CEs01            [ 8] 1107 	adc	a, #>((_spriteComponent + 300))
+    00000487 57               [ 4] 1108 	ld	d, a
+    00000488 21 02 00         [12] 1109 	ld	hl, #0x0002
+    0000048B E5               [16] 1110 	push	hl
+    0000048C CDr00r00         [24] 1111 	call	___memcpy
+                                   1112 ;Source/Engine/ECS/../Components/sprite_component.h:191: return;
+    0000048F 18 04            [12] 1113 	jr	00107$
+    00000491                       1114 00106$:
+                                   1115 ;Source/Engine/ECS/../Components/sprite_component.h:188: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000491 0C               [ 4] 1116 	inc	c
+    00000492 59               [ 4] 1117 	ld	e, c
+    00000493 18 D3            [12] 1118 	jr	00105$
+    00000495                       1119 00107$:
+                                   1120 ;Source/Engine/ECS/../Components/sprite_component.h:193: }
+    00000495 33               [ 8] 1121 	inc	sp
+    00000496 E1               [12] 1122 	pop	hl
+    00000497 F1               [12] 1123 	pop	af
+    00000498 E9               [ 4] 1124 	jp	(hl)
+                                   1125 ;Source/Engine/ECS/../Components/sprite_component.h:196: static inline bool getSpriteWorldFlag(uint8_t entityID) {
+                                   1126 ;	---------------------------------
+                                   1127 ; Function getSpriteWorldFlag
+                                   1128 ; ---------------------------------
+    00000499                       1129 _getSpriteWorldFlag:
+    00000499 E8 FC            [16] 1130 	add	sp, #-4
+    0000049B F8 02            [12] 1131 	ldhl	sp,	#2
+                                   1132 ;Source/Engine/ECS/../Components/sprite_component.h:197: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000049D 32               [ 8] 1133 	ld	(hl-), a
+    0000049E AF               [ 4] 1134 	xor	a, a
+    0000049F 22               [ 8] 1135 	ld	(hl+), a
+    000004A0 23               [ 8] 1136 	inc	hl
+    000004A1 36 00            [12] 1137 	ld	(hl), #0x00
+    000004A3                       1138 00105$:
+    000004A3 F8 03            [12] 1139 	ldhl	sp,	#3
+    000004A5 7E               [ 8] 1140 	ld	a, (hl)
+    000004A6 D6 32            [ 8] 1141 	sub	a, #0x32
+    000004A8 30 39            [12] 1142 	jr	NC, 00103$
+                                   1143 ;Source/Engine/ECS/../Components/sprite_component.h:198: if (spriteComponent.entityID[i] == entityID)
+    000004AA 11r00r00         [12] 1144 	ld	de, #_spriteComponent
+    000004AD 6E               [ 8] 1145 	ld	l, (hl)
+    000004AE 26 00            [ 8] 1146 	ld	h, #0x00
+    000004B0 19               [ 8] 1147 	add	hl, de
+    000004B1 4D               [ 4] 1148 	ld	c, l
+    000004B2 44               [ 4] 1149 	ld	b, h
+    000004B3 0A               [ 8] 1150 	ld	a, (bc)
+    000004B4 4F               [ 4] 1151 	ld	c, a
+    000004B5 F8 02            [12] 1152 	ldhl	sp,	#2
+    000004B7 7E               [ 8] 1153 	ld	a, (hl)
+    000004B8 91               [ 4] 1154 	sub	a, c
+    000004B9 20 20            [12] 1155 	jr	NZ, 00106$
+                                   1156 ;Source/Engine/ECS/../Components/sprite_component.h:199: return (spriteComponent.flags[i] & SPRF_WORLD) != 0;
+    000004BB 11r90r01         [12] 1157 	ld	de, #(_spriteComponent + 400)
+    000004BE F8 01            [12] 1158 	ldhl	sp,	#1
+    000004C0 6E               [ 8] 1159 	ld	l, (hl)
+    000004C1 26 00            [ 8] 1160 	ld	h, #0x00
+    000004C3 19               [ 8] 1161 	add	hl, de
+    000004C4 33               [ 8] 1162 	inc	sp
+    000004C5 33               [ 8] 1163 	inc	sp
+    000004C6 5D               [ 4] 1164 	ld	e, l
+    000004C7 54               [ 4] 1165 	ld	d, h
+    000004C8 D5               [16] 1166 	push	de
+    000004C9 1A               [ 8] 1167 	ld	a, (de)
+    000004CA F8 03            [12] 1168 	ldhl	sp,	#3
+    000004CC 77               [ 8] 1169 	ld	(hl), a
+    000004CD E6 01            [ 8] 1170 	and	a, #0x01
+    000004CF 77               [ 8] 1171 	ld	(hl), a
+    000004D0 D6 01            [ 8] 1172 	sub	a, #0x01
+    000004D2 3E 00            [ 8] 1173 	ld	a, #0x00
+    000004D4 17               [ 4] 1174 	rla
+    000004D5 77               [ 8] 1175 	ld	(hl), a
+    000004D6 EE 01            [ 8] 1176 	xor	a, #0x01
+    000004D8 77               [ 8] 1177 	ld	(hl), a
+    000004D9 18 09            [12] 1178 	jr	00107$
+    000004DB                       1179 00106$:
+                                   1180 ;Source/Engine/ECS/../Components/sprite_component.h:197: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000004DB F8 03            [12] 1181 	ldhl	sp,	#3
+    000004DD 34               [12] 1182 	inc	(hl)
+    000004DE 3A               [ 8] 1183 	ld	a, (hl-)
+    000004DF 2B               [ 8] 1184 	dec	hl
+    000004E0 77               [ 8] 1185 	ld	(hl), a
+    000004E1 18 C0            [12] 1186 	jr	00105$
+    000004E3                       1187 00103$:
+                                   1188 ;Source/Engine/ECS/../Components/sprite_component.h:200: return false;
+    000004E3 AF               [ 4] 1189 	xor	a, a
+    000004E4                       1190 00107$:
+                                   1191 ;Source/Engine/ECS/../Components/sprite_component.h:201: }
+    000004E4 E8 04            [16] 1192 	add	sp, #4
+    000004E6 C9               [16] 1193 	ret
+                                   1194 ;Source/Engine/ECS/../Components/sprite_component.h:203: static inline void setSpriteWorldFlag(uint8_t entityID, bool isWorld) {
+                                   1195 ;	---------------------------------
+                                   1196 ; Function setSpriteWorldFlag
+                                   1197 ; ---------------------------------
+    000004E7                       1198 _setSpriteWorldFlag:
+    000004E7 3B               [ 8] 1199 	dec	sp
+    000004E8 F8 00            [12] 1200 	ldhl	sp,	#0
+    000004EA 77               [ 8] 1201 	ld	(hl), a
+    000004EB 4B               [ 4] 1202 	ld	c, e
+                                   1203 ;Source/Engine/ECS/../Components/sprite_component.h:204: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000004EC 06 00            [ 8] 1204 	ld	b, #0x00
+    000004EE 58               [ 4] 1205 	ld	e, b
+    000004EF                       1206 00108$:
+    000004EF 7B               [ 4] 1207 	ld	a, e
+    000004F0 D6 32            [ 8] 1208 	sub	a, #0x32
+    000004F2 30 29            [12] 1209 	jr	NC, 00110$
+                                   1210 ;Source/Engine/ECS/../Components/sprite_component.h:205: if (spriteComponent.entityID[i] == entityID) {
+    000004F4 21r00r00         [12] 1211 	ld	hl, #_spriteComponent
+    000004F7 16 00            [ 8] 1212 	ld	d, #0x00
+    000004F9 19               [ 8] 1213 	add	hl, de
+    000004FA 56               [ 8] 1214 	ld	d, (hl)
+    000004FB F8 00            [12] 1215 	ldhl	sp,	#0
+    000004FD 7E               [ 8] 1216 	ld	a, (hl)
+    000004FE 92               [ 4] 1217 	sub	a, d
+    000004FF 20 18            [12] 1218 	jr	NZ, 00109$
+                                   1219 ;Source/Engine/ECS/../Components/sprite_component.h:207: spriteComponent.flags[i] |= SPRF_WORLD;
+    00000501 3Er90            [ 8] 1220 	ld	a, #<((_spriteComponent + 400))
+    00000503 80               [ 4] 1221 	add	a, b
+    00000504 5F               [ 4] 1222 	ld	e, a
+    00000505 3Es01            [ 8] 1223 	ld	a, #>((_spriteComponent + 400))
+    00000507 CE 00            [ 8] 1224 	adc	a, #0x00
+    00000509 57               [ 4] 1225 	ld	d, a
+    0000050A 1A               [ 8] 1226 	ld	a, (de)
+                                   1227 ;Source/Engine/ECS/../Components/sprite_component.h:206: if (isWorld)
+    0000050B CB 41            [ 8] 1228 	bit	0, c
+    0000050D 28 05            [12] 1229 	jr	Z, 00102$
+                                   1230 ;Source/Engine/ECS/../Components/sprite_component.h:207: spriteComponent.flags[i] |= SPRF_WORLD;
+    0000050F CB C7            [ 8] 1231 	set	0, a
+    00000511 12               [ 8] 1232 	ld	(de), a
+    00000512 18 09            [12] 1233 	jr	00110$
+    00000514                       1234 00102$:
+                                   1235 ;Source/Engine/ECS/../Components/sprite_component.h:209: spriteComponent.flags[i] &= ~SPRF_WORLD;
+    00000514 CB 87            [ 8] 1236 	res	0, a
+    00000516 12               [ 8] 1237 	ld	(de), a
+                                   1238 ;Source/Engine/ECS/../Components/sprite_component.h:210: return;
+    00000517 18 04            [12] 1239 	jr	00110$
+    00000519                       1240 00109$:
+                                   1241 ;Source/Engine/ECS/../Components/sprite_component.h:204: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000519 1C               [ 4] 1242 	inc	e
+    0000051A 43               [ 4] 1243 	ld	b, e
+    0000051B 18 D2            [12] 1244 	jr	00108$
+    0000051D                       1245 00110$:
+                                   1246 ;Source/Engine/ECS/../Components/sprite_component.h:212: }
+    0000051D 33               [ 8] 1247 	inc	sp
+    0000051E C9               [16] 1248 	ret
+                                   1249 ;Source/Engine/ECS/../Components/sprite_component.h:215: static inline bool getSpriteFlipX(uint8_t entityID) {
+                                   1250 ;	---------------------------------
+                                   1251 ; Function getSpriteFlipX
+                                   1252 ; ---------------------------------
+    0000051F                       1253 _getSpriteFlipX:
+    0000051F E8 FC            [16] 1254 	add	sp, #-4
+    00000521 F8 02            [12] 1255 	ldhl	sp,	#2
+                                   1256 ;Source/Engine/ECS/../Components/sprite_component.h:216: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000523 32               [ 8] 1257 	ld	(hl-), a
+    00000524 AF               [ 4] 1258 	xor	a, a
+    00000525 22               [ 8] 1259 	ld	(hl+), a
+    00000526 23               [ 8] 1260 	inc	hl
+    00000527 36 00            [12] 1261 	ld	(hl), #0x00
+    00000529                       1262 00105$:
+    00000529 F8 03            [12] 1263 	ldhl	sp,	#3
+    0000052B 7E               [ 8] 1264 	ld	a, (hl)
+    0000052C D6 32            [ 8] 1265 	sub	a, #0x32
+    0000052E 30 39            [12] 1266 	jr	NC, 00103$
+                                   1267 ;Source/Engine/ECS/../Components/sprite_component.h:217: if (spriteComponent.entityID[i] == entityID)
+    00000530 11r00r00         [12] 1268 	ld	de, #_spriteComponent
+    00000533 6E               [ 8] 1269 	ld	l, (hl)
+    00000534 26 00            [ 8] 1270 	ld	h, #0x00
+    00000536 19               [ 8] 1271 	add	hl, de
+    00000537 4D               [ 4] 1272 	ld	c, l
+    00000538 44               [ 4] 1273 	ld	b, h
+    00000539 0A               [ 8] 1274 	ld	a, (bc)
+    0000053A 4F               [ 4] 1275 	ld	c, a
+    0000053B F8 02            [12] 1276 	ldhl	sp,	#2
+    0000053D 7E               [ 8] 1277 	ld	a, (hl)
+    0000053E 91               [ 4] 1278 	sub	a, c
+    0000053F 20 20            [12] 1279 	jr	NZ, 00106$
+                                   1280 ;Source/Engine/ECS/../Components/sprite_component.h:218: return (spriteComponent.flags[i] & SPRF_FLIPX) != 0;
+    00000541 11r90r01         [12] 1281 	ld	de, #(_spriteComponent + 400)
+    00000544 F8 01            [12] 1282 	ldhl	sp,	#1
+    00000546 6E               [ 8] 1283 	ld	l, (hl)
+    00000547 26 00            [ 8] 1284 	ld	h, #0x00
+    00000549 19               [ 8] 1285 	add	hl, de
+    0000054A 33               [ 8] 1286 	inc	sp
+    0000054B 33               [ 8] 1287 	inc	sp
+    0000054C 5D               [ 4] 1288 	ld	e, l
+    0000054D 54               [ 4] 1289 	ld	d, h
+    0000054E D5               [16] 1290 	push	de
+    0000054F 1A               [ 8] 1291 	ld	a, (de)
+    00000550 F8 03            [12] 1292 	ldhl	sp,	#3
+    00000552 77               [ 8] 1293 	ld	(hl), a
+    00000553 E6 02            [ 8] 1294 	and	a, #0x02
+    00000555 77               [ 8] 1295 	ld	(hl), a
+    00000556 D6 01            [ 8] 1296 	sub	a, #0x01
+    00000558 3E 00            [ 8] 1297 	ld	a, #0x00
+    0000055A 17               [ 4] 1298 	rla
+    0000055B 77               [ 8] 1299 	ld	(hl), a
+    0000055C EE 01            [ 8] 1300 	xor	a, #0x01
+    0000055E 77               [ 8] 1301 	ld	(hl), a
+    0000055F 18 09            [12] 1302 	jr	00107$
+    00000561                       1303 00106$:
+                                   1304 ;Source/Engine/ECS/../Components/sprite_component.h:216: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000561 F8 03            [12] 1305 	ldhl	sp,	#3
+    00000563 34               [12] 1306 	inc	(hl)
+    00000564 3A               [ 8] 1307 	ld	a, (hl-)
+    00000565 2B               [ 8] 1308 	dec	hl
+    00000566 77               [ 8] 1309 	ld	(hl), a
+    00000567 18 C0            [12] 1310 	jr	00105$
+    00000569                       1311 00103$:
+                                   1312 ;Source/Engine/ECS/../Components/sprite_component.h:219: return false;
+    00000569 AF               [ 4] 1313 	xor	a, a
+    0000056A                       1314 00107$:
+                                   1315 ;Source/Engine/ECS/../Components/sprite_component.h:220: }
+    0000056A E8 04            [16] 1316 	add	sp, #4
+    0000056C C9               [16] 1317 	ret
+                                   1318 ;Source/Engine/ECS/../Components/sprite_component.h:222: static inline void setSpriteFlipX(uint8_t entityID, bool flip) {
+                                   1319 ;	---------------------------------
+                                   1320 ; Function setSpriteFlipX
+                                   1321 ; ---------------------------------
+    0000056D                       1322 _setSpriteFlipX:
+    0000056D 3B               [ 8] 1323 	dec	sp
+    0000056E F8 00            [12] 1324 	ldhl	sp,	#0
+    00000570 77               [ 8] 1325 	ld	(hl), a
+    00000571 4B               [ 4] 1326 	ld	c, e
+                                   1327 ;Source/Engine/ECS/../Components/sprite_component.h:223: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000572 06 00            [ 8] 1328 	ld	b, #0x00
+    00000574 58               [ 4] 1329 	ld	e, b
+    00000575                       1330 00108$:
+    00000575 7B               [ 4] 1331 	ld	a, e
+    00000576 D6 32            [ 8] 1332 	sub	a, #0x32
+    00000578 30 29            [12] 1333 	jr	NC, 00110$
+                                   1334 ;Source/Engine/ECS/../Components/sprite_component.h:224: if (spriteComponent.entityID[i] == entityID) {
+    0000057A 21r00r00         [12] 1335 	ld	hl, #_spriteComponent
+    0000057D 16 00            [ 8] 1336 	ld	d, #0x00
+    0000057F 19               [ 8] 1337 	add	hl, de
+    00000580 56               [ 8] 1338 	ld	d, (hl)
+    00000581 F8 00            [12] 1339 	ldhl	sp,	#0
+    00000583 7E               [ 8] 1340 	ld	a, (hl)
+    00000584 92               [ 4] 1341 	sub	a, d
+    00000585 20 18            [12] 1342 	jr	NZ, 00109$
+                                   1343 ;Source/Engine/ECS/../Components/sprite_component.h:226: spriteComponent.flags[i] |= SPRF_FLIPX;
+    00000587 3Er90            [ 8] 1344 	ld	a, #<((_spriteComponent + 400))
+    00000589 80               [ 4] 1345 	add	a, b
+    0000058A 5F               [ 4] 1346 	ld	e, a
+    0000058B 3Es01            [ 8] 1347 	ld	a, #>((_spriteComponent + 400))
+    0000058D CE 00            [ 8] 1348 	adc	a, #0x00
+    0000058F 57               [ 4] 1349 	ld	d, a
+    00000590 1A               [ 8] 1350 	ld	a, (de)
+                                   1351 ;Source/Engine/ECS/../Components/sprite_component.h:225: if (flip)
+    00000591 CB 41            [ 8] 1352 	bit	0, c
+    00000593 28 05            [12] 1353 	jr	Z, 00102$
+                                   1354 ;Source/Engine/ECS/../Components/sprite_component.h:226: spriteComponent.flags[i] |= SPRF_FLIPX;
+    00000595 CB CF            [ 8] 1355 	set	1, a
+    00000597 12               [ 8] 1356 	ld	(de), a
+    00000598 18 09            [12] 1357 	jr	00110$
+    0000059A                       1358 00102$:
+                                   1359 ;Source/Engine/ECS/../Components/sprite_component.h:228: spriteComponent.flags[i] &= ~SPRF_FLIPX;
+    0000059A CB 8F            [ 8] 1360 	res	1, a
+    0000059C 12               [ 8] 1361 	ld	(de), a
+                                   1362 ;Source/Engine/ECS/../Components/sprite_component.h:229: return;
+    0000059D 18 04            [12] 1363 	jr	00110$
+    0000059F                       1364 00109$:
+                                   1365 ;Source/Engine/ECS/../Components/sprite_component.h:223: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000059F 1C               [ 4] 1366 	inc	e
+    000005A0 43               [ 4] 1367 	ld	b, e
+    000005A1 18 D2            [12] 1368 	jr	00108$
+    000005A3                       1369 00110$:
+                                   1370 ;Source/Engine/ECS/../Components/sprite_component.h:231: }
+    000005A3 33               [ 8] 1371 	inc	sp
+    000005A4 C9               [16] 1372 	ret
+                                   1373 ;Source/Engine/ECS/../Components/sprite_component.h:233: static inline bool getSpriteFlipY(uint8_t entityID) {
+                                   1374 ;	---------------------------------
+                                   1375 ; Function getSpriteFlipY
+                                   1376 ; ---------------------------------
+    000005A5                       1377 _getSpriteFlipY:
+    000005A5 E8 FC            [16] 1378 	add	sp, #-4
+    000005A7 F8 02            [12] 1379 	ldhl	sp,	#2
+                                   1380 ;Source/Engine/ECS/../Components/sprite_component.h:234: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000005A9 32               [ 8] 1381 	ld	(hl-), a
+    000005AA AF               [ 4] 1382 	xor	a, a
+    000005AB 22               [ 8] 1383 	ld	(hl+), a
+    000005AC 23               [ 8] 1384 	inc	hl
+    000005AD 36 00            [12] 1385 	ld	(hl), #0x00
+    000005AF                       1386 00105$:
+    000005AF F8 03            [12] 1387 	ldhl	sp,	#3
+    000005B1 7E               [ 8] 1388 	ld	a, (hl)
+    000005B2 D6 32            [ 8] 1389 	sub	a, #0x32
+    000005B4 30 39            [12] 1390 	jr	NC, 00103$
+                                   1391 ;Source/Engine/ECS/../Components/sprite_component.h:235: if (spriteComponent.entityID[i] == entityID)
+    000005B6 11r00r00         [12] 1392 	ld	de, #_spriteComponent
+    000005B9 6E               [ 8] 1393 	ld	l, (hl)
+    000005BA 26 00            [ 8] 1394 	ld	h, #0x00
+    000005BC 19               [ 8] 1395 	add	hl, de
+    000005BD 4D               [ 4] 1396 	ld	c, l
+    000005BE 44               [ 4] 1397 	ld	b, h
+    000005BF 0A               [ 8] 1398 	ld	a, (bc)
+    000005C0 4F               [ 4] 1399 	ld	c, a
+    000005C1 F8 02            [12] 1400 	ldhl	sp,	#2
+    000005C3 7E               [ 8] 1401 	ld	a, (hl)
+    000005C4 91               [ 4] 1402 	sub	a, c
+    000005C5 20 20            [12] 1403 	jr	NZ, 00106$
+                                   1404 ;Source/Engine/ECS/../Components/sprite_component.h:236: return (spriteComponent.flags[i] & SPRF_FLIPY) != 0;
+    000005C7 11r90r01         [12] 1405 	ld	de, #(_spriteComponent + 400)
+    000005CA F8 01            [12] 1406 	ldhl	sp,	#1
+    000005CC 6E               [ 8] 1407 	ld	l, (hl)
+    000005CD 26 00            [ 8] 1408 	ld	h, #0x00
+    000005CF 19               [ 8] 1409 	add	hl, de
+    000005D0 33               [ 8] 1410 	inc	sp
+    000005D1 33               [ 8] 1411 	inc	sp
+    000005D2 5D               [ 4] 1412 	ld	e, l
+    000005D3 54               [ 4] 1413 	ld	d, h
+    000005D4 D5               [16] 1414 	push	de
+    000005D5 1A               [ 8] 1415 	ld	a, (de)
+    000005D6 F8 03            [12] 1416 	ldhl	sp,	#3
+    000005D8 77               [ 8] 1417 	ld	(hl), a
+    000005D9 E6 04            [ 8] 1418 	and	a, #0x04
+    000005DB 77               [ 8] 1419 	ld	(hl), a
+    000005DC D6 01            [ 8] 1420 	sub	a, #0x01
+    000005DE 3E 00            [ 8] 1421 	ld	a, #0x00
+    000005E0 17               [ 4] 1422 	rla
+    000005E1 77               [ 8] 1423 	ld	(hl), a
+    000005E2 EE 01            [ 8] 1424 	xor	a, #0x01
+    000005E4 77               [ 8] 1425 	ld	(hl), a
+    000005E5 18 09            [12] 1426 	jr	00107$
+    000005E7                       1427 00106$:
+                                   1428 ;Source/Engine/ECS/../Components/sprite_component.h:234: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000005E7 F8 03            [12] 1429 	ldhl	sp,	#3
+    000005E9 34               [12] 1430 	inc	(hl)
+    000005EA 3A               [ 8] 1431 	ld	a, (hl-)
+    000005EB 2B               [ 8] 1432 	dec	hl
+    000005EC 77               [ 8] 1433 	ld	(hl), a
+    000005ED 18 C0            [12] 1434 	jr	00105$
+    000005EF                       1435 00103$:
+                                   1436 ;Source/Engine/ECS/../Components/sprite_component.h:237: return false;
+    000005EF AF               [ 4] 1437 	xor	a, a
+    000005F0                       1438 00107$:
+                                   1439 ;Source/Engine/ECS/../Components/sprite_component.h:238: }
+    000005F0 E8 04            [16] 1440 	add	sp, #4
+    000005F2 C9               [16] 1441 	ret
+                                   1442 ;Source/Engine/ECS/../Components/sprite_component.h:240: static inline void setSpriteFlipY(uint8_t entityID, bool flip) {
+                                   1443 ;	---------------------------------
+                                   1444 ; Function setSpriteFlipY
+                                   1445 ; ---------------------------------
+    000005F3                       1446 _setSpriteFlipY:
+    000005F3 3B               [ 8] 1447 	dec	sp
+    000005F4 F8 00            [12] 1448 	ldhl	sp,	#0
+    000005F6 77               [ 8] 1449 	ld	(hl), a
+    000005F7 4B               [ 4] 1450 	ld	c, e
+                                   1451 ;Source/Engine/ECS/../Components/sprite_component.h:241: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000005F8 06 00            [ 8] 1452 	ld	b, #0x00
+    000005FA 58               [ 4] 1453 	ld	e, b
+    000005FB                       1454 00108$:
+    000005FB 7B               [ 4] 1455 	ld	a, e
+    000005FC D6 32            [ 8] 1456 	sub	a, #0x32
+    000005FE 30 29            [12] 1457 	jr	NC, 00110$
+                                   1458 ;Source/Engine/ECS/../Components/sprite_component.h:242: if (spriteComponent.entityID[i] == entityID) {
+    00000600 21r00r00         [12] 1459 	ld	hl, #_spriteComponent
+    00000603 16 00            [ 8] 1460 	ld	d, #0x00
+    00000605 19               [ 8] 1461 	add	hl, de
+    00000606 56               [ 8] 1462 	ld	d, (hl)
+    00000607 F8 00            [12] 1463 	ldhl	sp,	#0
+    00000609 7E               [ 8] 1464 	ld	a, (hl)
+    0000060A 92               [ 4] 1465 	sub	a, d
+    0000060B 20 18            [12] 1466 	jr	NZ, 00109$
+                                   1467 ;Source/Engine/ECS/../Components/sprite_component.h:244: spriteComponent.flags[i] |= SPRF_FLIPY;
+    0000060D 3Er90            [ 8] 1468 	ld	a, #<((_spriteComponent + 400))
+    0000060F 80               [ 4] 1469 	add	a, b
+    00000610 5F               [ 4] 1470 	ld	e, a
+    00000611 3Es01            [ 8] 1471 	ld	a, #>((_spriteComponent + 400))
+    00000613 CE 00            [ 8] 1472 	adc	a, #0x00
+    00000615 57               [ 4] 1473 	ld	d, a
+    00000616 1A               [ 8] 1474 	ld	a, (de)
+                                   1475 ;Source/Engine/ECS/../Components/sprite_component.h:243: if (flip)
+    00000617 CB 41            [ 8] 1476 	bit	0, c
+    00000619 28 05            [12] 1477 	jr	Z, 00102$
+                                   1478 ;Source/Engine/ECS/../Components/sprite_component.h:244: spriteComponent.flags[i] |= SPRF_FLIPY;
+    0000061B CB D7            [ 8] 1479 	set	2, a
+    0000061D 12               [ 8] 1480 	ld	(de), a
+    0000061E 18 09            [12] 1481 	jr	00110$
+    00000620                       1482 00102$:
+                                   1483 ;Source/Engine/ECS/../Components/sprite_component.h:246: spriteComponent.flags[i] &= ~SPRF_FLIPY;
+    00000620 CB 97            [ 8] 1484 	res	2, a
+    00000622 12               [ 8] 1485 	ld	(de), a
+                                   1486 ;Source/Engine/ECS/../Components/sprite_component.h:247: return;
+    00000623 18 04            [12] 1487 	jr	00110$
+    00000625                       1488 00109$:
+                                   1489 ;Source/Engine/ECS/../Components/sprite_component.h:241: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    00000625 1C               [ 4] 1490 	inc	e
+    00000626 43               [ 4] 1491 	ld	b, e
+    00000627 18 D2            [12] 1492 	jr	00108$
+    00000629                       1493 00110$:
+                                   1494 ;Source/Engine/ECS/../Components/sprite_component.h:249: }
+    00000629 33               [ 8] 1495 	inc	sp
+    0000062A C9               [16] 1496 	ret
+                                   1497 ;Source/Engine/ECS/../Components/sprite_component.h:252: static inline bool getSpriteActive(uint8_t entityID) {
+                                   1498 ;	---------------------------------
+                                   1499 ; Function getSpriteActive
+                                   1500 ; ---------------------------------
+    0000062B                       1501 _getSpriteActive:
+    0000062B E8 FC            [16] 1502 	add	sp, #-4
+    0000062D F8 02            [12] 1503 	ldhl	sp,	#2
+                                   1504 ;Source/Engine/ECS/../Components/sprite_component.h:253: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000062F 32               [ 8] 1505 	ld	(hl-), a
+    00000630 AF               [ 4] 1506 	xor	a, a
+    00000631 22               [ 8] 1507 	ld	(hl+), a
+    00000632 23               [ 8] 1508 	inc	hl
+    00000633 36 00            [12] 1509 	ld	(hl), #0x00
+    00000635                       1510 00105$:
+    00000635 F8 03            [12] 1511 	ldhl	sp,	#3
+    00000637 7E               [ 8] 1512 	ld	a, (hl)
+    00000638 D6 32            [ 8] 1513 	sub	a, #0x32
+    0000063A 30 39            [12] 1514 	jr	NC, 00103$
+                                   1515 ;Source/Engine/ECS/../Components/sprite_component.h:254: if (spriteComponent.entityID[i] == entityID)
+    0000063C 11r00r00         [12] 1516 	ld	de, #_spriteComponent
+    0000063F 6E               [ 8] 1517 	ld	l, (hl)
+    00000640 26 00            [ 8] 1518 	ld	h, #0x00
+    00000642 19               [ 8] 1519 	add	hl, de
+    00000643 4D               [ 4] 1520 	ld	c, l
+    00000644 44               [ 4] 1521 	ld	b, h
+    00000645 0A               [ 8] 1522 	ld	a, (bc)
+    00000646 4F               [ 4] 1523 	ld	c, a
+    00000647 F8 02            [12] 1524 	ldhl	sp,	#2
+    00000649 7E               [ 8] 1525 	ld	a, (hl)
+    0000064A 91               [ 4] 1526 	sub	a, c
+    0000064B 20 20            [12] 1527 	jr	NZ, 00106$
+                                   1528 ;Source/Engine/ECS/../Components/sprite_component.h:255: return (spriteComponent.flags[i] & SPRF_ACTIVE) != 0;
+    0000064D 11r90r01         [12] 1529 	ld	de, #(_spriteComponent + 400)
+    00000650 F8 01            [12] 1530 	ldhl	sp,	#1
+    00000652 6E               [ 8] 1531 	ld	l, (hl)
+    00000653 26 00            [ 8] 1532 	ld	h, #0x00
+    00000655 19               [ 8] 1533 	add	hl, de
+    00000656 33               [ 8] 1534 	inc	sp
+    00000657 33               [ 8] 1535 	inc	sp
+    00000658 5D               [ 4] 1536 	ld	e, l
+    00000659 54               [ 4] 1537 	ld	d, h
+    0000065A D5               [16] 1538 	push	de
+    0000065B 1A               [ 8] 1539 	ld	a, (de)
+    0000065C F8 03            [12] 1540 	ldhl	sp,	#3
+    0000065E 77               [ 8] 1541 	ld	(hl), a
+    0000065F E6 80            [ 8] 1542 	and	a, #0x80
+    00000661 77               [ 8] 1543 	ld	(hl), a
+    00000662 D6 01            [ 8] 1544 	sub	a, #0x01
+    00000664 3E 00            [ 8] 1545 	ld	a, #0x00
+    00000666 17               [ 4] 1546 	rla
+    00000667 77               [ 8] 1547 	ld	(hl), a
+    00000668 EE 01            [ 8] 1548 	xor	a, #0x01
+    0000066A 77               [ 8] 1549 	ld	(hl), a
+    0000066B 18 09            [12] 1550 	jr	00107$
+    0000066D                       1551 00106$:
+                                   1552 ;Source/Engine/ECS/../Components/sprite_component.h:253: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000066D F8 03            [12] 1553 	ldhl	sp,	#3
+    0000066F 34               [12] 1554 	inc	(hl)
+    00000670 3A               [ 8] 1555 	ld	a, (hl-)
+    00000671 2B               [ 8] 1556 	dec	hl
+    00000672 77               [ 8] 1557 	ld	(hl), a
+    00000673 18 C0            [12] 1558 	jr	00105$
+    00000675                       1559 00103$:
+                                   1560 ;Source/Engine/ECS/../Components/sprite_component.h:256: return false;
+    00000675 AF               [ 4] 1561 	xor	a, a
+    00000676                       1562 00107$:
+                                   1563 ;Source/Engine/ECS/../Components/sprite_component.h:257: }
+    00000676 E8 04            [16] 1564 	add	sp, #4
+    00000678 C9               [16] 1565 	ret
+                                   1566 ;Source/Engine/ECS/../Components/sprite_component.h:259: static inline void setSpriteActive(uint8_t entityID, bool active) {
+                                   1567 ;	---------------------------------
+                                   1568 ; Function setSpriteActive
+                                   1569 ; ---------------------------------
+    00000679                       1570 _setSpriteActive:
+    00000679 3B               [ 8] 1571 	dec	sp
+    0000067A F8 00            [12] 1572 	ldhl	sp,	#0
+    0000067C 77               [ 8] 1573 	ld	(hl), a
+    0000067D 4B               [ 4] 1574 	ld	c, e
+                                   1575 ;Source/Engine/ECS/../Components/sprite_component.h:260: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    0000067E 06 00            [ 8] 1576 	ld	b, #0x00
+    00000680 58               [ 4] 1577 	ld	e, b
+    00000681                       1578 00108$:
+    00000681 7B               [ 4] 1579 	ld	a, e
+    00000682 D6 32            [ 8] 1580 	sub	a, #0x32
+    00000684 30 29            [12] 1581 	jr	NC, 00110$
+                                   1582 ;Source/Engine/ECS/../Components/sprite_component.h:261: if (spriteComponent.entityID[i] == entityID) {
+    00000686 21r00r00         [12] 1583 	ld	hl, #_spriteComponent
+    00000689 16 00            [ 8] 1584 	ld	d, #0x00
+    0000068B 19               [ 8] 1585 	add	hl, de
+    0000068C 56               [ 8] 1586 	ld	d, (hl)
+    0000068D F8 00            [12] 1587 	ldhl	sp,	#0
+    0000068F 7E               [ 8] 1588 	ld	a, (hl)
+    00000690 92               [ 4] 1589 	sub	a, d
+    00000691 20 18            [12] 1590 	jr	NZ, 00109$
+                                   1591 ;Source/Engine/ECS/../Components/sprite_component.h:263: spriteComponent.flags[i] |= SPRF_ACTIVE;
+    00000693 3Er90            [ 8] 1592 	ld	a, #<((_spriteComponent + 400))
+    00000695 80               [ 4] 1593 	add	a, b
+    00000696 5F               [ 4] 1594 	ld	e, a
+    00000697 3Es01            [ 8] 1595 	ld	a, #>((_spriteComponent + 400))
+    00000699 CE 00            [ 8] 1596 	adc	a, #0x00
+    0000069B 57               [ 4] 1597 	ld	d, a
+    0000069C 1A               [ 8] 1598 	ld	a, (de)
+                                   1599 ;Source/Engine/ECS/../Components/sprite_component.h:262: if (active)
+    0000069D CB 41            [ 8] 1600 	bit	0, c
+    0000069F 28 05            [12] 1601 	jr	Z, 00102$
+                                   1602 ;Source/Engine/ECS/../Components/sprite_component.h:263: spriteComponent.flags[i] |= SPRF_ACTIVE;
+    000006A1 CB FF            [ 8] 1603 	set	7, a
+    000006A3 12               [ 8] 1604 	ld	(de), a
+    000006A4 18 09            [12] 1605 	jr	00110$
+    000006A6                       1606 00102$:
+                                   1607 ;Source/Engine/ECS/../Components/sprite_component.h:265: spriteComponent.flags[i] &= ~SPRF_ACTIVE;
+    000006A6 CB BF            [ 8] 1608 	res	7, a
+    000006A8 12               [ 8] 1609 	ld	(de), a
+                                   1610 ;Source/Engine/ECS/../Components/sprite_component.h:266: return;
+    000006A9 18 04            [12] 1611 	jr	00110$
+    000006AB                       1612 00109$:
+                                   1613 ;Source/Engine/ECS/../Components/sprite_component.h:260: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000006AB 1C               [ 4] 1614 	inc	e
+    000006AC 43               [ 4] 1615 	ld	b, e
+    000006AD 18 D2            [12] 1616 	jr	00108$
+    000006AF                       1617 00110$:
+                                   1618 ;Source/Engine/ECS/../Components/sprite_component.h:268: }
+    000006AF 33               [ 8] 1619 	inc	sp
+    000006B0 C9               [16] 1620 	ret
+                                   1621 ;Source/Engine/ECS/../Components/sprite_component.h:271: static inline LocalSprite getLocalSprite(uint8_t entityID) {
+                                   1622 ;	---------------------------------
+                                   1623 ; Function getLocalSprite
+                                   1624 ; ---------------------------------
+    000006B1                       1625 _getLocalSprite:
+    000006B1 E8 F0            [16] 1626 	add	sp, #-16
+    000006B3 F8 0F            [12] 1627 	ldhl	sp,	#15
+    000006B5 77               [ 8] 1628 	ld	(hl), a
+                                   1629 ;Source/Engine/ECS/../Components/sprite_component.h:272: LocalSprite s = {0};
+    000006B6 F8 00            [12] 1630 	ldhl	sp,	#0
+    000006B8 AF               [ 4] 1631 	xor	a, a
+    000006B9 22               [ 8] 1632 	ld	(hl+), a
+    000006BA 22               [ 8] 1633 	ld	(hl+), a
+    000006BB AF               [ 4] 1634 	xor	a, a
+    000006BC 22               [ 8] 1635 	ld	(hl+), a
+    000006BD 22               [ 8] 1636 	ld	(hl+), a
+    000006BE 22               [ 8] 1637 	ld	(hl+), a
+    000006BF AF               [ 4] 1638 	xor	a, a
+    000006C0 22               [ 8] 1639 	ld	(hl+), a
+    000006C1 22               [ 8] 1640 	ld	(hl+), a
+    000006C2 AF               [ 4] 1641 	xor	a, a
+    000006C3 22               [ 8] 1642 	ld	(hl+), a
+    000006C4 22               [ 8] 1643 	ld	(hl+), a
+    000006C5 AF               [ 4] 1644 	xor	a, a
+    000006C6 22               [ 8] 1645 	ld	(hl+), a
+    000006C7 22               [ 8] 1646 	ld	(hl+), a
+                                   1647 ;Source/Engine/ECS/../Components/sprite_component.h:273: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000006C8 AF               [ 4] 1648 	xor	a, a
+    000006C9 22               [ 8] 1649 	ld	(hl+), a
+    000006CA 77               [ 8] 1650 	ld	(hl), a
+    000006CB 0E 00            [ 8] 1651 	ld	c, #0x00
+    000006CD                       1652 00105$:
+    000006CD 79               [ 4] 1653 	ld	a, c
+    000006CE D6 32            [ 8] 1654 	sub	a, #0x32
+    000006D0 D2rBDr07         [16] 1655 	jp	NC, 00103$
+                                   1656 ;Source/Engine/ECS/../Components/sprite_component.h:274: if (spriteComponent.entityID[i] == entityID) {
+    000006D3 21r00r00         [12] 1657 	ld	hl, #_spriteComponent
+    000006D6 06 00            [ 8] 1658 	ld	b, #0x00
+    000006D8 09               [ 8] 1659 	add	hl, bc
+    000006D9 46               [ 8] 1660 	ld	b, (hl)
+    000006DA F8 0F            [12] 1661 	ldhl	sp,	#15
+    000006DC 7E               [ 8] 1662 	ld	a, (hl)
+    000006DD 90               [ 4] 1663 	sub	a, b
+    000006DE C2rB6r07         [16] 1664 	jp	NZ, 00106$
+                                   1665 ;Source/Engine/ECS/../Components/sprite_component.h:275: s.id        = spriteComponent.entityID[i];
+    000006E1 11r00r00         [12] 1666 	ld	de, #_spriteComponent
+    000006E4 F8 0C            [12] 1667 	ldhl	sp,	#12
+    000006E6 6E               [ 8] 1668 	ld	l, (hl)
+    000006E7 26 00            [ 8] 1669 	ld	h, #0x00
+    000006E9 19               [ 8] 1670 	add	hl, de
+    000006EA 4D               [ 4] 1671 	ld	c, l
+    000006EB 44               [ 4] 1672 	ld	b, h
+    000006EC 0A               [ 8] 1673 	ld	a, (bc)
+    000006ED F8 00            [12] 1674 	ldhl	sp,	#0
+    000006EF 77               [ 8] 1675 	ld	(hl), a
+                                   1676 ;Source/Engine/ECS/../Components/sprite_component.h:276: s.width     = spriteComponent.width[i];
+    000006F0 11rC8r00         [12] 1677 	ld	de, #(_spriteComponent + 200)
+    000006F3 F8 0C            [12] 1678 	ldhl	sp,	#12
+    000006F5 6E               [ 8] 1679 	ld	l, (hl)
+    000006F6 26 00            [ 8] 1680 	ld	h, #0x00
+    000006F8 19               [ 8] 1681 	add	hl, de
+    000006F9 4D               [ 4] 1682 	ld	c, l
+    000006FA 44               [ 4] 1683 	ld	b, h
+    000006FB 0A               [ 8] 1684 	ld	a, (bc)
+    000006FC F8 01            [12] 1685 	ldhl	sp,	#1
+    000006FE 77               [ 8] 1686 	ld	(hl), a
+                                   1687 ;Source/Engine/ECS/../Components/sprite_component.h:277: s.height    = spriteComponent.height[i];
+    000006FF 11rFAr00         [12] 1688 	ld	de, #(_spriteComponent + 250)
+    00000702 F8 0C            [12] 1689 	ldhl	sp,	#12
+    00000704 6E               [ 8] 1690 	ld	l, (hl)
+    00000705 26 00            [ 8] 1691 	ld	h, #0x00
+    00000707 19               [ 8] 1692 	add	hl, de
+    00000708 4D               [ 4] 1693 	ld	c, l
+    00000709 44               [ 4] 1694 	ld	b, h
+    0000070A 0A               [ 8] 1695 	ld	a, (bc)
+    0000070B F8 02            [12] 1696 	ldhl	sp,	#2
+    0000070D 77               [ 8] 1697 	ld	(hl), a
+                                   1698 ;Source/Engine/ECS/../Components/sprite_component.h:278: s.offset    = spriteComponent.offset[i];
+    0000070E F8 0C            [12] 1699 	ldhl	sp,	#12
+    00000710 2A               [ 8] 1700 	ld	a, (hl+)
+    00000711 23               [ 8] 1701 	inc	hl
+    00000712 87               [ 4] 1702 	add	a, a
+    00000713 77               [ 8] 1703 	ld	(hl), a
+    00000714 11r2Cr01         [12] 1704 	ld	de, #(_spriteComponent + 300)
+    00000717 6E               [ 8] 1705 	ld	l, (hl)
+    00000718 26 00            [ 8] 1706 	ld	h, #0x00
+    0000071A 19               [ 8] 1707 	add	hl, de
+    0000071B 4D               [ 4] 1708 	ld	c, l
+    0000071C 44               [ 4] 1709 	ld	b, h
+    0000071D 11 02 00         [12] 1710 	ld	de, #0x0002
+    00000720 D5               [16] 1711 	push	de
+    00000721 21 08 00         [12] 1712 	ld	hl, #8
+    00000724 39               [ 8] 1713 	add	hl, sp
+    00000725 5D               [ 4] 1714 	ld	e, l
+    00000726 54               [ 4] 1715 	ld	d, h
+    00000727 CDr00r00         [24] 1716 	call	___memcpy
+                                   1717 ;Source/Engine/ECS/../Components/sprite_component.h:279: s.flags     = spriteComponent.flags[i];
+    0000072A 11r90r01         [12] 1718 	ld	de, #(_spriteComponent + 400)
+    0000072D F8 0C            [12] 1719 	ldhl	sp,	#12
+    0000072F 6E               [ 8] 1720 	ld	l, (hl)
+    00000730 26 00            [ 8] 1721 	ld	h, #0x00
+    00000732 19               [ 8] 1722 	add	hl, de
+    00000733 4D               [ 4] 1723 	ld	c, l
+    00000734 44               [ 4] 1724 	ld	b, h
+    00000735 0A               [ 8] 1725 	ld	a, (bc)
+    00000736 F8 0A            [12] 1726 	ldhl	sp,	#10
+    00000738 77               [ 8] 1727 	ld	(hl), a
+                                   1728 ;Source/Engine/ECS/../Components/sprite_component.h:280: s.tileData  = spriteComponent.tileData[i];
+    00000739 11r32r00         [12] 1729 	ld	de, #(_spriteComponent + 50)
+    0000073C F8 0E            [12] 1730 	ldhl	sp,	#14
+    0000073E 6E               [ 8] 1731 	ld	l, (hl)
+    0000073F 26 00            [ 8] 1732 	ld	h, #0x00
+    00000741 19               [ 8] 1733 	add	hl, de
+    00000742 E5               [16] 1734 	push	hl
+    00000743 7D               [ 4] 1735 	ld	a, l
+    00000744 F8 0F            [12] 1736 	ldhl	sp,	#15
+    00000746 77               [ 8] 1737 	ld	(hl), a
+    00000747 E1               [12] 1738 	pop	hl
+    00000748 7C               [ 4] 1739 	ld	a, h
+    00000749 F8 0E            [12] 1740 	ldhl	sp,	#14
+    0000074B 32               [ 8] 1741 	ld	(hl-), a
+    0000074C 2A               [ 8] 1742 	ld	a, (hl+)
+    0000074D 5F               [ 4] 1743 	ld	e, a
+    0000074E 56               [ 8] 1744 	ld	d, (hl)
+    0000074F 1A               [ 8] 1745 	ld	a, (de)
+    00000750 6F               [ 4] 1746 	ld	l, a
+    00000751 13               [ 8] 1747 	inc	de
+    00000752 1A               [ 8] 1748 	ld	a, (de)
+    00000753 67               [ 4] 1749 	ld	h, a
+    00000754 E5               [16] 1750 	push	hl
+    00000755 7D               [ 4] 1751 	ld	a, l
+    00000756 F8 05            [12] 1752 	ldhl	sp,	#5
+    00000758 77               [ 8] 1753 	ld	(hl), a
+    00000759 E1               [12] 1754 	pop	hl
+    0000075A 7C               [ 4] 1755 	ld	a, h
+    0000075B F8 04            [12] 1756 	ldhl	sp,	#4
+    0000075D 77               [ 8] 1757 	ld	(hl), a
+                                   1758 ;Source/Engine/ECS/../Components/sprite_component.h:281: s.tileIndex = spriteComponent.tileIndex[i];
+    0000075E 11r96r00         [12] 1759 	ld	de, #(_spriteComponent + 150)
+    00000761 F8 0C            [12] 1760 	ldhl	sp,	#12
+    00000763 6E               [ 8] 1761 	ld	l, (hl)
+    00000764 26 00            [ 8] 1762 	ld	h, #0x00
+    00000766 19               [ 8] 1763 	add	hl, de
+    00000767 5D               [ 4] 1764 	ld	e, l
+    00000768 54               [ 4] 1765 	ld	d, h
+    00000769 1A               [ 8] 1766 	ld	a, (de)
+    0000076A F8 05            [12] 1767 	ldhl	sp,	#5
+    0000076C 77               [ 8] 1768 	ld	(hl), a
+                                   1769 ;Source/Engine/ECS/../Components/sprite_component.h:282: s.isWorld   = (spriteComponent.flags[i] & SPRF_WORLD) != 0;
+    0000076D 0A               [ 8] 1770 	ld	a, (bc)
+    0000076E E6 01            [ 8] 1771 	and	a, #0x01
+    00000770 D6 01            [ 8] 1772 	sub	a, #0x01
+    00000772 3E 00            [ 8] 1773 	ld	a, #0x00
+    00000774 17               [ 4] 1774 	rla
+    00000775 EE 01            [ 8] 1775 	xor	a, #0x01
+    00000777 F8 08            [12] 1776 	ldhl	sp,	#8
+                                   1777 ;Source/Engine/ECS/../Components/sprite_component.h:283: s.visible   = (spriteComponent.flags[i] & SPRF_ACTIVE) != 0;
+    00000779 22               [ 8] 1778 	ld	(hl+), a
+    0000077A 0A               [ 8] 1779 	ld	a, (bc)
+    0000077B E6 80            [ 8] 1780 	and	a, #0x80
+    0000077D D6 01            [ 8] 1781 	sub	a, #0x01
+    0000077F 3E 00            [ 8] 1782 	ld	a, #0x00
+    00000781 17               [ 4] 1783 	rla
+    00000782 EE 01            [ 8] 1784 	xor	a, #0x01
+                                   1785 ;Source/Engine/ECS/../Components/sprite_component.h:284: s.flipProps = spriteComponent.flags[i] & (SPRF_FLIPX | SPRF_FLIPY);
+    00000784 22               [ 8] 1786 	ld	(hl+), a
+    00000785 23               [ 8] 1787 	inc	hl
+    00000786 0A               [ 8] 1788 	ld	a, (bc)
+    00000787 E6 06            [ 8] 1789 	and	a, #0x06
+    00000789 77               [ 8] 1790 	ld	(hl), a
+                                   1791 ;Source/Engine/ECS/../Components/sprite_component.h:285: return s;
+    0000078A F8 12            [12] 1792 	ldhl	sp,	#18
+    0000078C 2A               [ 8] 1793 	ld	a, (hl+)
+    0000078D 4F               [ 4] 1794 	ld	c, a
+    0000078E 46               [ 8] 1795 	ld	b, (hl)
+    0000078F F8 00            [12] 1796 	ldhl	sp,	#0
+    00000791 2A               [ 8] 1797 	ld	a, (hl+)
+    00000792 02               [ 8] 1798 	ld	(bc), a
+    00000793 03               [ 8] 1799 	inc	bc
+    00000794 2A               [ 8] 1800 	ld	a, (hl+)
+    00000795 02               [ 8] 1801 	ld	(bc), a
+    00000796 03               [ 8] 1802 	inc	bc
+    00000797 2A               [ 8] 1803 	ld	a, (hl+)
+    00000798 02               [ 8] 1804 	ld	(bc), a
+    00000799 03               [ 8] 1805 	inc	bc
+    0000079A 2A               [ 8] 1806 	ld	a, (hl+)
+    0000079B 02               [ 8] 1807 	ld	(bc), a
+    0000079C 03               [ 8] 1808 	inc	bc
+    0000079D 2A               [ 8] 1809 	ld	a, (hl+)
+    0000079E 02               [ 8] 1810 	ld	(bc), a
+    0000079F 03               [ 8] 1811 	inc	bc
+    000007A0 2A               [ 8] 1812 	ld	a, (hl+)
+    000007A1 02               [ 8] 1813 	ld	(bc), a
+    000007A2 03               [ 8] 1814 	inc	bc
+    000007A3 2A               [ 8] 1815 	ld	a, (hl+)
+    000007A4 02               [ 8] 1816 	ld	(bc), a
+    000007A5 03               [ 8] 1817 	inc	bc
+    000007A6 2A               [ 8] 1818 	ld	a, (hl+)
+    000007A7 02               [ 8] 1819 	ld	(bc), a
+    000007A8 03               [ 8] 1820 	inc	bc
+    000007A9 2A               [ 8] 1821 	ld	a, (hl+)
+    000007AA 02               [ 8] 1822 	ld	(bc), a
+    000007AB 03               [ 8] 1823 	inc	bc
+    000007AC 2A               [ 8] 1824 	ld	a, (hl+)
+    000007AD 02               [ 8] 1825 	ld	(bc), a
+    000007AE 03               [ 8] 1826 	inc	bc
+    000007AF 2A               [ 8] 1827 	ld	a, (hl+)
+    000007B0 02               [ 8] 1828 	ld	(bc), a
+    000007B1 03               [ 8] 1829 	inc	bc
+    000007B2 7E               [ 8] 1830 	ld	a, (hl)
+    000007B3 02               [ 8] 1831 	ld	(bc), a
+    000007B4 18 31            [12] 1832 	jr	00107$
+    000007B6                       1833 00106$:
+                                   1834 ;Source/Engine/ECS/../Components/sprite_component.h:273: for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    000007B6 0C               [ 4] 1835 	inc	c
+    000007B7 F8 0C            [12] 1836 	ldhl	sp,	#12
+    000007B9 71               [ 8] 1837 	ld	(hl), c
+    000007BA C3rCDr06         [16] 1838 	jp	00105$
+    000007BD                       1839 00103$:
+                                   1840 ;Source/Engine/ECS/../Components/sprite_component.h:287: return s;
+    000007BD F8 12            [12] 1841 	ldhl	sp,	#18
+    000007BF 2A               [ 8] 1842 	ld	a, (hl+)
+    000007C0 4F               [ 4] 1843 	ld	c, a
+    000007C1 46               [ 8] 1844 	ld	b, (hl)
+    000007C2 F8 00            [12] 1845 	ldhl	sp,	#0
+    000007C4 2A               [ 8] 1846 	ld	a, (hl+)
+    000007C5 02               [ 8] 1847 	ld	(bc), a
+    000007C6 03               [ 8] 1848 	inc	bc
+    000007C7 2A               [ 8] 1849 	ld	a, (hl+)
+    000007C8 02               [ 8] 1850 	ld	(bc), a
+    000007C9 03               [ 8] 1851 	inc	bc
+    000007CA 2A               [ 8] 1852 	ld	a, (hl+)
+    000007CB 02               [ 8] 1853 	ld	(bc), a
+    000007CC 03               [ 8] 1854 	inc	bc
+    000007CD 2A               [ 8] 1855 	ld	a, (hl+)
+    000007CE 02               [ 8] 1856 	ld	(bc), a
+    000007CF 03               [ 8] 1857 	inc	bc
+    000007D0 2A               [ 8] 1858 	ld	a, (hl+)
+    000007D1 02               [ 8] 1859 	ld	(bc), a
+    000007D2 03               [ 8] 1860 	inc	bc
+    000007D3 2A               [ 8] 1861 	ld	a, (hl+)
+    000007D4 02               [ 8] 1862 	ld	(bc), a
+    000007D5 03               [ 8] 1863 	inc	bc
+    000007D6 2A               [ 8] 1864 	ld	a, (hl+)
+    000007D7 02               [ 8] 1865 	ld	(bc), a
+    000007D8 03               [ 8] 1866 	inc	bc
+    000007D9 2A               [ 8] 1867 	ld	a, (hl+)
+    000007DA 02               [ 8] 1868 	ld	(bc), a
+    000007DB 03               [ 8] 1869 	inc	bc
+    000007DC 2A               [ 8] 1870 	ld	a, (hl+)
+    000007DD 02               [ 8] 1871 	ld	(bc), a
+    000007DE 03               [ 8] 1872 	inc	bc
+    000007DF 2A               [ 8] 1873 	ld	a, (hl+)
+    000007E0 02               [ 8] 1874 	ld	(bc), a
+    000007E1 03               [ 8] 1875 	inc	bc
+    000007E2 2A               [ 8] 1876 	ld	a, (hl+)
+    000007E3 02               [ 8] 1877 	ld	(bc), a
+    000007E4 03               [ 8] 1878 	inc	bc
+    000007E5 7E               [ 8] 1879 	ld	a, (hl)
+    000007E6 02               [ 8] 1880 	ld	(bc), a
+    000007E7                       1881 00107$:
+                                   1882 ;Source/Engine/ECS/../Components/sprite_component.h:288: }
+    000007E7 E8 10            [16] 1883 	add	sp, #16
+    000007E9 E1               [12] 1884 	pop	hl
+    000007EA F1               [12] 1885 	pop	af
+    000007EB E9               [ 4] 1886 	jp	(hl)
+                                   1887 ;Source/Engine/ECS/ECS.c:9: void EntityAddComponent (Entity *entity, uint16_t component) {
+                                   1888 ;	---------------------------------
+                                   1889 ; Function EntityAddComponent
+                                   1890 ; ---------------------------------
+    000007EC                       1891 _EntityAddComponent::
+    000007EC E8 F5            [16] 1892 	add	sp, #-11
+    000007EE F8 09            [12] 1893 	ldhl	sp,	#9
+    000007F0 7B               [ 4] 1894 	ld	a, e
+    000007F1 22               [ 8] 1895 	ld	(hl+), a
+    000007F2 72               [ 8] 1896 	ld	(hl), d
+    000007F3 F8 07            [12] 1897 	ldhl	sp,	#7
+    000007F5 79               [ 4] 1898 	ld	a, c
+    000007F6 22               [ 8] 1899 	ld	(hl+), a
+                                   1900 ;Source/Engine/ECS/ECS.c:13: if (EntityHasComponent(entity, component)){
+    000007F7 78               [ 4] 1901 	ld	a, b
+    000007F8 32               [ 8] 1902 	ld	(hl-), a
+    000007F9 2A               [ 8] 1903 	ld	a, (hl+)
+    000007FA 4F               [ 4] 1904 	ld	c, a
+    000007FB 2A               [ 8] 1905 	ld	a, (hl+)
+    000007FC 47               [ 4] 1906 	ld	b, a
+    000007FD 2A               [ 8] 1907 	ld	a, (hl+)
+    000007FE 5F               [ 4] 1908 	ld	e, a
+    000007FF 56               [ 8] 1909 	ld	d, (hl)
+    00000800 CDr8Dr0A         [24] 1910 	call	_EntityHasComponent
+    00000803 F8 06            [12] 1911 	ldhl	sp,#6
+    00000805 77               [ 8] 1912 	ld	(hl), a
+    00000806 CB 46            [12] 1913 	bit	0, (hl)
+                                   1914 ;Source/Engine/ECS/ECS.c:14: return;
+    00000808 C2rACr09         [16] 1915 	jp	NZ, 00112$
+                                   1916 ;Source/Engine/ECS/ECS.c:17: entity->components |= component;
+    0000080B F8 09            [12] 1917 	ldhl	sp,	#9
+    0000080D 2A               [ 8] 1918 	ld	a, (hl+)
+    0000080E 4F               [ 4] 1919 	ld	c, a
+    0000080F 46               [ 8] 1920 	ld	b, (hl)
+    00000810 03               [ 8] 1921 	inc	bc
+    00000811 69               [ 4] 1922 	ld	l, c
+    00000812 60               [ 4] 1923 	ld	h, b
+    00000813 23               [ 8] 1924 	inc	hl
+    00000814 3A               [ 8] 1925 	ld	a,	(hl-)
+    00000815 6E               [ 8] 1926 	ld	l, (hl)
+    00000816 F5               [16] 1927 	push	af
+    00000817 7D               [ 4] 1928 	ld	a, l
+    00000818 E5               [16] 1929 	push	hl
+    00000819 F8 0B            [12] 1930 	ldhl	sp,	#11
+    0000081B B6               [ 8] 1931 	or	a, (hl)
+    0000081C E1               [12] 1932 	pop	hl
+    0000081D 5F               [ 4] 1933 	ld	e, a
+    0000081E F1               [12] 1934 	pop	af
+    0000081F F8 08            [12] 1935 	ldhl	sp,	#8
+    00000821 B6               [ 8] 1936 	or	a, (hl)
+                                   1937 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
+    00000822 23               [ 8] 1938 	inc	hl
+    00000823 57               [ 4] 1939 	ld	d, a
+    00000824 7B               [ 4] 1940 	ld	a, e
+    00000825 02               [ 8] 1941 	ld	(bc), a
+    00000826 03               [ 8] 1942 	inc	bc
+    00000827 7A               [ 4] 1943 	ld	a, d
+    00000828 02               [ 8] 1944 	ld	(bc), a
+    00000829 7E               [ 8] 1945 	ld	a, (hl)
+    0000082A F8 01            [12] 1946 	ldhl	sp,	#1
+    0000082C 77               [ 8] 1947 	ld	(hl), a
+    0000082D F8 0A            [12] 1948 	ldhl	sp,	#10
+    0000082F 7E               [ 8] 1949 	ld	a, (hl)
+    00000830 F8 02            [12] 1950 	ldhl	sp,	#2
+    00000832 77               [ 8] 1951 	ld	(hl), a
+                                   1952 ;Source/Engine/ECS/ECS.c:20: switch (component) {
+    00000833 F8 07            [12] 1953 	ldhl	sp,	#7
+    00000835 2A               [ 8] 1954 	ld	a, (hl+)
+    00000836 3D               [ 4] 1955 	dec	a
+    00000837 B6               [ 8] 1956 	or	a, (hl)
+    00000838 28 0C            [12] 1957 	jr	Z, 00103$
+    0000083A F8 07            [12] 1958 	ldhl	sp,	#7
+    0000083C 2A               [ 8] 1959 	ld	a, (hl+)
+    0000083D D6 02            [ 8] 1960 	sub	a, #0x02
+    0000083F B6               [ 8] 1961 	or	a, (hl)
+    00000840 CArCDr08         [16] 1962 	jp	Z, 00106$
+    00000843 C3rACr09         [16] 1963 	jp	00112$
+                                   1964 ;Source/Engine/ECS/ECS.c:21: case TRANSFORM_COMPONENT:
+    00000846                       1965 00103$:
+                                   1966 ;Source/Engine/ECS/ECS.c:22: nextPoolSlot = GetNextAvailableComponentPoolSlot(transformComponent.entityID, TRANSFORM_POOL_SIZE);
+    00000846 3E 64            [ 8] 1967 	ld	a, #0x64
+    00000848 11r00r00         [12] 1968 	ld	de, #_transformComponent
+    0000084B CDr9Fr0A         [24] 1969 	call	_GetNextAvailableComponentPoolSlot
+                                   1970 ;Source/Engine/ECS/ECS.c:23: if (nextPoolSlot != 255) {
+    0000084E F8 00            [12] 1971 	ldhl	sp,#0
+    00000850 77               [ 8] 1972 	ld	(hl), a
+    00000851 3C               [ 4] 1973 	inc	a
+    00000852 CArACr09         [16] 1974 	jp	Z, 00112$
+                                   1975 ;Source/Engine/ECS/ECS.c:24: vec2_set(&transformComponent.position[nextPoolSlot], 0, 0);
+    00000855 F8 00            [12] 1976 	ldhl	sp,	#0
+    00000857 7E               [ 8] 1977 	ld	a, (hl)
+    00000858 F8 05            [12] 1978 	ldhl	sp,	#5
+    0000085A 22               [ 8] 1979 	ld	(hl+), a
+    0000085B AF               [ 4] 1980 	xor	a, a
+    0000085C 32               [ 8] 1981 	ld	(hl-), a
+    0000085D 3A               [ 8] 1982 	ld	a, (hl-)
+    0000085E 2B               [ 8] 1983 	dec	hl
+    0000085F 22               [ 8] 1984 	ld	(hl+), a
+    00000860 36 00            [12] 1985 	ld	(hl), #0x00
+    00000862 3E 02            [ 8] 1986 	ld	a, #0x02
+    00000864                       1987 00152$:
+    00000864 F8 03            [12] 1988 	ldhl	sp,	#3
+    00000866 CB 26            [16] 1989 	sla	(hl)
+    00000868 23               [ 8] 1990 	inc	hl
+    00000869 CB 16            [16] 1991 	rl	(hl)
+    0000086B 3D               [ 4] 1992 	dec	a
+    0000086C 20 F6            [12] 1993 	jr	NZ, 00152$
+    0000086E 2B               [ 8] 1994 	dec	hl
+    0000086F 2A               [ 8] 1995 	ld	a, (hl+)
+    00000870 5F               [ 4] 1996 	ld	e, a
+    00000871 56               [ 8] 1997 	ld	d, (hl)
+    00000872 21r64r00         [12] 1998 	ld	hl, #(_transformComponent + 100)
+    00000875 19               [ 8] 1999 	add	hl, de
+    00000876 E5               [16] 2000 	push	hl
+    00000877 7D               [ 4] 2001 	ld	a, l
+    00000878 F8 07            [12] 2002 	ldhl	sp,	#7
+    0000087A 77               [ 8] 2003 	ld	(hl), a
+    0000087B E1               [12] 2004 	pop	hl
+    0000087C 7C               [ 4] 2005 	ld	a, h
+    0000087D F8 06            [12] 2006 	ldhl	sp,	#6
+    0000087F 32               [ 8] 2007 	ld	(hl-), a
+    00000880 3A               [ 8] 2008 	ld	a, (hl-)
+    00000881 2B               [ 8] 2009 	dec	hl
+    00000882 77               [ 8] 2010 	ld	(hl), a
+    00000883 F8 06            [12] 2011 	ldhl	sp,	#6
+    00000885 3A               [ 8] 2012 	ld	a, (hl-)
+    00000886 2B               [ 8] 2013 	dec	hl
+                                   2014 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
+    00000887 32               [ 8] 2015 	ld	(hl-), a
+    00000888 2A               [ 8] 2016 	ld	a, (hl+)
+    00000889 66               [ 8] 2017 	ld	h, (hl)
+    0000088A 6F               [ 4] 2018 	ld	l, a
+    0000088B AF               [ 4] 2019 	xor	a, a
+    0000088C 22               [ 8] 2020 	ld	(hl+), a
+    0000088D 77               [ 8] 2021 	ld	(hl), a
+                                   2022 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
+    0000088E F8 03            [12] 2023 	ldhl	sp,#3
+    00000890 2A               [ 8] 2024 	ld	a, (hl+)
+    00000891 5F               [ 4] 2025 	ld	e, a
+    00000892 56               [ 8] 2026 	ld	d, (hl)
+    00000893 21 02 00         [12] 2027 	ld	hl, #0x0002
+    00000896 19               [ 8] 2028 	add	hl, de
+    00000897 E5               [16] 2029 	push	hl
+    00000898 7D               [ 4] 2030 	ld	a, l
+    00000899 F8 07            [12] 2031 	ldhl	sp,	#7
+    0000089B 77               [ 8] 2032 	ld	(hl), a
+    0000089C E1               [12] 2033 	pop	hl
+    0000089D 7C               [ 4] 2034 	ld	a, h
+    0000089E F8 06            [12] 2035 	ldhl	sp,	#6
+    000008A0 32               [ 8] 2036 	ld	(hl-), a
+    000008A1 2A               [ 8] 2037 	ld	a, (hl+)
+    000008A2 66               [ 8] 2038 	ld	h, (hl)
+    000008A3 6F               [ 4] 2039 	ld	l, a
+    000008A4 AF               [ 4] 2040 	xor	a, a
+    000008A5 22               [ 8] 2041 	ld	(hl+), a
+    000008A6 77               [ 8] 2042 	ld	(hl), a
+                                   2043 ;Source/Engine/ECS/ECS.c:25: transformComponent.entityID[nextPoolSlot] = entity->ID;
+    000008A7 11r00r00         [12] 2044 	ld	de, #_transformComponent
+    000008AA F8 00            [12] 2045 	ldhl	sp,	#0
+    000008AC 6E               [ 8] 2046 	ld	l, (hl)
+    000008AD 26 00            [ 8] 2047 	ld	h, #0x00
+    000008AF 19               [ 8] 2048 	add	hl, de
+    000008B0 E5               [16] 2049 	push	hl
+    000008B1 7D               [ 4] 2050 	ld	a, l
+    000008B2 F8 07            [12] 2051 	ldhl	sp,	#7
+    000008B4 77               [ 8] 2052 	ld	(hl), a
+    000008B5 E1               [12] 2053 	pop	hl
+    000008B6 7C               [ 4] 2054 	ld	a, h
+    000008B7 F8 06            [12] 2055 	ldhl	sp,	#6
+    000008B9 77               [ 8] 2056 	ld	(hl), a
+    000008BA F8 01            [12] 2057 	ldhl	sp,#1
+    000008BC 2A               [ 8] 2058 	ld	a, (hl+)
+    000008BD 5F               [ 4] 2059 	ld	e, a
+    000008BE 2A               [ 8] 2060 	ld	a, (hl+)
+    000008BF 23               [ 8] 2061 	inc	hl
+    000008C0 57               [ 4] 2062 	ld	d, a
+    000008C1 1A               [ 8] 2063 	ld	a, (de)
+    000008C2 22               [ 8] 2064 	ld	(hl+), a
+    000008C3 2A               [ 8] 2065 	ld	a, (hl+)
+    000008C4 5F               [ 4] 2066 	ld	e, a
+    000008C5 3A               [ 8] 2067 	ld	a, (hl-)
+    000008C6 2B               [ 8] 2068 	dec	hl
+    000008C7 57               [ 4] 2069 	ld	d, a
+    000008C8 7E               [ 8] 2070 	ld	a, (hl)
+    000008C9 12               [ 8] 2071 	ld	(de), a
+                                   2072 ;Source/Engine/ECS/ECS.c:27: break;
+    000008CA C3rACr09         [16] 2073 	jp	00112$
+                                   2074 ;Source/Engine/ECS/ECS.c:28: case SPRITE_COMPONENT:
+    000008CD                       2075 00106$:
+                                   2076 ;Source/Engine/ECS/ECS.c:29: nextPoolSlot = GetNextAvailableComponentPoolSlot(spriteComponent.entityID, SPRITE_POOL_SIZE);
+    000008CD 3E 32            [ 8] 2077 	ld	a, #0x32
+    000008CF 11r00r00         [12] 2078 	ld	de, #_spriteComponent
+    000008D2 CDr9Fr0A         [24] 2079 	call	_GetNextAvailableComponentPoolSlot
+                                   2080 ;Source/Engine/ECS/ECS.c:30: if (nextPoolSlot != 255) {
+    000008D5 F8 03            [12] 2081 	ldhl	sp,#3
+    000008D7 77               [ 8] 2082 	ld	(hl), a
+    000008D8 3C               [ 4] 2083 	inc	a
+    000008D9 CArACr09         [16] 2084 	jp	Z, 00112$
+                                   2085 ;Source/Engine/ECS/ECS.c:31: spriteComponent.entityID[nextPoolSlot] = entity->ID;
+    000008DC 11r00r00         [12] 2086 	ld	de, #_spriteComponent
+    000008DF F8 03            [12] 2087 	ldhl	sp,	#3
+    000008E1 6E               [ 8] 2088 	ld	l, (hl)
+    000008E2 26 00            [ 8] 2089 	ld	h, #0x00
+    000008E4 19               [ 8] 2090 	add	hl, de
+    000008E5 E5               [16] 2091 	push	hl
+    000008E6 7D               [ 4] 2092 	ld	a, l
+    000008E7 F8 06            [12] 2093 	ldhl	sp,	#6
+    000008E9 77               [ 8] 2094 	ld	(hl), a
+    000008EA E1               [12] 2095 	pop	hl
+    000008EB 7C               [ 4] 2096 	ld	a, h
+    000008EC F8 05            [12] 2097 	ldhl	sp,	#5
+    000008EE 77               [ 8] 2098 	ld	(hl), a
+    000008EF F8 01            [12] 2099 	ldhl	sp,#1
+    000008F1 2A               [ 8] 2100 	ld	a, (hl+)
+    000008F2 5F               [ 4] 2101 	ld	e, a
+    000008F3 56               [ 8] 2102 	ld	d, (hl)
+    000008F4 1A               [ 8] 2103 	ld	a, (de)
+    000008F5 F8 06            [12] 2104 	ldhl	sp,	#6
+    000008F7 32               [ 8] 2105 	ld	(hl-), a
+    000008F8 2B               [ 8] 2106 	dec	hl
+    000008F9 2A               [ 8] 2107 	ld	a, (hl+)
+    000008FA 5F               [ 4] 2108 	ld	e, a
+    000008FB 2A               [ 8] 2109 	ld	a, (hl+)
+    000008FC 57               [ 4] 2110 	ld	d, a
+    000008FD 7E               [ 8] 2111 	ld	a, (hl)
+    000008FE 12               [ 8] 2112 	ld	(de), a
+                                   2113 ;Source/Engine/ECS/ECS.c:32: spriteComponent.tileData[nextPoolSlot] = 0; // Null pointer, but zero for consistency
+    000008FF F8 03            [12] 2114 	ldhl	sp,	#3
+    00000901 7E               [ 8] 2115 	ld	a, (hl)
+    00000902 87               [ 4] 2116 	add	a, a
+    00000903 F8 06            [12] 2117 	ldhl	sp,	#6
+    00000905 77               [ 8] 2118 	ld	(hl), a
+    00000906 11r32r00         [12] 2119 	ld	de, #(_spriteComponent + 50)
+    00000909 6E               [ 8] 2120 	ld	l, (hl)
+    0000090A 26 00            [ 8] 2121 	ld	h, #0x00
+    0000090C 19               [ 8] 2122 	add	hl, de
+    0000090D E5               [16] 2123 	push	hl
+    0000090E 7D               [ 4] 2124 	ld	a, l
+    0000090F F8 06            [12] 2125 	ldhl	sp,	#6
+    00000911 77               [ 8] 2126 	ld	(hl), a
+    00000912 E1               [12] 2127 	pop	hl
+    00000913 7C               [ 4] 2128 	ld	a, h
+    00000914 F8 05            [12] 2129 	ldhl	sp,	#5
+    00000916 32               [ 8] 2130 	ld	(hl-), a
+    00000917 2A               [ 8] 2131 	ld	a, (hl+)
+    00000918 66               [ 8] 2132 	ld	h, (hl)
+    00000919 6F               [ 4] 2133 	ld	l, a
+    0000091A AF               [ 4] 2134 	xor	a, a
+    0000091B 22               [ 8] 2135 	ld	(hl+), a
+    0000091C 77               [ 8] 2136 	ld	(hl), a
+                                   2137 ;Source/Engine/ECS/ECS.c:33: spriteComponent.tileIndex[nextPoolSlot] = 0;
+    0000091D 11r96r00         [12] 2138 	ld	de, #(_spriteComponent + 150)
+    00000920 F8 03            [12] 2139 	ldhl	sp,	#3
+    00000922 6E               [ 8] 2140 	ld	l, (hl)
+    00000923 26 00            [ 8] 2141 	ld	h, #0x00
+    00000925 19               [ 8] 2142 	add	hl, de
+    00000926 E5               [16] 2143 	push	hl
+    00000927 7D               [ 4] 2144 	ld	a, l
+    00000928 F8 06            [12] 2145 	ldhl	sp,	#6
+    0000092A 77               [ 8] 2146 	ld	(hl), a
+    0000092B E1               [12] 2147 	pop	hl
+    0000092C 7C               [ 4] 2148 	ld	a, h
+    0000092D F8 05            [12] 2149 	ldhl	sp,	#5
+    0000092F 32               [ 8] 2150 	ld	(hl-), a
+    00000930 2A               [ 8] 2151 	ld	a, (hl+)
+    00000931 66               [ 8] 2152 	ld	h, (hl)
+    00000932 6F               [ 4] 2153 	ld	l, a
+    00000933 36 00            [12] 2154 	ld	(hl), #0x00
+                                   2155 ;Source/Engine/ECS/ECS.c:34: spriteComponent.width[nextPoolSlot] = 0;
+    00000935 11rC8r00         [12] 2156 	ld	de, #(_spriteComponent + 200)
+    00000938 F8 03            [12] 2157 	ldhl	sp,	#3
+    0000093A 6E               [ 8] 2158 	ld	l, (hl)
+    0000093B 26 00            [ 8] 2159 	ld	h, #0x00
+    0000093D 19               [ 8] 2160 	add	hl, de
+    0000093E E5               [16] 2161 	push	hl
+    0000093F 7D               [ 4] 2162 	ld	a, l
+    00000940 F8 06            [12] 2163 	ldhl	sp,	#6
+    00000942 77               [ 8] 2164 	ld	(hl), a
+    00000943 E1               [12] 2165 	pop	hl
+    00000944 7C               [ 4] 2166 	ld	a, h
+    00000945 F8 05            [12] 2167 	ldhl	sp,	#5
+    00000947 32               [ 8] 2168 	ld	(hl-), a
+    00000948 2A               [ 8] 2169 	ld	a, (hl+)
+    00000949 66               [ 8] 2170 	ld	h, (hl)
+    0000094A 6F               [ 4] 2171 	ld	l, a
+    0000094B 36 00            [12] 2172 	ld	(hl), #0x00
+                                   2173 ;Source/Engine/ECS/ECS.c:35: spriteComponent.height[nextPoolSlot] = 0;
+    0000094D 11rFAr00         [12] 2174 	ld	de, #(_spriteComponent + 250)
+    00000950 F8 03            [12] 2175 	ldhl	sp,	#3
+    00000952 6E               [ 8] 2176 	ld	l, (hl)
+    00000953 26 00            [ 8] 2177 	ld	h, #0x00
+    00000955 19               [ 8] 2178 	add	hl, de
+    00000956 E5               [16] 2179 	push	hl
+    00000957 7D               [ 4] 2180 	ld	a, l
+    00000958 F8 06            [12] 2181 	ldhl	sp,	#6
+    0000095A 77               [ 8] 2182 	ld	(hl), a
+    0000095B E1               [12] 2183 	pop	hl
+    0000095C 7C               [ 4] 2184 	ld	a, h
+    0000095D F8 05            [12] 2185 	ldhl	sp,	#5
+    0000095F 32               [ 8] 2186 	ld	(hl-), a
+    00000960 2A               [ 8] 2187 	ld	a, (hl+)
+    00000961 66               [ 8] 2188 	ld	h, (hl)
+    00000962 6F               [ 4] 2189 	ld	l, a
+    00000963 36 00            [12] 2190 	ld	(hl), #0x00
+                                   2191 ;Source/Engine/ECS/ECS.c:36: spriteComponent.offset[nextPoolSlot].x = 0;
+    00000965 11r2Cr01         [12] 2192 	ld	de, #(_spriteComponent + 300)
+    00000968 F8 06            [12] 2193 	ldhl	sp,	#6
+    0000096A 6E               [ 8] 2194 	ld	l, (hl)
+    0000096B 26 00            [ 8] 2195 	ld	h, #0x00
+    0000096D 19               [ 8] 2196 	add	hl, de
+    0000096E E5               [16] 2197 	push	hl
+    0000096F 7D               [ 4] 2198 	ld	a, l
+    00000970 F8 03            [12] 2199 	ldhl	sp,	#3
+    00000972 77               [ 8] 2200 	ld	(hl), a
+    00000973 E1               [12] 2201 	pop	hl
+    00000974 7C               [ 4] 2202 	ld	a, h
+    00000975 F8 02            [12] 2203 	ldhl	sp,	#2
+    00000977 32               [ 8] 2204 	ld	(hl-), a
+    00000978 2A               [ 8] 2205 	ld	a, (hl+)
+    00000979 66               [ 8] 2206 	ld	h, (hl)
+    0000097A 6F               [ 4] 2207 	ld	l, a
+    0000097B 36 00            [12] 2208 	ld	(hl), #0x00
+                                   2209 ;Source/Engine/ECS/ECS.c:37: spriteComponent.offset[nextPoolSlot].y = 0;
+    0000097D F8 01            [12] 2210 	ldhl	sp,#1
+    0000097F 2A               [ 8] 2211 	ld	a, (hl+)
+    00000980 5F               [ 4] 2212 	ld	e, a
+    00000981 56               [ 8] 2213 	ld	d, (hl)
+    00000982 6B               [ 4] 2214 	ld	l, e
+    00000983 62               [ 4] 2215 	ld	h, d
+    00000984 23               [ 8] 2216 	inc	hl
+    00000985 E5               [16] 2217 	push	hl
+    00000986 7D               [ 4] 2218 	ld	a, l
+    00000987 F8 07            [12] 2219 	ldhl	sp,	#7
+    00000989 77               [ 8] 2220 	ld	(hl), a
+    0000098A E1               [12] 2221 	pop	hl
+    0000098B 7C               [ 4] 2222 	ld	a, h
+    0000098C F8 06            [12] 2223 	ldhl	sp,	#6
+    0000098E 32               [ 8] 2224 	ld	(hl-), a
+    0000098F 2A               [ 8] 2225 	ld	a, (hl+)
+    00000990 66               [ 8] 2226 	ld	h, (hl)
+    00000991 6F               [ 4] 2227 	ld	l, a
+    00000992 36 00            [12] 2228 	ld	(hl), #0x00
+                                   2229 ;Source/Engine/ECS/ECS.c:38: spriteComponent.flags[nextPoolSlot] = 0;
+    00000994 11r90r01         [12] 2230 	ld	de, #(_spriteComponent + 400)
+    00000997 F8 03            [12] 2231 	ldhl	sp,	#3
+    00000999 6E               [ 8] 2232 	ld	l, (hl)
+    0000099A 26 00            [ 8] 2233 	ld	h, #0x00
+    0000099C 19               [ 8] 2234 	add	hl, de
+    0000099D E5               [16] 2235 	push	hl
+    0000099E 7D               [ 4] 2236 	ld	a, l
+    0000099F F8 07            [12] 2237 	ldhl	sp,	#7
+    000009A1 77               [ 8] 2238 	ld	(hl), a
+    000009A2 E1               [12] 2239 	pop	hl
+    000009A3 7C               [ 4] 2240 	ld	a, h
+    000009A4 F8 06            [12] 2241 	ldhl	sp,	#6
+    000009A6 32               [ 8] 2242 	ld	(hl-), a
+    000009A7 2A               [ 8] 2243 	ld	a, (hl+)
+    000009A8 66               [ 8] 2244 	ld	h, (hl)
+    000009A9 6F               [ 4] 2245 	ld	l, a
+    000009AA 36 00            [12] 2246 	ld	(hl), #0x00
+                                   2247 ;Source/Engine/ECS/ECS.c:45: }
+    000009AC                       2248 00112$:
+                                   2249 ;Source/Engine/ECS/ECS.c:46: }
+    000009AC E8 0B            [16] 2250 	add	sp, #11
+    000009AE C9               [16] 2251 	ret
+                                   2252 ;Source/Engine/ECS/ECS.c:49: void EntityRemoveComponent(Entity *entity, uint16_t component) {
+                                   2253 ;	---------------------------------
+                                   2254 ; Function EntityRemoveComponent
+                                   2255 ; ---------------------------------
+    000009AF                       2256 _EntityRemoveComponent::
+    000009AF E8 FA            [16] 2257 	add	sp, #-6
+    000009B1 F8 04            [12] 2258 	ldhl	sp,	#4
+    000009B3 7B               [ 4] 2259 	ld	a, e
+    000009B4 22               [ 8] 2260 	ld	(hl+), a
+                                   2261 ;Source/Engine/ECS/ECS.c:51: entity->components &= ~component;
+    000009B5 7A               [ 4] 2262 	ld	a, d
+    000009B6 32               [ 8] 2263 	ld	(hl-), a
+    000009B7 2A               [ 8] 2264 	ld	a, (hl+)
+    000009B8 5F               [ 4] 2265 	ld	e, a
+    000009B9 56               [ 8] 2266 	ld	d, (hl)
+    000009BA 6B               [ 4] 2267 	ld	l, e
+    000009BB 62               [ 4] 2268 	ld	h, d
+    000009BC 23               [ 8] 2269 	inc	hl
+    000009BD 33               [ 8] 2270 	inc	sp
+    000009BE 33               [ 8] 2271 	inc	sp
+    000009BF 5D               [ 4] 2272 	ld	e, l
+    000009C0 54               [ 4] 2273 	ld	d, h
+    000009C1 D5               [16] 2274 	push	de
+    000009C2 1A               [ 8] 2275 	ld	a, (de)
+    000009C3 6F               [ 4] 2276 	ld	l, a
+    000009C4 13               [ 8] 2277 	inc	de
+    000009C5 1A               [ 8] 2278 	ld	a, (de)
+    000009C6 67               [ 4] 2279 	ld	h, a
+    000009C7 79               [ 4] 2280 	ld	a, c
+    000009C8 2F               [ 4] 2281 	cpl
+    000009C9 5F               [ 4] 2282 	ld	e, a
+    000009CA 78               [ 4] 2283 	ld	a, b
+    000009CB 2F               [ 4] 2284 	cpl
+    000009CC 57               [ 4] 2285 	ld	d, a
+    000009CD 7D               [ 4] 2286 	ld	a, l
+    000009CE A3               [ 4] 2287 	and	a, e
+    000009CF E5               [16] 2288 	push	hl
+    000009D0 F8 04            [12] 2289 	ldhl	sp,	#4
+    000009D2 77               [ 8] 2290 	ld	(hl), a
+    000009D3 E1               [12] 2291 	pop	hl
+    000009D4 7C               [ 4] 2292 	ld	a, h
+    000009D5 A2               [ 4] 2293 	and	a, d
+    000009D6 F8 03            [12] 2294 	ldhl	sp,	#3
+    000009D8 77               [ 8] 2295 	ld	(hl), a
+    000009D9 D1               [12] 2296 	pop	de
+    000009DA D5               [16] 2297 	push	de
+    000009DB F8 02            [12] 2298 	ldhl	sp,	#2
+    000009DD 2A               [ 8] 2299 	ld	a, (hl+)
+    000009DE 12               [ 8] 2300 	ld	(de), a
+    000009DF 13               [ 8] 2301 	inc	de
+                                   2302 ;Source/Engine/ECS/ECS.c:57: if (transformComponent.entityID[i] == entity -> ID)  {
+    000009E0 2A               [ 8] 2303 	ld	a, (hl+)
+    000009E1 12               [ 8] 2304 	ld	(de), a
+    000009E2 2A               [ 8] 2305 	ld	a, (hl+)
+    000009E3 5F               [ 4] 2306 	ld	e, a
+    000009E4 56               [ 8] 2307 	ld	d, (hl)
+                                   2308 ;Source/Engine/ECS/ECS.c:54: switch (component) {
+    000009E5 79               [ 4] 2309 	ld	a, c
+    000009E6 3D               [ 4] 2310 	dec	a
+    000009E7 B0               [ 4] 2311 	or	a, b
+    000009E8 28 09            [12] 2312 	jr	Z, 00101$
+    000009EA 79               [ 4] 2313 	ld	a, c
+    000009EB D6 02            [ 8] 2314 	sub	a, #0x02
+    000009ED B0               [ 4] 2315 	or	a, b
+    000009EE 28 43            [12] 2316 	jr	Z, 00105$
+    000009F0 C3r8Ar0A         [16] 2317 	jp	00116$
+                                   2318 ;Source/Engine/ECS/ECS.c:55: case TRANSFORM_COMPONENT:
+    000009F3                       2319 00101$:
+                                   2320 ;Source/Engine/ECS/ECS.c:56: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+    000009F3 F8 03            [12] 2321 	ldhl	sp,	#3
+    000009F5 36 00            [12] 2322 	ld	(hl), #0x00
+    000009F7 0E 00            [ 8] 2323 	ld	c, #0x00
+    000009F9                       2324 00112$:
+                                   2325 ;Source/Engine/ECS/ECS.c:57: if (transformComponent.entityID[i] == entity -> ID)  {
+    000009F9 21r00r00         [12] 2326 	ld	hl, #_transformComponent
+    000009FC 06 00            [ 8] 2327 	ld	b, #0x00
+    000009FE 09               [ 8] 2328 	add	hl, bc
+    000009FF 1A               [ 8] 2329 	ld	a, (de)
+    00000A00 46               [ 8] 2330 	ld	b, (hl)
+    00000A01 90               [ 4] 2331 	sub	a, b
+    00000A02 20 24            [12] 2332 	jr	NZ, 00113$
+                                   2333 ;Source/Engine/ECS/ECS.c:58: vec2_set(&transformComponent.position[i], 0, 0);
+    00000A04 01r64r00         [12] 2334 	ld	bc, #_transformComponent + 100
+    00000A07 F8 03            [12] 2335 	ldhl	sp,	#3
+    00000A09 5E               [ 8] 2336 	ld	e, (hl)
+    00000A0A 16 00            [ 8] 2337 	ld	d, #0x00
+    00000A0C 6B               [ 4] 2338 	ld	l, e
+    00000A0D 62               [ 4] 2339 	ld	h, d
+    00000A0E 29               [ 8] 2340 	add	hl, hl
+    00000A0F 29               [ 8] 2341 	add	hl, hl
+    00000A10 09               [ 8] 2342 	add	hl, bc
+                                   2343 ;Source/Engine/ECS/../Libraries/vec2.h:33: v->x = F12(x);
+    00000A11 AF               [ 4] 2344 	xor	a, a
+    00000A12 22               [ 8] 2345 	ld	(hl+), a
+    00000A13 32               [ 8] 2346 	ld	(hl-), a
+                                   2347 ;Source/Engine/ECS/../Libraries/vec2.h:34: v->y = F12(y);
+    00000A14 23               [ 8] 2348 	inc	hl
+    00000A15 23               [ 8] 2349 	inc	hl
+    00000A16 AF               [ 4] 2350 	xor	a, a
+    00000A17 22               [ 8] 2351 	ld	(hl+), a
+    00000A18 77               [ 8] 2352 	ld	(hl), a
+                                   2353 ;Source/Engine/ECS/ECS.c:59: transformComponent.entityID[i] = 0;
+    00000A19 11r00r00         [12] 2354 	ld	de, #_transformComponent
+    00000A1C F8 03            [12] 2355 	ldhl	sp,	#3
+    00000A1E 6E               [ 8] 2356 	ld	l, (hl)
+    00000A1F 26 00            [ 8] 2357 	ld	h, #0x00
+    00000A21 19               [ 8] 2358 	add	hl, de
+    00000A22 4D               [ 4] 2359 	ld	c, l
+    00000A23 44               [ 4] 2360 	ld	b, h
+    00000A24 AF               [ 4] 2361 	xor	a, a
+    00000A25 02               [ 8] 2362 	ld	(bc), a
+                                   2363 ;Source/Engine/ECS/ECS.c:60: return;
+    00000A26 18 62            [12] 2364 	jr	00116$
+    00000A28                       2365 00113$:
+                                   2366 ;Source/Engine/ECS/ECS.c:56: for (i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+    00000A28 0C               [ 4] 2367 	inc	c
+    00000A29 F8 03            [12] 2368 	ldhl	sp,	#3
+    00000A2B 79               [ 4] 2369 	ld	a,c
+    00000A2C 77               [ 8] 2370 	ld	(hl),a
+    00000A2D D6 64            [ 8] 2371 	sub	a, #0x64
+    00000A2F 38 C8            [12] 2372 	jr	C, 00112$
+                                   2373 ;Source/Engine/ECS/ECS.c:63: break;
+    00000A31 18 57            [12] 2374 	jr	00116$
+                                   2375 ;Source/Engine/ECS/ECS.c:64: case SPRITE_COMPONENT:
+    00000A33                       2376 00105$:
+                                   2377 ;Source/Engine/ECS/ECS.c:65: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
+    00000A33 01 00 00         [12] 2378 	ld	bc, #0x0
+    00000A36                       2379 00114$:
+                                   2380 ;Source/Engine/ECS/ECS.c:66: if (spriteComponent.entityID[i] == entity -> ID)  {
+    00000A36 3Er00            [ 8] 2381 	ld	a, #<(_spriteComponent)
+    00000A38 80               [ 4] 2382 	add	a, b
+    00000A39 6F               [ 4] 2383 	ld	l, a
+    00000A3A 3Es00            [ 8] 2384 	ld	a, #>(_spriteComponent)
+    00000A3C CE 00            [ 8] 2385 	adc	a, #0x00
+    00000A3E 67               [ 4] 2386 	ld	h, a
+    00000A3F 1A               [ 8] 2387 	ld	a, (de)
+    00000A40 6E               [ 8] 2388 	ld	l, (hl)
+    00000A41 95               [ 4] 2389 	sub	a, l
+    00000A42 20 3F            [12] 2390 	jr	NZ, 00115$
+                                   2391 ;Source/Engine/ECS/ECS.c:67: spriteComponent.entityID[i] = 0;
+    00000A44 21r00r00         [12] 2392 	ld	hl, #_spriteComponent
+    00000A47 06 00            [ 8] 2393 	ld	b, #0x00
+    00000A49 09               [ 8] 2394 	add	hl, bc
+    00000A4A 36 00            [12] 2395 	ld	(hl), #0x00
+                                   2396 ;Source/Engine/ECS/ECS.c:68: spriteComponent.tileData[i] = 0;
+    00000A4C 21r32r00         [12] 2397 	ld	hl, #_spriteComponent + 50
+    00000A4F 79               [ 4] 2398 	ld	a, c
+    00000A50 87               [ 4] 2399 	add	a, a
+    00000A51 5F               [ 4] 2400 	ld	e, a
+    00000A52 16 00            [ 8] 2401 	ld	d, #0x00
+    00000A54 19               [ 8] 2402 	add	hl, de
+    00000A55 AF               [ 4] 2403 	xor	a, a
+    00000A56 22               [ 8] 2404 	ld	(hl+), a
+    00000A57 77               [ 8] 2405 	ld	(hl), a
+                                   2406 ;Source/Engine/ECS/ECS.c:69: spriteComponent.tileIndex[i] = 0;
+    00000A58 21r96r00         [12] 2407 	ld	hl, #_spriteComponent + 150
+    00000A5B 06 00            [ 8] 2408 	ld	b, #0x00
+    00000A5D 09               [ 8] 2409 	add	hl, bc
+    00000A5E 36 00            [12] 2410 	ld	(hl), #0x00
+                                   2411 ;Source/Engine/ECS/ECS.c:70: spriteComponent.width[i] = 0;
+    00000A60 21rC8r00         [12] 2412 	ld	hl, #_spriteComponent + 200
+    00000A63 06 00            [ 8] 2413 	ld	b, #0x00
+    00000A65 09               [ 8] 2414 	add	hl, bc
+    00000A66 36 00            [12] 2415 	ld	(hl), #0x00
+                                   2416 ;Source/Engine/ECS/ECS.c:71: spriteComponent.height[i] = 0;
+    00000A68 21rFAr00         [12] 2417 	ld	hl, #_spriteComponent + 250
+    00000A6B 06 00            [ 8] 2418 	ld	b, #0x00
+    00000A6D 09               [ 8] 2419 	add	hl, bc
+    00000A6E 36 00            [12] 2420 	ld	(hl), #0x00
+                                   2421 ;Source/Engine/ECS/ECS.c:72: spriteComponent.offset[i].x = 0;
+    00000A70 21r2Cr01         [12] 2422 	ld	hl, #_spriteComponent + 300
+    00000A73 16 00            [ 8] 2423 	ld	d, #0x00
+    00000A75 19               [ 8] 2424 	add	hl, de
+                                   2425 ;Source/Engine/ECS/ECS.c:73: spriteComponent.offset[i].y = 0;
+    00000A76 AF               [ 4] 2426 	xor	a, a
+    00000A77 22               [ 8] 2427 	ld	(hl+), a
+    00000A78 77               [ 8] 2428 	ld	(hl), a
+                                   2429 ;Source/Engine/ECS/ECS.c:74: spriteComponent.flags[i] = 0;
+    00000A79 21r90r01         [12] 2430 	ld	hl, #(_spriteComponent + 400)
+    00000A7C 06 00            [ 8] 2431 	ld	b, #0x00
+    00000A7E 09               [ 8] 2432 	add	hl, bc
+    00000A7F 36 00            [12] 2433 	ld	(hl), #0x00
+                                   2434 ;Source/Engine/ECS/ECS.c:75: return;
+    00000A81 18 07            [12] 2435 	jr	00116$
+    00000A83                       2436 00115$:
+                                   2437 ;Source/Engine/ECS/ECS.c:65: for (i = 0; i < SPRITE_POOL_SIZE; i++) {
+    00000A83 04               [ 4] 2438 	inc	b
+    00000A84 48               [ 4] 2439 	ld	c, b
+    00000A85 78               [ 4] 2440 	ld	a, b
+    00000A86 D6 32            [ 8] 2441 	sub	a, #0x32
+    00000A88 38 AC            [12] 2442 	jr	C, 00114$
+                                   2443 ;Source/Engine/ECS/ECS.c:83: }
+    00000A8A                       2444 00116$:
+                                   2445 ;Source/Engine/ECS/ECS.c:84: }
+    00000A8A E8 06            [16] 2446 	add	sp, #6
+    00000A8C C9               [16] 2447 	ret
+                                   2448 ;Source/Engine/ECS/ECS.c:87: bool EntityHasComponent(const Entity *entity, uint16_t component) {
+                                   2449 ;	---------------------------------
+                                   2450 ; Function EntityHasComponent
+                                   2451 ; ---------------------------------
+    00000A8D                       2452 _EntityHasComponent::
+                                   2453 ;Source/Engine/ECS/ECS.c:88: return (entity->components & component) != 0;
+    00000A8D 6B               [ 4] 2454 	ld	l, e
+    00000A8E 62               [ 4] 2455 	ld	h, d
+    00000A8F 23               [ 8] 2456 	inc	hl
+    00000A90 2A               [ 8] 2457 	ld	a, (hl+)
+    00000A91 6E               [ 8] 2458 	ld	l, (hl)
+    00000A92 A1               [ 4] 2459 	and	a, c
+    00000A93 4F               [ 4] 2460 	ld	c, a
+    00000A94 7D               [ 4] 2461 	ld	a, l
+    00000A95 A0               [ 4] 2462 	and	a, b
+    00000A96 B1               [ 4] 2463 	or	a, c
+    00000A97 D6 01            [ 8] 2464 	sub	a, #0x01
+    00000A99 3E 00            [ 8] 2465 	ld	a, #0x00
+    00000A9B 17               [ 4] 2466 	rla
+    00000A9C EE 01            [ 8] 2467 	xor	a, #0x01
+                                   2468 ;Source/Engine/ECS/ECS.c:89: }
+    00000A9E C9               [16] 2469 	ret
+                                   2470 ;Source/Engine/ECS/ECS.c:91: uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
+                                   2471 ;	---------------------------------
+                                   2472 ; Function GetNextAvailableComponentPoolSlot
+                                   2473 ; ---------------------------------
+    00000A9F                       2474 _GetNextAvailableComponentPoolSlot::
+    00000A9F 3B               [ 8] 2475 	dec	sp
+    00000AA0 4F               [ 4] 2476 	ld	c, a
+                                   2477 ;Source/Engine/ECS/ECS.c:93: for (i = 0; i < poolSize; i++) {
+    00000AA1 F8 00            [12] 2478 	ldhl	sp,	#0
+    00000AA3 36 00            [12] 2479 	ld	(hl), #0x00
+    00000AA5 06 00            [ 8] 2480 	ld	b, #0x00
+    00000AA7                       2481 00105$:
+    00000AA7 78               [ 4] 2482 	ld	a, b
+    00000AA8 91               [ 4] 2483 	sub	a, c
+    00000AA9 30 13            [12] 2484 	jr	NC, 00103$
+                                   2485 ;Source/Engine/ECS/ECS.c:94: if (poolPointer[i] == 0) {
+    00000AAB 68               [ 4] 2486 	ld	l, b
+    00000AAC 26 00            [ 8] 2487 	ld	h, #0x00
+    00000AAE 19               [ 8] 2488 	add	hl, de
+    00000AAF 7E               [ 8] 2489 	ld	a, (hl)
+    00000AB0 B7               [ 4] 2490 	or	a, a
+    00000AB1 20 05            [12] 2491 	jr	NZ, 00106$
+                                   2492 ;Source/Engine/ECS/ECS.c:95: return i;
+    00000AB3 F8 00            [12] 2493 	ldhl	sp,	#0
+    00000AB5 7E               [ 8] 2494 	ld	a, (hl)
+    00000AB6 18 08            [12] 2495 	jr	00107$
+    00000AB8                       2496 00106$:
+                                   2497 ;Source/Engine/ECS/ECS.c:93: for (i = 0; i < poolSize; i++) {
+    00000AB8 04               [ 4] 2498 	inc	b
+    00000AB9 F8 00            [12] 2499 	ldhl	sp,	#0
+    00000ABB 70               [ 8] 2500 	ld	(hl), b
+    00000ABC 18 E9            [12] 2501 	jr	00105$
+    00000ABE                       2502 00103$:
+                                   2503 ;Source/Engine/ECS/ECS.c:98: return 255;
+    00000ABE 3E FF            [ 8] 2504 	ld	a, #0xff
+    00000AC0                       2505 00107$:
+                                   2506 ;Source/Engine/ECS/ECS.c:99: }
+    00000AC0 33               [ 8] 2507 	inc	sp
+    00000AC1 C9               [16] 2508 	ret
+                                   2509 ;Source/Engine/ECS/ECS.c:101: Entity* getEntityById (uint8_t id) {
+                                   2510 ;	---------------------------------
+                                   2511 ; Function getEntityById
+                                   2512 ; ---------------------------------
+    00000AC2                       2513 _getEntityById::
+    00000AC2 3B               [ 8] 2514 	dec	sp
+    00000AC3 F8 00            [12] 2515 	ldhl	sp,	#0
+    00000AC5 77               [ 8] 2516 	ld	(hl), a
+                                   2517 ;Source/Engine/ECS/ECS.c:102: for (int i = 0; i < MAX_ENTITIES; i++) {
+    00000AC6 01 00 00         [12] 2518 	ld	bc, #0x0000
+    00000AC9                       2519 00105$:
+    00000AC9 79               [ 4] 2520 	ld	a, c
+    00000ACA D6 64            [ 8] 2521 	sub	a, #0x64
+    00000ACC 30 19            [12] 2522 	jr	NC, 00103$
+                                   2523 ;Source/Engine/ECS/ECS.c:103: if (entity[i].ID == id) {
+    00000ACE 69               [ 4] 2524 	ld	l, c
+    00000ACF 60               [ 4] 2525 	ld	h, b
+    00000AD0 29               [ 8] 2526 	add	hl, hl
+    00000AD1 09               [ 8] 2527 	add	hl, bc
+    00000AD2 7D               [ 4] 2528 	ld	a, l
+    00000AD3 C6r00            [ 8] 2529 	add	a, #<(_entity)
+    00000AD5 5F               [ 4] 2530 	ld	e, a
+    00000AD6 7C               [ 4] 2531 	ld	a, h
+    00000AD7 CEs00            [ 8] 2532 	adc	a, #>(_entity)
+    00000AD9 57               [ 4] 2533 	ld	d, a
+    00000ADA 1A               [ 8] 2534 	ld	a, (de)
+    00000ADB F8 00            [12] 2535 	ldhl	sp,	#0
+    00000ADD 96               [ 8] 2536 	sub	a, (hl)
+    00000ADE 20 04            [12] 2537 	jr	NZ, 00106$
+                                   2538 ;Source/Engine/ECS/ECS.c:104: return &entity[i];
+    00000AE0 4B               [ 4] 2539 	ld	c, e
+    00000AE1 42               [ 4] 2540 	ld	b, d
+    00000AE2 18 06            [12] 2541 	jr	00107$
+    00000AE4                       2542 00106$:
+                                   2543 ;Source/Engine/ECS/ECS.c:102: for (int i = 0; i < MAX_ENTITIES; i++) {
+    00000AE4 03               [ 8] 2544 	inc	bc
+    00000AE5 18 E2            [12] 2545 	jr	00105$
+    00000AE7                       2546 00103$:
+                                   2547 ;Source/Engine/ECS/ECS.c:107: return 0;
+    00000AE7 01 00 00         [12] 2548 	ld	bc, #0x0000
+    00000AEA                       2549 00107$:
+                                   2550 ;Source/Engine/ECS/ECS.c:108: }
+    00000AEA 33               [ 8] 2551 	inc	sp
+    00000AEB C9               [16] 2552 	ret
+                                   2553 	.area _CODE
+                                   2554 	.area _INITIALIZER
+                                   2555 	.area _CABS (ABS)

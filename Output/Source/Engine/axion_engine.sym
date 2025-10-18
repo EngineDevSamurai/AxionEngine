@@ -18,26 +18,24 @@ Symbol Table
     _bkg_data                                                       ******** GX
     _display_off                                                    ******** GX
     _face                                                           ******** GX
-  0 _getLocalSprite                                                 00000531 R
-  0 _getSpriteFlipProps                                             000004EC R
-  0 _getSpriteFlipX                                                 00000402 R
-  0 _getSpriteFlipY                                                 00000450 R
-  0 _getSpriteHeight                                                0000028A R
-  0 _getSpriteOffset                                                0000035C R
-  0 _getSpriteVisible                                               0000049E R
-  0 _getSpriteWidth                                                 000007CC R
-  0 _getSpriteWorldFlag                                             000003B4 R
-  0 _getSpriteZIndex                                                00000311 R
+  0 _getLocalSprite                                                 000006B1 R
+  0 _getSpriteActive                                                0000062B R
+  0 _getSpriteFlipX                                                 0000051F R
+  0 _getSpriteFlipY                                                 000005A5 R
+  0 _getSpriteHeight                                                00000311 R
+  0 _getSpritePalette                                               00000398 R
+  0 _getSpriteWidth                                                 0000028A R
+  0 _getSpriteWorldFlag                                             00000499 R
   0 _getTransformPosition                                           00000221 R
-  0 _main                                                           00000853 GR
-  0 _setSpriteFlipX                                                 000006EC R
-  0 _setSpriteFlipY                                                 00000724 R
-  0 _setSpriteHeight                                                000002CC R
-  0 _setSpriteOffset                                                00000794 R
-  0 _setSpriteVisible                                               0000075C R
-  0 _setSpriteWidth                                                 0000080E R
-  0 _setSpriteWorldFlag                                             000006B4 R
-  0 _setSpriteZIndex                                                0000065C R
+  0 _main                                                           000007EC GR
+  0 _setSpriteActive                                                00000679 R
+  0 _setSpriteFlipX                                                 0000056D R
+  0 _setSpriteFlipY                                                 000005F3 R
+  0 _setSpriteHeight                                                00000353 R
+  0 _setSpriteOffset                                                00000461 R
+  0 _setSpritePalette                                               00000408 R
+  0 _setSpriteWidth                                                 000002CC R
+  0 _setSpriteWorldFlag                                             000004E7 R
     _set_bkg_data                                                   ******** GX
     _smiley                                                         ******** GX
     _spriteComponent                                                ******** GX
@@ -56,7 +54,7 @@ Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      98E   flags    0
+   0 _CODE                                      size      91B   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

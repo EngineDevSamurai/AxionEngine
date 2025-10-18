@@ -2,85 +2,95 @@
 #include "../Components/sprite_component.h"
 #include "../../Asset_Manifests/tile_manifest.h"
 
-// Renders all visible sprites from the global sprite and transform component pools.
-// Uses the global camera position for world-space sprites.
-
-// Remove this after we add a proper camera
+// Temporary camera placeholder
 vec2_i camera = {0, 0};
 
+// Structure for temporary OAM sort list
+typedef struct {
+    uint8_t entityID;
+    int16_t screenX;
+    int16_t screenY;
+    uint16_t orderKey; // optional: preserves stable ordering for same X
+} OAMEntry;
+
+static OAMEntry oamList[SPRITE_POOL_SIZE];
+static uint8_t oamCount = 0;
+
+
+// ---------------------------------------------------------------
+// Renders all visible sprites from the global sprite/transform pools.
+// Draw order: ascending screen X (hardware order on Game Boy).
+// ---------------------------------------------------------------
 void RenderSprites(void) {
-    // Storing attributes in local variables if referenced more than once
-    // This helps reduce repeated processor instructions for deep array lookups
-    // And allows the processor to better utilize the CPU registers instead of
-    // putting everything on the stack.
     vec2 position;
-    vec2_i offset;
-    uint8_t id;
     uint8_t spriteOAMIndex = 0;
-    Entity *e;
-    uint8_t tileDataIndex = 0;
-    uint8_t spriteCount;
-    LocalSprite s;
+    uint8_t spriteCount = 0;
+    oamCount = 0;
 
-    spriteCount = sortEntitiesByZIndex();
+    // Build list of visible sprites
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+        uint8_t id = spriteComponent.entityID[i];
+        if (id == 0) continue;
 
+        LocalSprite s = getLocalSprite(id);
+        if (!s.visible) continue;
 
-    for (uint8_t i = 0; i < spriteCount; i++) {
-        id = spriteIDByZIndex[i];
-        e = getEntityById(id);
-        // Load the local sprite component into memory
-        s = getLocalSprite(id);
+        Entity *e = getEntityById(id);
+        if (!EntityHasComponent(e, TRANSFORM_COMPONENT))
+            continue;
 
-        if (id != 0 && s.visible &&
-            EntityHasComponent(e, TRANSFORM_COMPONENT)) {
+        position = getTransformPosition(id);
 
-            // Get the transform
-            position = getTransformPosition(id);
+        int16_t screenX = s.isWorld ? (TO_INT(position.x) - camera.x + s.offset.x)
+                                    : position.x + s.offset.x;
+        int16_t screenY = s.isWorld ? (TO_INT(position.y) - camera.y + s.offset.y)
+                                    : position.y + s.offset.y;
 
-            // // Determine screen position
-            int16_t screenX = s.isWorld ? (TO_INT(position.x) - camera.x + s.offset.x) : position.x + s.offset.x;
-            int16_t screenY = s.isWorld ? (TO_INT(position.y) - camera.y + s.offset.y) : position.y + s.offset.y;
+        OAMEntry entry;
+        entry.entityID = id;
+        entry.screenX  = screenX;
+        entry.screenY  = screenY;
+        entry.orderKey = (uint16_t)((screenX << 1) | (id & 1));
 
-            uint8_t numTiles = s.width * s.height;
-            set_sprite_data(spriteOAMIndex, numTiles, s.tileData);
+        oamList[oamCount++] = entry;
 
+        ;
+    }
 
-            // Loop through sprite tiles
-            for (uint8_t tx = 0; tx < s.width; tx++) {
-                for (uint8_t ty = 0; ty < s.height; ty++) {
-                    if (spriteOAMIndex >= 40) return; // Max hardware sprites
-
-                    uint8_t tileIndex = tx * s.height + ty;
-                    set_sprite_tile(spriteOAMIndex, spriteOAMIndex);
-                    set_sprite_prop(spriteOAMIndex, s.flipProps);
-                    move_sprite(spriteOAMIndex, screenX + tx * 8, screenY + ty * 8);
-                    spriteOAMIndex++;
-                }
+    // Sort ascending by screenX (and stable order)
+    for (uint8_t i = 0; i < oamCount; i++) {
+        for (uint8_t j = i + 1; j < oamCount; j++) {
+            if (oamList[j].screenX < oamList[i].screenX) {
+                OAMEntry tmp = oamList[i];
+                oamList[i] = oamList[j];
+                oamList[j] = tmp;
             }
         }
     }
-}
 
-// Clear the ZIndex Array
-void clearZIndexArray(void) {
-    uint8_t i;
-    for (i = 0; i < SPRITE_POOL_SIZE; i++) {
-        spriteIDByZIndex[i] = 0;
-    }
-}
+    // Render in sorted order
+    for (uint8_t n = 0; n < oamCount; n++) {
+        uint8_t id = oamList[n].entityID;
+        LocalSprite s = getLocalSprite(id);
+        if (!s.visible) continue;
 
-// Sort the entities by ZIndex
-uint8_t sortEntitiesByZIndex(void) {
-    clearZIndexArray();
-    uint8_t zIndex, entityID, entityCount;
-    entityCount = 0;
-    for (zIndex = 0; zIndex < 8; zIndex++) {
-        for (entityID = 0; entityID < SPRITE_POOL_SIZE; entityID++) {
-            if (SPRITE_GET_Z(spriteComponent.flags[entityID]) == zIndex) {
-                spriteIDByZIndex[entityCount] = spriteComponent.entityID[entityID];
-                entityCount++;
+        uint8_t numTiles = s.width * s.height;
+        set_sprite_data(spriteOAMIndex, numTiles, s.tileData);
+
+        for (uint8_t tx = 0; tx < s.width; tx++) {
+            for (uint8_t ty = 0; ty < s.height; ty++) {
+                if (spriteOAMIndex >= 40) return; // Max hardware sprites
+
+                uint8_t tileIndex = tx * s.height + ty;
+                uint8_t props = SPRITE_PROPS_FROM_FLAGS(s.flags);
+
+                set_sprite_tile(spriteOAMIndex, spriteOAMIndex);
+                set_sprite_prop(spriteOAMIndex, props);
+                move_sprite(spriteOAMIndex,
+                            oamList[n].screenX + tx * 8,
+                            oamList[n].screenY + ty * 8);
+                spriteOAMIndex++;
             }
         }
     }
-    return entityCount;
 }

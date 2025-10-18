@@ -3,155 +3,265 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <gb/gb.h>                     // for sprite property macros
 #include "../../settings.h"
 #include "../Libraries/vec2.h"
 
-// Sprite flags layout (1 byte)
-// Bit 0: World (1) / UI (0)
-// Bit 1: Flip X
-// Bit 2: Flip Y
-// Bits 3-5: Z-index (0-7)
-// Bit 6: Visible (1 = visible, 0 = hidden)
-// Bit 7: Reserved
+/* ------- Flag layout (1 byte) -------
+   bit0 : WORLD (1=world, 0=UI)          [SPRF_WORLD]
+   bit1 : FLIP X                         [SPRF_FLIPX]
+   bit2 : FLIP Y                         [SPRF_FLIPY]
+   bits3-5 : PALETTE index (0..7)        [SPRF_PAL_MASK / SHIFT]
+   bit6 : OBJ->BG priority (behind BG)   [SPRF_BEHIND]
+   bit7 : ACTIVE / visible               [SPRF_ACTIVE]
+-------------------------------------- */
 
-#define SPRITE_FLAG_WORLD   (1 << 0)
-#define SPRITE_FLIP_X       (1 << 1)
-#define SPRITE_FLIP_Y       (1 << 2)
-#define SPRITE_VISIBLE      (1 << 6)
+#define SPRF_WORLD      0x01
+#define SPRF_FLIPX      0x02
+#define SPRF_FLIPY      0x04
+#define SPRF_PAL_MASK   0x38
+#define SPRF_PAL_SHIFT  3
+#define SPRF_BEHIND     0x40
+#define SPRF_ACTIVE     0x80
 
-// Z-index helpers
-#define SPRITE_Z_SHIFT      3
-#define SPRITE_Z_MASK       (0x07 << SPRITE_Z_SHIFT)
-#define SPRITE_SET_Z(flags, z) ((flags & ~SPRITE_Z_MASK) | ((z << SPRITE_Z_SHIFT) & SPRITE_Z_MASK))
-#define SPRITE_GET_Z(flags) ((flags & SPRITE_Z_MASK) >> SPRITE_Z_SHIFT)
+/* ---- Flag helpers (get/set/toggle) ---- */
 
-// The struct used by the ECS
+/* active/visible */
+#define SPRITE_IS_ACTIVE(f)       ((uint8_t)((f) & SPRF_ACTIVE))
+#define SPRITE_SET_ACTIVE(f)      ((f) |= SPRF_ACTIVE)
+#define SPRITE_CLEAR_ACTIVE(f)    ((f) &= (uint8_t)~SPRF_ACTIVE)
+
+/* world/ui */
+#define SPRITE_IS_WORLD(f)        ((uint8_t)((f) & SPRF_WORLD))
+#define SPRITE_SET_WORLD(f)       ((f) |= SPRF_WORLD)
+#define SPRITE_SET_UI(f)          ((f) &= (uint8_t)~SPRF_WORLD)
+
+/* flips */
+#define SPRITE_IS_FLIPX(f)        ((uint8_t)((f) & SPRF_FLIPX))
+#define SPRITE_SET_FLIPX(f)       ((f) |= SPRF_FLIPX)
+#define SPRITE_CLEAR_FLIPX(f)     ((f) &= (uint8_t)~SPRF_FLIPX)
+
+#define SPRITE_IS_FLIPY(f)        ((uint8_t)((f) & SPRF_FLIPY))
+#define SPRITE_SET_FLIPY(f)       ((f) |= SPRF_FLIPY)
+#define SPRITE_CLEAR_FLIPY(f)     ((f) &= (uint8_t)~SPRF_FLIPY)
+
+/* behind BG */
+#define SPRITE_IS_BEHIND(f)       ((uint8_t)((f) & SPRF_BEHIND))
+#define SPRITE_SET_BEHIND(f)      ((f) |= SPRF_BEHIND)
+#define SPRITE_CLEAR_BEHIND(f)    ((f) &= (uint8_t)~SPRF_BEHIND)
+
+/* palette (3 bits, 0..7). On DMG, only 0/1 are meaningful. */
+#define SPRITE_GET_PALETTE(f)     ( (uint8_t)(((f) & SPRF_PAL_MASK) >> SPRF_PAL_SHIFT) )
+#define SPRITE_SET_PALETTE(f,n)   ( (f) = (uint8_t)(((f) & (uint8_t)~SPRF_PAL_MASK) | (uint8_t)(((n) & 0x07) << SPRF_PAL_SHIFT)) )
+
+/* Pack GBDK sprite props from flags (palette left to caller if needed) */
+#define SPRITE_PROPS_BASE_FROM_FLAGS(f) \
+    ( ((f)&SPRF_FLIPX ? S_FLIPX : 0) | ((f)&SPRF_FLIPY ? S_FLIPY : 0) | ((f)&SPRF_BEHIND ? S_PRIORITY : 0) )
+
+/* Include palette info (auto-handles DMG vs CGB) */
+#if defined(CGB)
+/* CGB: 0..7 palette */
+  #define SPRITE_PROPS_FROM_FLAGS(f) \
+      ( SPRITE_PROPS_BASE_FROM_FLAGS(f) | S_PALETTE(SPRITE_GET_PALETTE(f)) )
+#else
+/* DMG: coerce to 0/1 (OBP0 / OBP1). Adjust macros if needed for your GBDK version. */
+  #ifndef S_PAL0
+    #define S_PAL0 0
+    #define S_PAL1 0x10  /* DMG attr bit 4 selects OBP1 */
+  #endif
+  #define SPRITE_PROPS_FROM_FLAGS(f) \
+      ( SPRITE_PROPS_BASE_FROM_FLAGS(f) | ((SPRITE_GET_PALETTE(f) & 1) ? S_PAL1 : S_PAL0) )
+#endif
+
+#define GET_SPRITE_OFFSET(entityID, OUT_VEC)                      \
+    do {                                                          \
+        (OUT_VEC).x = 0;                                          \
+        (OUT_VEC).y = 0;                                          \
+        for (uint8_t _i = 0; _i < SPRITE_POOL_SIZE; _i++) {       \
+            if (spriteComponent.entityID[_i] == (entityID)) {     \
+                (OUT_VEC) = spriteComponent.offset[_i];            \
+                break;                                            \
+            }                                                     \
+        }                                                         \
+    } while (0)
+
+
+
+/* ============================================================
+   ECS Sprite Component
+   ============================================================ */
 typedef struct {
-    uint8_t entityID[SPRITE_POOL_SIZE];
+    uint8_t              entityID[SPRITE_POOL_SIZE];
     const unsigned char* tileData[SPRITE_POOL_SIZE];  // pointer to tile data in ROM
-    uint8_t tileIndex[SPRITE_POOL_SIZE];              // tile index in VRAM
-    uint8_t width[SPRITE_POOL_SIZE];                  // in tiles
-    uint8_t height[SPRITE_POOL_SIZE];                 // in tiles
-    vec2_i offset[SPRITE_POOL_SIZE];                  // offset relative to entity transform
-    uint8_t flags[SPRITE_POOL_SIZE];                  // bitmask
-    uint8_t palette[SPRITE_POOL_SIZE];                // color palette
+    uint8_t              tileIndex[SPRITE_POOL_SIZE]; // tile index in VRAM
+    uint8_t              width[SPRITE_POOL_SIZE];     // in tiles
+    uint8_t              height[SPRITE_POOL_SIZE];    // in tiles
+    vec2_i               offset[SPRITE_POOL_SIZE];    // offset relative to entity transform
+    uint8_t              flags[SPRITE_POOL_SIZE];     // packed attribute bits
 } SpriteComponent;
 
-// Local sprite used in the rendering loop
+
+/* ============================================================
+   Local Sprite (used during rendering)
+   ============================================================ */
 typedef struct {
-    uint8_t id;
-    uint8_t width;
-    uint8_t height;
-    vec2_i offset;
-    bool isWorld;
-    bool visible;
-    uint8_t flags;
-    const unsigned char *tileData;
-    uint8_t flipProps;
+    uint8_t              id;
+    uint8_t              width;
+    uint8_t              height;
+    const unsigned char* tileData;
+    uint8_t              tileIndex;
+    vec2_i               offset;
+    bool                 isWorld;
+    bool                 visible;
+    uint8_t              flags;
+    uint8_t              flipProps;
 } LocalSprite;
 
 
-
-// Global instance
+/* ============================================================
+   Global instance
+   ============================================================ */
 extern SpriteComponent spriteComponent;
 
 
-// Inline function for getting sprite height (in tiles)
-static inline uint8_t getSpriteHeight(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            return spriteComponent.height[i];
-        }
-    }
+/* ============================================================
+   Inline utility functions
+   ============================================================ */
+
+/* Sprite dimension helpers */
+static inline uint8_t getSpriteWidth(uint8_t entityID) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return spriteComponent.width[i];
     return 0;
 }
 
-// Inline function for setting sprite height (in tiles)
+static inline void setSpriteWidth(uint8_t entityID, uint8_t width) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID) {
+            spriteComponent.width[i] = width;
+            return;
+        }
+}
+
+static inline uint8_t getSpriteHeight(uint8_t entityID) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return spriteComponent.height[i];
+    return 0;
+}
+
 static inline void setSpriteHeight(uint8_t entityID, uint8_t height) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
         if (spriteComponent.entityID[i] == entityID) {
             spriteComponent.height[i] = height;
             return;
         }
-    }
 }
 
-// Inline function for returning sprite Z-index (0–7)
-static inline uint8_t getSpriteZIndex(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            return SPRITE_GET_Z(spriteComponent.flags[i]);
-        }
-    }
+/* Palette accessors (replace old Z-index accessors) */
+static inline uint8_t getSpritePalette(uint8_t entityID) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return SPRITE_GET_PALETTE(spriteComponent.flags[i]);
     return 0;
 }
 
-// Inline function for returning sprite offset
-static inline vec2_i getSpriteOffset(uint8_t entityID) {
-    vec2_i result = {0, 0};
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+static inline void setSpritePalette(uint8_t entityID, uint8_t palette) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
         if (spriteComponent.entityID[i] == entityID) {
-            result = spriteComponent.offset[i];
-            return result;
+            SPRITE_SET_PALETTE(spriteComponent.flags[i], palette);
+            return;
         }
-    }
-    return result;
 }
 
-// Inline function for checking if sprite is world-space
+static inline void setSpriteOffset(uint8_t entityID, vec2_i newOffset) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID) {
+            spriteComponent.offset[i] = newOffset;
+            return;
+        }
+}
+
+/* World flag */
 static inline bool getSpriteWorldFlag(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            return (spriteComponent.flags[i] & SPRITE_FLAG_WORLD) != 0;
-        }
-    }
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return (spriteComponent.flags[i] & SPRF_WORLD) != 0;
     return false;
 }
 
-// Inline function for checking horizontal flip
+static inline void setSpriteWorldFlag(uint8_t entityID, bool isWorld) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID) {
+            if (isWorld)
+                spriteComponent.flags[i] |= SPRF_WORLD;
+            else
+                spriteComponent.flags[i] &= ~SPRF_WORLD;
+            return;
+        }
+}
+
+/* Flip flags */
 static inline bool getSpriteFlipX(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            return (spriteComponent.flags[i] & SPRITE_FLIP_X) != 0;
-        }
-    }
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return (spriteComponent.flags[i] & SPRF_FLIPX) != 0;
     return false;
 }
 
-// Inline function for checking vertical flip
+static inline void setSpriteFlipX(uint8_t entityID, bool flip) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID) {
+            if (flip)
+                spriteComponent.flags[i] |= SPRF_FLIPX;
+            else
+                spriteComponent.flags[i] &= ~SPRF_FLIPX;
+            return;
+        }
+}
+
 static inline bool getSpriteFlipY(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            return (spriteComponent.flags[i] & SPRITE_FLIP_Y) != 0;
-        }
-    }
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return (spriteComponent.flags[i] & SPRF_FLIPY) != 0;
     return false;
 }
 
-// Inline function for checking sprite visibility
-static inline bool getSpriteVisible(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+static inline void setSpriteFlipY(uint8_t entityID, bool flip) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
         if (spriteComponent.entityID[i] == entityID) {
-            return (spriteComponent.flags[i] & SPRITE_VISIBLE) != 0;
+            if (flip)
+                spriteComponent.flags[i] |= SPRF_FLIPY;
+            else
+                spriteComponent.flags[i] &= ~SPRF_FLIPY;
+            return;
         }
-    }
+}
+
+/* Active/visible helpers */
+static inline bool getSpriteActive(uint8_t entityID) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+        if (spriteComponent.entityID[i] == entityID)
+            return (spriteComponent.flags[i] & SPRF_ACTIVE) != 0;
     return false;
 }
 
-// Get the sprite flip flags ready for set_sprite_prop()
-static inline uint8_t getSpriteFlipProps(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+static inline void setSpriteActive(uint8_t entityID, bool active) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
         if (spriteComponent.entityID[i] == entityID) {
-            return spriteComponent.flags[i] & (SPRITE_FLIP_X | SPRITE_FLIP_Y);
+            if (active)
+                spriteComponent.flags[i] |= SPRF_ACTIVE;
+            else
+                spriteComponent.flags[i] &= ~SPRF_ACTIVE;
+            return;
         }
-    }
-    return 0;
 }
 
-// Inline function for returning a LocalSprite by entity ID
+/* Build a local sprite snapshot */
 static inline LocalSprite getLocalSprite(uint8_t entityID) {
-    LocalSprite s = {0};  // Initialize everything to zero / NULL
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+    LocalSprite s = {0};
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
         if (spriteComponent.entityID[i] == entityID) {
             s.id        = spriteComponent.entityID[i];
             s.width     = spriteComponent.width[i];
@@ -159,119 +269,13 @@ static inline LocalSprite getLocalSprite(uint8_t entityID) {
             s.offset    = spriteComponent.offset[i];
             s.flags     = spriteComponent.flags[i];
             s.tileData  = spriteComponent.tileData[i];
-            s.isWorld   = spriteComponent.flags[i] & SPRITE_FLAG_WORLD;
-            s.visible   = spriteComponent.flags[i] & SPRITE_VISIBLE;
-            s.flipProps = spriteComponent.flags[i] & (SPRITE_FLIP_X | SPRITE_FLIP_Y);
+            s.tileIndex = spriteComponent.tileIndex[i];
+            s.isWorld   = (spriteComponent.flags[i] & SPRF_WORLD) != 0;
+            s.visible   = (spriteComponent.flags[i] & SPRF_ACTIVE) != 0;
+            s.flipProps = spriteComponent.flags[i] & (SPRF_FLIPX | SPRF_FLIPY);
             return s;
         }
-    }
-    // If not found, returns a LocalSprite with id=0 and visible=false
-    s.visible = false;
     return s;
 }
 
-
-
-// Inline function to set sprite Z-index (0–7)
-static inline void setSpriteZIndex(uint8_t entityID, uint8_t z) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            spriteComponent.flags[i] = SPRITE_SET_Z(spriteComponent.flags[i], z);
-            return;
-        }
-    }
-}
-
-// Inline function to set sprite world flag
-static inline void setSpriteWorldFlag(uint8_t entityID, bool isWorld) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            if (isWorld) {
-                spriteComponent.flags[i] |= SPRITE_FLAG_WORLD;
-            } else {
-                spriteComponent.flags[i] &= ~SPRITE_FLAG_WORLD;
-            }
-            return;
-        }
-    }
-}
-
-// Inline function to set horizontal flip
-static inline void setSpriteFlipX(uint8_t entityID, bool flip) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            if (flip) {
-                spriteComponent.flags[i] |= SPRITE_FLIP_X;
-            } else {
-                spriteComponent.flags[i] &= ~SPRITE_FLIP_X;
-            }
-            return;
-        }
-    }
-}
-
-// Inline function to set vertical flip
-static inline void setSpriteFlipY(uint8_t entityID, bool flip) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            if (flip) {
-                spriteComponent.flags[i] |= SPRITE_FLIP_Y;
-            } else {
-                spriteComponent.flags[i] &= ~SPRITE_FLIP_Y;
-            }
-            return;
-        }
-    }
-}
-
-// Inline function to set sprite visibility
-static inline void setSpriteVisible(uint8_t entityID, bool visible) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            if (visible) {
-                spriteComponent.flags[i] |= SPRITE_VISIBLE;
-            } else {
-                spriteComponent.flags[i] &= ~SPRITE_VISIBLE;
-            }
-            return;
-        }
-    }
-}
-
-// Inline function for setting sprite offset
-static inline void setSpriteOffset(uint8_t entityID, vec2_i newOffset) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            spriteComponent.offset[i] = newOffset;
-            return;
-        }
-    }
-}
-
-// Inline function for getting sprite width (in tiles)
-static inline uint8_t getSpriteWidth(uint8_t entityID) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            return spriteComponent.width[i];
-        }
-    }
-    return 0;
-}
-
-// Inline function for setting sprite width (in tiles)
-static inline void setSpriteWidth(uint8_t entityID, uint8_t width) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
-        if (spriteComponent.entityID[i] == entityID) {
-            spriteComponent.width[i] = width;
-            return;
-        }
-    }
-}
-
-
-
-
-// For sorting sprites by ZIndex
-extern uint8_t spriteIDByZIndex[];
-
-#endif
+#endif /* SPRITE_COMPONENT_H */

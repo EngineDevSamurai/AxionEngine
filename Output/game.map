@@ -26,19 +26,19 @@ Area                       Addr        Size        Decimal Bytes (Attributes)
      00000003  l__HRAM12 |    00000005  l__HEADER |    00000006  l__HEADER
      00000007  l__HEADER |    00000008  l__HEADER |    0000000C  l__GSINIT
      00000030  l__HEADER |    00000060  l__HEADER |    000000AB  l__HEADER
-     0000013D  l__DATA   |    00000162  l__HOME   |    00000200  s__CODE  
-     0000041C  l__INITIA |    0000041C  l__INITIA |    00002000  _rROMB0  
-     00003000  _rROMB1   |    00003031  l__CODE   |    00003231  s__HOME  
-     00003393  s__BASE   |    00003393  s__CODE_0 |    00003393  s__INITIA
-     00003393  s__LIT    |    000037AF  s__GSINIT |    000037BB  s__GSFINA
+     00000162  l__HOME   |    00000200  s__CODE   |    0000029B  l__DATA  
+     000003B9  l__INITIA |    000003B9  l__INITIA |    00002000  _rROMB0  
+     00003000  _rROMB1   |    000037F6  l__CODE   |    000039F6  s__HOME  
+     00003B58  s__BASE   |    00003B58  s__CODE_0 |    00003B58  s__INITIA
+     00003B58  s__LIT    |    00003F11  s__GSINIT |    00003F1D  s__GSFINA
      00004000  _rMBC7_SR |    00004000  _rRAMB    |    00008000  __VRAM   
      00008000  __VRAM800 |    00008800  __VRAM880 |    00009000  __VRAM900
      00009800  __SCRN0   |    00009C00  __SCRN1   |    0000A000  __SRAM   
      0000A000  _rMBC7_LA |    0000A010  _rMBC7_LA |    0000A020  _rMBC7_AC
      0000A030  _rMBC7_AC |    0000A040  _rMBC7_AC |    0000A050  _rMBC7_AC
      0000C000  __RAM     |    0000C000  _shadow_O |    0000C0A0  s__DATA  
-     0000C1DD  s__BSS    |    0000C1DD  s__INITIA |    0000C5F9  s__HEAP  
-     0000C5F9  s__HEAP_E |    0000D000  __RAMBANK |    0000E000  .STACK   
+     0000C33B  s__BSS    |    0000C33B  s__INITIA |    0000C6F4  s__HEAP  
+     0000C6F4  s__HEAP_E |    0000D000  __RAMBANK |    0000E000  .STACK   
      0000FE00  __OAMRAM  |    0000FF00  _P1_REG   |    0000FF00  __IO     
      0000FF01  _SB_REG   |    0000FF02  _SC_REG   |    0000FF04  _DIV_REG 
      0000FF05  _TIMA_REG |    0000FF06  _TMA_REG  |    0000FF07  _TAC_REG 
@@ -75,20 +75,20 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_CODE                  00000200    00003031 =       12337. bytes (REL,CON)
+_CODE                  00000200    000037F6 =       14326. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00000A53  _RenderSp |    00000D94  _clearZIn |    00000DA5  _sortEnti
-     0000133A  _EntityAd |    00001515  _EntityRe |    000015FB  _EntityHa
-     0000160D  _GetNextA |    00001630  _getEntit |    00001EAD  _main    
-     0000274E  _std_data |    0000278E  _earth_da |    0000294E  _face    
-     0000298E  _smiley   |    0000299E  _bkg_data |    00002C6E  _frame_da
-     00002E7E  _frame_ti |    00002F1E  _door2_ti |    00002FA2  _earth_ti
-     00002FB0  _door4_ti |    00003034  _bkg_tile |    00003074  _door3_ti
-     000030F8  _door1_ti |    00003188  _film     |    000031BA  __mulsuch
-     000031BD  __mulusch |    000031C6  __mulscha |    000031CE  __mulint 
-     000031ED  __mulucha |    000031FF  ___memcpy |    000031FF  _memcpy  
+     000009EC  _RenderSp |    000018EB  _EntityAd |    00001AAE  _EntityRe
+     00001B8C  _EntityHa |    00001B9E  _GetNextA |    00001BC1  _getEntit
+     000023D7  _main     |    00002F13  _std_data |    00002F53  _earth_da
+     00003113  _face     |    00003153  _smiley   |    00003163  _bkg_data
+     00003433  _frame_da |    00003643  _frame_ti |    000036E3  _door2_ti
+     00003767  _earth_ti |    00003775  _door4_ti |    000037F9  _bkg_tile
+     00003839  _door3_ti |    000038BD  _door1_ti |    0000394D  _film    
+     0000397F  __mulsuch |    00003982  __mulusch |    0000398B  __mulscha
+     00003993  __mulint  |    000039B2  __mulucha |    000039C4  ___memcpy
+     000039C4  _memcpy  
 ASxxxx Linker V03.00/V05.40 + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
@@ -266,19 +266,19 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_HOME                  00003231    00000162 =         354. bytes (REL,CON)
+_HOME                  000039F6    00000162 =         354. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     00003231  .memset_s |    0000323A  .memcpy_s |    00003257  .display_
-     00003257  _display_ |    0000326F  _set_tile |    00003274  _set_bkg_
-     00003274  _set_win_ |    0000327C  _set_spri |    000032AC  __mullong
+     000039F6  .memset_s |    000039FF  .memcpy_s |    00003A1C  .display_
+     00003A1C  _display_ |    00003A34  _set_tile |    00003A39  _set_bkg_
+     00003A39  _set_win_ |    00003A41  _set_spri |    00003A71  __mullong
 ASxxxx Linker V03.00/V05.40 + sdld,  page 23.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZER           00003393    0000041C =        1052. bytes (REL,CON)
+_INITIALIZER           00003B58    000003B9 =         953. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -287,17 +287,17 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSINIT                000037AF    0000000C =          12. bytes (REL,CON)
+_GSINIT                00003F11    0000000C =          12. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     000037AF  gsinit   
+     00003F11  gsinit   
 ASxxxx Linker V03.00/V05.40 + sdld,  page 25.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_GSFINAL               000037BB    00000001 =           1. bytes (REL,CON)
+_GSFINAL               00003F1D    00000001 =           1. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
@@ -306,24 +306,23 @@ Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_DATA                  0000C0A0    0000013D =         317. bytes (REL,CON)
+_DATA                  0000C0A0    0000029B =         667. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
      0000C0A0  __cpu     |    0000C0A1  __is_GBA  |    0000C0A2  .mode    
      0000C0A3  .sys_time |    0000C0A3  _sys_time |    0000C0A5  .int_0x40
-     0000C0B1  _entity  
+     0000C20F  _entity  
 ASxxxx Linker V03.00/V05.40 + sdld,  page 27.
 Hexadecimal  [32-Bits]
 
 Area                       Addr        Size        Decimal Bytes (Attributes)
 --------------------       ----        ----        ------- ----- ------------
-_INITIALIZED           0000C1DD    0000041C =        1052. bytes (REL,CON)
+_INITIALIZED           0000C33B    000003B9 =         953. bytes (REL,CON)
 
         Value  Global            Value  Global            Value  Global    
         -----  ------            -----  ------            -----  ------    
-     0000C1DD  _camera   |    0000C1DF  _transfor |    0000C3D3  _spriteCo
-     0000C5C7  _spriteID
+     0000C33B  _camera   |    0000C33E  _transfor |    0000C532  _spriteCo
 ASxxxx Linker V03.00/V05.40 + sdld,  page 28.
 Hexadecimal  [32-Bits]
 

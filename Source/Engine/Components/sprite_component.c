@@ -8,9 +8,5 @@ SpriteComponent spriteComponent = {
     .height = {0},
     .offset = {{0,0}},
     .flags = {0},
-    .palette = {0}
 };
 
-
-// For sorting sprites by ZIndex
-uint8_t spriteIDByZIndex[SPRITE_POOL_SIZE] = {0};

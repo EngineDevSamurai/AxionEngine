@@ -36,7 +36,6 @@ void EntityAddComponent (Entity *entity, uint16_t component) {
                 spriteComponent.offset[nextPoolSlot].x = 0;
                 spriteComponent.offset[nextPoolSlot].y = 0;
                 spriteComponent.flags[nextPoolSlot] = 0;
-                spriteComponent.palette[nextPoolSlot] = 0;
             }
         break;
         default:
@@ -73,7 +72,6 @@ void EntityRemoveComponent(Entity *entity, uint16_t component) {
                     spriteComponent.offset[i].x = 0;
                     spriteComponent.offset[i].y = 0;
                     spriteComponent.flags[i] = 0;
-                    spriteComponent.palette[i] = 0;
                     return;
                 }
             }
