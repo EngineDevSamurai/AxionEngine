@@ -7,15 +7,25 @@ Symbol Table
     .__.ABS.                                                    =   00000000 G
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
-  0 _EntityAddComponent                                             00000278 GR
-  0 _EntityHasComponent                                             00000539 GR
-  0 _EntityRemoveComponent                                          00000453 GR
-  0 _GetNextAvailableComponentPoolSlot                              0000054B GR
+  0 _EntityAddComponent                                             00000545 GR
+  0 _EntityHasComponent                                             00000806 GR
+  0 _EntityRemoveComponent                                          00000720 GR
+  0 _GetNextAvailableComponentPoolSlot                              00000818 GR
     ___memcpy                                                       ******** GX
     __mullong                                                       ******** GX
   1 _entity                                                         00000000 GR
-  0 _getEntityById                                                  0000056E GR
-  0 _getTransformPos                                                00000221 R
+  0 _getEntityById                                                  0000083B GR
+  0 _getSpriteFlipX                                                 00000323 R
+  0 _getSpriteFlipY                                                 00000371 R
+  0 _getSpriteVisible                                               000003BF R
+  0 _getSpriteWorldFlag                                             000002D5 R
+  0 _getSpriteZIndex                                                0000028A R
+  0 _getTransformPosition                                           00000221 R
+  0 _setSpriteFlipX                                                 0000049D R
+  0 _setSpriteFlipY                                                 000004D5 R
+  0 _setSpriteVisible                                               0000050D R
+  0 _setSpriteWorldFlag                                             00000465 R
+  0 _setSpriteZIndex                                                0000040D R
     _spriteComponent                                                ******** GX
     _transformComponent                                             ******** GX
   0 _vec2_add                                                       00000027 R
@@ -25,12 +35,13 @@ Symbol Table
   0 _vec2_set                                                       00000000 R
   0 _vec2_sub                                                       0000008C R
 
+
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
 Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      598   flags    0
+   0 _CODE                                      size      865   flags    0
    1 _DATA                                      size      12C   flags    0
    2 _INITIALIZED                               size        0   flags    0
    3 _DABS                                      size        0   flags    8

@@ -50,13 +50,26 @@ void main(void)
   Entity player2 =  { .ID = 2, .components = 0 }; // Write function to get next ID
   
   EntityAddComponent(&player2, TRANSFORM_COMPONENT);
-  transformComponent.position[1].x = F12(45);
+  transformComponent.position[1].x = F12(25);
   transformComponent.position[1].y = F12(95);
   EntityAddComponent(&player2, SPRITE_COMPONENT);
   spriteComponent.tileData[1] = smiley;
   spriteComponent.width[1] = 1;
   spriteComponent.height[1] = 1;
   spriteComponent.flags[1] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
+  spriteComponent.flags[1] = SPRITE_SET_Z(spriteComponent.flags[1], 1);
+
+  Entity player3 =  { .ID = 3, .components = 0 }; // Write function to get next ID
+  
+  EntityAddComponent(&player3, TRANSFORM_COMPONENT);
+  transformComponent.position[2].x = F12(36);
+  transformComponent.position[2].y = F12(95);
+  EntityAddComponent(&player3, SPRITE_COMPONENT);
+  spriteComponent.tileData[2] = face;
+  spriteComponent.width[2] = 2;
+  spriteComponent.height[2] = 2;
+  spriteComponent.flags[2] = SPRITE_FLAG_WORLD | SPRITE_VISIBLE;
+  spriteComponent.flags[2] = SPRITE_SET_Z(spriteComponent.flags[2], 5);
 
   disable_interrupts();
   DISPLAY_OFF;
@@ -89,6 +102,7 @@ void main(void)
     // Systems Function Calls Here
 
     transformComponent.position[0].x += 10;
+    transformComponent.position[1].x += 10;
 
     // Render Function Calls Here
     RenderSprites();

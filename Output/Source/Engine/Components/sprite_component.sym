@@ -9,7 +9,19 @@ Symbol Table
     .__.H$L.                                                    =   00000000 L
     __mullong                                                       ******** GX
   7 __xinit__spriteComponent                                        00000000 R
+  7 __xinit__spriteIDByZIndex                                       000001F4 R
+  0 _getSpriteFlipX                                                 000002BA R
+  0 _getSpriteFlipY                                                 00000308 R
+  0 _getSpriteVisible                                               00000356 R
+  0 _getSpriteWorldFlag                                             0000026C R
+  0 _getSpriteZIndex                                                00000221 R
+  0 _setSpriteFlipX                                                 00000434 R
+  0 _setSpriteFlipY                                                 0000046C R
+  0 _setSpriteVisible                                               000004A4 R
+  0 _setSpriteWorldFlag                                             000003FC R
+  0 _setSpriteZIndex                                                000003A4 R
   2 _spriteComponent                                                00000000 GR
+  2 _spriteIDByZIndex                                               000001F4 GR
   0 _vec2_add                                                       00000027 R
   0 _vec2_copy                                                      0000018A R
   0 _vec2_equal                                                     000001B8 R
@@ -23,13 +35,13 @@ Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      221   flags    0
+   0 _CODE                                      size      4DC   flags    0
    1 _DATA                                      size        0   flags    0
-   2 _INITIALIZED                               size      1F4   flags    0
+   2 _INITIALIZED                               size      226   flags    0
    3 _DABS                                      size        0   flags    8
    4 _HOME                                      size        0   flags    0
    5 _GSINIT                                    size        0   flags    0
    6 _GSFINAL                                   size        0   flags    0
-   7 _INITIALIZER                               size      1F4   flags    0
+   7 _INITIALIZER                               size      226   flags    0
    8 _CABS                                      size        0   flags    8
 

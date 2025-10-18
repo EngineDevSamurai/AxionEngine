@@ -11,5 +11,7 @@
 //#include "camera.h"  // assuming a global camera position vec2_i
 
 void RenderSprites(void);
+void clearZIndexArray(void);
+uint8_t sortEntitiesByZIndex(void);
 
 #endif

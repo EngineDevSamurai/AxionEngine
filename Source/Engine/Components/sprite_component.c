@@ -10,3 +10,7 @@ SpriteComponent spriteComponent = {
     .flags = {0},
     .palette = {0}
 };
+
+
+// For sorting sprites by ZIndex
+uint8_t spriteIDByZIndex[SPRITE_POOL_SIZE] = {0};

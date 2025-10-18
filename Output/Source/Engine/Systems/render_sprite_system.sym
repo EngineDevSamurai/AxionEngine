@@ -8,17 +8,38 @@ Symbol Table
     .__.CPU.                                                    =   00000000 L
     .__.H$L.                                                    =   00000000 L
     _EntityHasComponent                                             ******** GX
-  0 _RenderSprites                                                  0000028A GR
+  0 _RenderSprites                                                  00000853 GR
     ___memcpy                                                       ******** GX
     __mullong                                                       ******** GX
     __muluchar                                                      ******** GX
   7 __xinit__camera                                                 00000000 R
   2 _camera                                                         00000000 GR
+  0 _clearZIndexArray                                               00000B94 GR
     _getEntityById                                                  ******** GX
-  0 _getTransformPosition                                           00000221 R
+  0 _getLocalSprite                                                 000004C8 R
+  0 _getSpriteFlipProps                                             00000483 R
+  0 _getSpriteFlipX                                                 00000399 R
+  0 _getSpriteFlipY                                                 000003E7 R
+  0 _getSpriteHeight                                                00000221 R
+  0 _getSpriteOffset                                                000002F3 R
+  0 _getSpriteVisible                                               00000435 R
+  0 _getSpriteWidth                                                 00000763 R
+  0 _getSpriteWorldFlag                                             0000034B R
+  0 _getSpriteZIndex                                                000002A8 R
+  0 _getTransformPosition                                           000007EA R
+  0 _setSpriteFlipX                                                 00000683 R
+  0 _setSpriteFlipY                                                 000006BB R
+  0 _setSpriteHeight                                                00000263 R
+  0 _setSpriteOffset                                                0000072B R
+  0 _setSpriteVisible                                               000006F3 R
+  0 _setSpriteWidth                                                 000007A5 R
+  0 _setSpriteWorldFlag                                             0000064B R
+  0 _setSpriteZIndex                                                000005F3 R
     _set_sprite_data                                                ******** GX
     _shadow_OAM                                                     ******** GX
+  0 _sortEntitiesByZIndex                                           00000BA5 GR
     _spriteComponent                                                ******** GX
+    _spriteIDByZIndex                                               ******** GX
     _transformComponent                                             ******** GX
   0 _vec2_add                                                       00000027 R
   0 _vec2_copy                                                      0000018A R
@@ -33,7 +54,7 @@ Hexadecimal [32-Bits]
 
 Area Table
 
-   0 _CODE                                      size      5B4   flags    0
+   0 _CODE                                      size      BF5   flags    0
    1 _DATA                                      size        0   flags    0
    2 _INITIALIZED                               size        2   flags    0
    3 _DABS                                      size        0   flags    8
