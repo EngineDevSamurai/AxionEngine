@@ -1,0 +1,22 @@
+# Build output
+/Build/
+**/Build/
+Output/
+**.o
+**.obj
+**.a
+**.so
+**.dll
+**.exe
+*.out
+
+# Editor/IDE junk
+.vscode/
+*.log
+*.swp
+.DS_Store
+
+# Dependency caches
+*.dSYM/
+*.tmp
+*.cache/
