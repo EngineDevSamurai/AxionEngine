@@ -1,0 +1,63 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+    _EntityHasComponent                                             ******** GX
+  0 _RenderSprites                                                  000007EC GR
+    ___memcpy                                                       ******** GX
+    __mullong                                                       ******** GX
+    __muluchar                                                      ******** GX
+  7 __xinit__camera                                                 00000000 R
+  7 __xinit__oamCount                                               00000002 R
+  2 _camera                                                         00000000 GR
+    _getEntityById                                                  ******** GX
+  0 _getLocalSprite                                                 00000648 R
+  0 _getSpriteActive                                                000005C2 R
+  0 _getSpriteFlipX                                                 000004B6 R
+  0 _getSpriteFlipY                                                 0000053C R
+  0 _getSpriteHeight                                                000002A8 R
+  0 _getSpritePalette                                               0000032F R
+  0 _getSpriteWidth                                                 00000221 R
+  0 _getSpriteWorldFlag                                             00000430 R
+  0 _getTransformPosition                                           00000783 R
+  2 _oamCount                                                       00000002 R
+  1 _oamList                                                        00000000 R
+  0 _setSpriteActive                                                00000610 R
+  0 _setSpriteFlipX                                                 00000504 R
+  0 _setSpriteFlipY                                                 0000058A R
+  0 _setSpriteHeight                                                000002EA R
+  0 _setSpriteOffset                                                000003F8 R
+  0 _setSpritePalette                                               0000039F R
+  0 _setSpriteWidth                                                 00000263 R
+  0 _setSpriteWorldFlag                                             0000047E R
+    _set_sprite_data                                                ******** GX
+    _shadow_OAM                                                     ******** GX
+    _spriteComponent                                                ******** GX
+    _transformComponent                                             ******** GX
+  0 _vec2_add                                                       00000027 R
+  0 _vec2_copy                                                      0000018A R
+  0 _vec2_equal                                                     000001B8 R
+  0 _vec2_scale                                                     000000E8 R
+  0 _vec2_set                                                       00000000 R
+  0 _vec2_sub                                                       0000008C R
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size      EFF   flags    0
+   1 _DATA                                      size      15E   flags    0
+   2 _INITIALIZED                               size        3   flags    0
+   3 _DABS                                      size        0   flags    8
+   4 _HOME                                      size        0   flags    0
+   5 _GSINIT                                    size        0   flags    0
+   6 _GSFINAL                                   size        0   flags    0
+   7 _INITIALIZER                               size        3   flags    0
+   8 _CABS                                      size        0   flags    8
+

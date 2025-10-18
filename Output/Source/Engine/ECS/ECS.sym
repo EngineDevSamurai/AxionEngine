@@ -1,0 +1,59 @@
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 1
+Hexadecimal [32-Bits]
+
+Symbol Table
+
+    .__.$$$.                                                    =   00002710 L
+    .__.ABS.                                                    =   00000000 G
+    .__.CPU.                                                    =   00000000 L
+    .__.H$L.                                                    =   00000000 L
+  0 _EntityAddComponent                                             000007EC GR
+  0 _EntityHasComponent                                             00000A8D GR
+  0 _EntityRemoveComponent                                          000009AF GR
+  0 _GetNextAvailableComponentPoolSlot                              00000A9F GR
+    ___memcpy                                                       ******** GX
+    __mullong                                                       ******** GX
+  1 _entity                                                         00000000 GR
+  0 _getEntityById                                                  00000AC2 GR
+  0 _getLocalSprite                                                 000006B1 R
+  0 _getSpriteActive                                                0000062B R
+  0 _getSpriteFlipX                                                 0000051F R
+  0 _getSpriteFlipY                                                 000005A5 R
+  0 _getSpriteHeight                                                00000311 R
+  0 _getSpritePalette                                               00000398 R
+  0 _getSpriteWidth                                                 0000028A R
+  0 _getSpriteWorldFlag                                             00000499 R
+  0 _getTransformPosition                                           00000221 R
+  0 _setSpriteActive                                                00000679 R
+  0 _setSpriteFlipX                                                 0000056D R
+  0 _setSpriteFlipY                                                 000005F3 R
+  0 _setSpriteHeight                                                00000353 R
+  0 _setSpriteOffset                                                00000461 R
+  0 _setSpritePalette                                               00000408 R
+  0 _setSpriteWidth                                                 000002CC R
+  0 _setSpriteWorldFlag                                             000004E7 R
+    _spriteComponent                                                ******** GX
+    _transformComponent                                             ******** GX
+  0 _vec2_add                                                       00000027 R
+  0 _vec2_copy                                                      0000018A R
+  0 _vec2_equal                                                     000001B8 R
+  0 _vec2_scale                                                     000000E8 R
+  0 _vec2_set                                                       00000000 R
+  0 _vec2_sub                                                       0000008C R
+
+
+ASxxxx Assembler V02.00 + NoICE + SDCC mods  (GameBoy)                  Page 2
+Hexadecimal [32-Bits]
+
+Area Table
+
+   0 _CODE                                      size      AEC   flags    0
+   1 _DATA                                      size      12C   flags    0
+   2 _INITIALIZED                               size        0   flags    0
+   3 _DABS                                      size        0   flags    8
+   4 _HOME                                      size        0   flags    0
+   5 _GSINIT                                    size        0   flags    0
+   6 _GSFINAL                                   size        0   flags    0
+   7 _INITIALIZER                               size        0   flags    0
+   8 _CABS                                      size        0   flags    8
+
