@@ -1,8 +1,0 @@
-ifndef BACKGROUND_SYSTEM_H
-define BACKGROUND_SYSTEM_H
-
-
-
-
-
-endif
