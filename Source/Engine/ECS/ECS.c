@@ -1,9 +1,68 @@
 #include "ECS.h"
-#include "../Components/transform_component.h"
-#include "../Components/sprite_component.h"
+#include "../Components/component_manifest.h"
 
 // Global Entity Pool
 Entity entity[MAX_ENTITIES];
+
+// Create an Entity
+uint8_t CreateEntity(uint16_t components) {
+    uint8_t id = GetNextEntityID();
+    uint8_t entityIndex = GetNextAvailableEntityIndex();
+
+    if (entityIndex == 255) return 255;  // no available slots
+
+    entity[entityIndex].ID = id;
+    entity[entityIndex].components = 0;
+
+    // Loop over all 16 component bits
+    for (uint8_t bit = 0; bit < 16; bit++) {
+        uint16_t mask = (1 << bit);
+        if (components & mask) {
+            EntityAddComponent(&entity[entityIndex], mask);
+        }
+    }
+    return id;
+}
+
+// Get next available entityID
+uint8_t GetNextEntityID(void) {
+    static uint8_t nextEntityID = 1;
+    uint8_t startID = nextEntityID;
+
+    // Loop until we find an unused ID
+    do {
+        bool used = false;
+
+        for (uint8_t i = 0; i < MAX_ENTITIES; i++) {
+            if (entity[i].ID == nextEntityID) {
+                used = true;
+                break;
+            }
+        }
+
+        if (!used) {
+            uint8_t id = nextEntityID++;
+            return id;
+        }
+
+        nextEntityID++;
+    } while (nextEntityID != startID);
+
+    return 0; // No available IDs
+}
+
+
+// Get next available entity index
+uint8_t GetNextAvailableEntityIndex(void) {
+    uint8_t i;
+
+    for (i = 0; i < MAX_ENTITIES; i++) {
+        if (entity[i].ID == 0) {
+            return i;
+        }
+    }
+    return 255; //All slots full
+}
 
 // Add a component to an entity
 void EntityAddComponent (Entity *entity, uint16_t component) {

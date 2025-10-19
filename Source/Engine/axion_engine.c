@@ -35,39 +35,33 @@ SOFTWARE. */
 
 void main(void)
 {
-  Entity player =  { .ID = 1, .components = 0 }; // Write function to get next ID
-  
-  EntityAddComponent(&player, TRANSFORM_COMPONENT);
-  transformComponent.position[0].x = F12(65);
-  transformComponent.position[0].y = F12(65);
-  EntityAddComponent(&player, SPRITE_COMPONENT);
-  spriteComponent.tileData[0] = face;
-  spriteComponent.width[0] = 2;
-  spriteComponent.height[0] = 2;
-  spriteComponent.flags[0] = SPRF_WORLD | SPRF_ACTIVE;
+ 
+  uint8_t player = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
+  uint8_t player2 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
+  uint8_t player3 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
+
+  setTransformPosition(player, F12(65), F12(65));
+  setSpriteTileData(player, face);
+  setSpriteWidth(player, 2);
+  setSpriteHeight(player, 2);
+  setSpriteWorldFlag(player, true);
+  setSpriteActive(player, true);
 
 
-  Entity player2 =  { .ID = 2, .components = 0 }; // Write function to get next ID
   
-  EntityAddComponent(&player2, TRANSFORM_COMPONENT);
-  transformComponent.position[1].x = F12(25);
-  transformComponent.position[1].y = F12(95);
-  EntityAddComponent(&player2, SPRITE_COMPONENT);
-  spriteComponent.tileData[1] = smiley;
-  spriteComponent.width[1] = 1;
-  spriteComponent.height[1] = 1;
-  spriteComponent.flags[1] = SPRF_WORLD | SPRF_ACTIVE;
+  setTransformPosition(player2, F12(25), F12(95));
+  setSpriteTileData(player2, smiley);
+  setSpriteWidth(player2, 1);
+  setSpriteHeight(player2, 1);
+  setSpriteWorldFlag(player2, true);
+  setSpriteActive(player2, true);
 
-  Entity player3 =  { .ID = 3, .components = 0 }; // Write function to get next ID
-  
-  EntityAddComponent(&player3, TRANSFORM_COMPONENT);
-  transformComponent.position[2].x = F12(36);
-  transformComponent.position[2].y = F12(95);
-  EntityAddComponent(&player3, SPRITE_COMPONENT);
-  spriteComponent.tileData[2] = face;
-  spriteComponent.width[2] = 2;
-  spriteComponent.height[2] = 2;
-  spriteComponent.flags[2] = SPRF_WORLD | SPRF_ACTIVE;
+  setTransformPosition(player3, F12(36), F12(95));
+  setSpriteTileData(player3, face);
+  setSpriteWidth(player3, 2);
+  setSpriteHeight(player3, 2);
+  setSpriteWorldFlag(player3, true);
+  setSpriteActive(player3, true);
 
   disable_interrupts();
   DISPLAY_OFF;
@@ -99,10 +93,13 @@ void main(void)
   while(true) {
     // Systems Function Calls Here
 
-    transformComponent.position[0].x += 100;
-    transformComponent.position[1].x += 10;
+    moveEntity(player, 100, 2);
+    moveEntity(player2, 10, -50);
 
     // Render Function Calls Here
     RenderSprites();
+
+    // Prevent screen tearing and runaway CPU usage
+    wait_vbl_done();
   }
 }

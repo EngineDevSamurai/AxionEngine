@@ -5,8 +5,7 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "../Components/sprite_component.h"
-#include "../Components/transform_component.h"
+#include "../Components/component_manifest.h"
 #include "../ECS/ECS.h"
 //#include "camera.h"  // assuming a global camera position vec2_i
 

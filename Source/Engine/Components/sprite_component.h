@@ -159,6 +159,15 @@ static inline void setSpriteHeight(uint8_t entityID, uint8_t height) {
         }
 }
 
+static inline void setSpriteTileData(uint8_t entityID, const unsigned char* tileData) {
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
+        if (spriteComponent.entityID[i] == entityID) {
+            spriteComponent.tileData[i] = tileData;
+            return;
+        }
+    }
+}
+
 /* Palette accessors (replace old Z-index accessors) */
 static inline uint8_t getSpritePalette(uint8_t entityID) {
     for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)

@@ -24,5 +24,27 @@ static inline vec2 getTransformPosition(uint8_t entityID) {
     return result;
 }
 
+// Inline function for setting transform position
+static inline void setTransformPosition(uint8_t entityID, int16_t x, int16_t y) {
+    for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+        if (transformComponent.entityID[i] == entityID) {
+            transformComponent.position[i].x = x;
+            transformComponent.position[i].y = y;
+            return;
+        }
+    }
+}
+
+// Inline function for moving entity
+static inline void moveEntity(uint8_t entityID, int16_t x, int16_t y) {
+    for (uint8_t i = 0; i < TRANSFORM_POOL_SIZE; i++) {
+        if (transformComponent.entityID[i] == entityID) {
+            transformComponent.position[i].x += x;
+            transformComponent.position[i].y += y;
+            return;
+        }
+    }
+}
+
 
 #endif

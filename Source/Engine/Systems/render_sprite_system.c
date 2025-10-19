@@ -1,5 +1,5 @@
 #include "render_sprite_system.h"
-#include "../Components/sprite_component.h"
+#include "../Components/component_manifest.h"
 #include "../../Asset_Manifests/tile_manifest.h"
 
 // Temporary camera placeholder

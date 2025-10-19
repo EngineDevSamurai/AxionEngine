@@ -15,6 +15,16 @@ typedef struct {
     uint16_t components; // 2 byte bitmask
 } Entity;
 
+// Create an Entity
+uint8_t CreateEntity(uint16_t components);
+
+// Get next available entityID
+uint8_t GetNextEntityID(void);
+
+// Get next available entity index
+uint8_t GetNextAvailableEntityIndex(void);
+
+
 // Add a component to an entity
 void EntityAddComponent (Entity *entity, uint16_t component);
 
