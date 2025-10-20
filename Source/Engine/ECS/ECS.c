@@ -69,7 +69,9 @@ void EntityAddComponent (Entity *entity, uint16_t component) {
     uint8_t nextPoolSlot;
 
     // Check if the entity already has the component and return if so
-    if (EntityHasComponent(entity, component)){
+    // Unless adding multiple event listeners, which is allowed
+    if (EntityHasComponent(entity, component) && 
+        component != EVENT_LISTENER_COMPONENT){
         return;
     }
     // Set the bitmask for the component being added
@@ -95,6 +97,14 @@ void EntityAddComponent (Entity *entity, uint16_t component) {
                 spriteComponent.offset[nextPoolSlot].x = 0;
                 spriteComponent.offset[nextPoolSlot].y = 0;
                 spriteComponent.flags[nextPoolSlot] = 0;
+            }
+        break;
+        case EVENT_LISTENER_COMPONENT:
+            nextPoolSlot = GetNextAvailableComponentPoolSlot(eventListenerComponent.entityID, EVENT_LISTENER_POOL_SIZE);
+            if (nextPoolSlot != 255) {
+                eventListenerComponent.entityID[nextPoolSlot] = entity->ID;
+                eventListenerComponent.type[nextPoolSlot] = 0;
+                eventListenerComponent.callback[nextPoolSlot] = 0;
             }
         break;
         default:
@@ -134,6 +144,16 @@ void EntityRemoveComponent(Entity *entity, uint16_t component) {
                     return;
                 }
             }
+        break;
+        case EVENT_LISTENER_COMPONENT:
+            for (i = 0; i < EVENT_LISTENER_POOL_SIZE; i++) {
+                if (eventListenerComponent.entityID[i] == entity -> ID) {
+                    eventListenerComponent.entityID[i] = 0;
+                    eventListenerComponent.type[i] = 0;
+                    eventListenerComponent.callback[i] = 0;
+                }
+            }
+            return;
         break;
         default:
 

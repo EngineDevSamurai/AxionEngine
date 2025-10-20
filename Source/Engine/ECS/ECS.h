@@ -6,8 +6,9 @@
 #include "../Libraries/vec2.h"  
 
 // Defining our bits for the bitmask
-#define TRANSFORM_COMPONENT (1 << 0)
-#define SPRITE_COMPONENT    (1 << 1)
+#define TRANSFORM_COMPONENT      (1 << 0)
+#define SPRITE_COMPONENT         (1 << 1)
+#define EVENT_LISTENER_COMPONENT (1 << 2)
 
 // Defining our entity struct
 typedef struct {
