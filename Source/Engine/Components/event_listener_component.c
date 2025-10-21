@@ -3,6 +3,7 @@
 // Global event pool
 Event eventPool[EVENT_POOL_SIZE];
 
+
 // For keeping track of active events
 uint8_t eventCount = 0;
 

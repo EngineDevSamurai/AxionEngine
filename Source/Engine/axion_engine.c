@@ -31,14 +31,17 @@ SOFTWARE. */
 #include "../Asset_Manifests/tilemap_manifest.h"
 #include "Components/component_manifest.h"
 #include "Systems/render_sprite_system.h"
+#include "Systems/event_system.h"
 #include "ECS/ECS.h"
+
+void movePlayer3 (Event* e);
 
 void main(void)
 {
  
   uint8_t player = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
   uint8_t player2 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
-  uint8_t player3 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
+  uint8_t player3 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT | EVENT_LISTENER_COMPONENT);
 
   setTransformPosition(player, F12(65), F12(65));
   setSpriteTileData(player, face);
@@ -62,6 +65,10 @@ void main(void)
   setSpriteHeight(player3, 2);
   setSpriteWorldFlag(player3, true);
   setSpriteActive(player3, true);
+  setEventListener(player3, ON_CREATE_ENTITY, movePlayer3);
+  
+  ClearEventPool();
+  Emit(ON_CREATE_ENTITY, player3, player3, 0);
 
   disable_interrupts();
   DISPLAY_OFF;
@@ -96,10 +103,20 @@ void main(void)
     moveEntity(player, 100, 2);
     moveEntity(player2, 10, -50);
 
+
+    //Process Events
+    ProcessEvents();
+    
+
     // Render Function Calls Here
     RenderSprites();
 
     // Prevent screen tearing and runaway CPU usage
     wait_vbl_done();
   }
+}
+
+  void movePlayer3 (Event* e) {
+  uint8_t id = e->entityID;
+  setTransformPosition(id, 77, 77);
 }
