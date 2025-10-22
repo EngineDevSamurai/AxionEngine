@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include "../Components/component_manifest.h"
 #include "../../settings.h"
+#include "../ECS/ECS.h"
 
 
 
@@ -24,6 +25,9 @@ void ProcessEvents(void);
 
 // Set event listener
 void setEventListener(uint8_t entityID, EventType type, EventCallback callback);
+    
+// Add event listener
+void addEventListener(uint8_t entityID, EventType type, EventCallback callback);
     
 
 #endif

@@ -30,10 +30,11 @@ void ProcessEvents(void) {
         Event* e = &eventPool[i];
 
         for (uint8_t j = 0; j < EVENT_LISTENER_POOL_SIZE; j++) {
-            if (eventListenerComponent.type[j] == e->type &&
-            (eventListenerComponent.entityID[j] == e->entityID ||
-                eventListenerComponent.entityID[j] == 254)) {
-
+            if (eventListenerComponent.callback[j] &&
+                eventListenerComponent.type[j] == e->type &&
+                (eventListenerComponent.entityID[j] == e->entityID ||
+                e->entityID == GLOBAL_EVENT))
+            {
                 eventListenerComponent.callback[j](e);
             }
         }
@@ -48,6 +49,31 @@ void setEventListener(uint8_t entityID, EventType type, EventCallback callback) 
     for (uint8_t i = 0; i < EVENT_LISTENER_POOL_SIZE; i++) {
         if (eventListenerComponent.entityID[i] == entityID &&
             eventListenerComponent.type[i] == 0) {  // uninitialized slot
+            eventListenerComponent.type[i] = type;
+            eventListenerComponent.callback[i] = callback;
+            return;
+        }
+    }
+}
+
+
+/// Add Event Listener
+void addEventListener(uint8_t entityID, EventType type, EventCallback callback) {
+    Entity* e = getEntityById(entityID);
+    EntityAddComponent(e, EVENT_LISTENER_COMPONENT);
+
+    for (uint8_t i = 0; i < EVENT_LISTENER_POOL_SIZE; i++) {
+
+        // If this exact event type is already registered for this entity, just update the callback
+        if (eventListenerComponent.entityID[i] == entityID &&
+            eventListenerComponent.type[i] == type) {
+            eventListenerComponent.callback[i] = callback;
+            return;
+        }
+
+        // Otherwise, look for a free slot (type == 0 means unused)
+        if (eventListenerComponent.type[i] == 0) {
+            eventListenerComponent.entityID[i] = entityID;
             eventListenerComponent.type[i] = type;
             eventListenerComponent.callback[i] = callback;
             return;

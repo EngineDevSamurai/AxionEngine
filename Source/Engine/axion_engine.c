@@ -32,15 +32,18 @@ SOFTWARE. */
 #include "Components/component_manifest.h"
 #include "Systems/render_sprite_system.h"
 #include "Systems/event_system.h"
+#include "Systems/input_system.h"
 #include "ECS/ECS.h"
 
 void movePlayer3 (Event* e);
+void movePlayer  (Event* e);
 
+int8_t player;
 void main(void)
 {
- 
-  uint8_t player = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
-  uint8_t player2 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT);
+  player = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT | BOX_COLLIDER_COMPONENT);
+
+  uint8_t player2 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT | EVENT_LISTENER_COMPONENT | BOX_COLLIDER_COMPONENT);
   uint8_t player3 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT | EVENT_LISTENER_COMPONENT);
 
   setTransformPosition(player, F12(65), F12(65));
@@ -49,6 +52,14 @@ void main(void)
   setSpriteHeight(player, 2);
   setSpriteWorldFlag(player, true);
   setSpriteActive(player, true);
+  addEventListener(player, ON_BUTTON_UP_PRESSED, movePlayer);
+  addEventListener(player, ON_BUTTON_UP_HELD, movePlayer);
+  addEventListener(player, ON_BUTTON_DOWN_PRESSED, movePlayer);
+  addEventListener(player, ON_BUTTON_DOWN_HELD, movePlayer);
+  addEventListener(player, ON_BUTTON_LEFT_PRESSED, movePlayer);
+  addEventListener(player, ON_BUTTON_LEFT_HELD, movePlayer);
+  addEventListener(player, ON_BUTTON_RIGHT_PRESSED, movePlayer);
+  addEventListener(player, ON_BUTTON_RIGHT_HELD, movePlayer);
 
 
   
@@ -100,9 +111,12 @@ void main(void)
   while(true) {
     // Systems Function Calls Here
 
-    moveEntity(player, 100, 2);
-    moveEntity(player2, 10, -50);
+    // moveEntity(player, 100, 2);
+    // moveEntity(player2, 10, -50);
 
+
+    //Process Input
+    ProcessInput();
 
     //Process Events
     ProcessEvents();
@@ -113,10 +127,22 @@ void main(void)
 
     // Prevent screen tearing and runaway CPU usage
     wait_vbl_done();
+
   }
 }
 
   void movePlayer3 (Event* e) {
   uint8_t id = e->entityID;
   setTransformPosition(id, 77, 77);
+}
+
+void movePlayer (Event* e) {
+  if (e->type == ON_BUTTON_UP_PRESSED || e->type == ON_BUTTON_UP_HELD)
+  moveEntity(player, 0, -40);
+  if (e->type == ON_BUTTON_DOWN_PRESSED || e->type == ON_BUTTON_DOWN_HELD)
+  moveEntity(player, 0, 40);
+  if (e->type == ON_BUTTON_LEFT_PRESSED || e->type == ON_BUTTON_LEFT_HELD)
+  moveEntity(player, -40, 0);
+  if (e->type == ON_BUTTON_RIGHT_PRESSED || e->type == ON_BUTTON_RIGHT_HELD)
+  moveEntity(player, 40, 0);
 }

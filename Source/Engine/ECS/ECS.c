@@ -107,6 +107,17 @@ void EntityAddComponent (Entity *entity, uint16_t component) {
                 eventListenerComponent.callback[nextPoolSlot] = 0;
             }
         break;
+        case BOX_COLLIDER_COMPONENT:
+            nextPoolSlot = GetNextAvailableComponentPoolSlot(boxColliderComponent.entityID, BOX_COLLIDER_POOL_SIZE);
+            if (nextPoolSlot != 255) {
+                boxColliderComponent.entityID[nextPoolSlot] = entity -> ID;
+                boxColliderComponent.layerMask[nextPoolSlot] = 0;
+                boxColliderComponent.width[nextPoolSlot] = 0;
+                boxColliderComponent.height[nextPoolSlot] = 0;
+                boxColliderComponent.offset[nextPoolSlot].x = 0;
+                boxColliderComponent.offset[nextPoolSlot].y = 0;
+            }
+        break;
         default:
 
         break;
@@ -151,6 +162,18 @@ void EntityRemoveComponent(Entity *entity, uint16_t component) {
                     eventListenerComponent.entityID[i] = 0;
                     eventListenerComponent.type[i] = 0;
                     eventListenerComponent.callback[i] = 0;
+                }
+            }
+            return;
+        break;
+        case BOX_COLLIDER_COMPONENT:
+            for (i = 0; i < EVENT_LISTENER_POOL_SIZE; i++) {
+                if (boxColliderComponent.entityID[i] == entity -> ID) {
+                    boxColliderComponent.layerMask[i] = 0;
+                    boxColliderComponent.width[i] = 0;
+                    boxColliderComponent.height[i] = 0;
+                    boxColliderComponent.offset[i].x = 0;
+                    boxColliderComponent.offset[i].y = 0;
                 }
             }
             return;

@@ -9,6 +9,7 @@
 #define TRANSFORM_COMPONENT      (1 << 0)
 #define SPRITE_COMPONENT         (1 << 1)
 #define EVENT_LISTENER_COMPONENT (1 << 2)
+#define BOX_COLLIDER_COMPONENT   (1 << 3)
 
 // Defining our entity struct
 typedef struct {
