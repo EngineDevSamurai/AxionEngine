@@ -1,5 +1,5 @@
 #include "ECS.h"
-#include "../Components/component_manifest.h"
+#include "../Components/components.h"
 
 // Global Entity Pool
 Entity entity[MAX_ENTITIES];
@@ -116,6 +116,14 @@ void EntityAddComponent (Entity *entity, uint16_t component) {
                 boxColliderComponent.height[nextPoolSlot] = 0;
                 boxColliderComponent.offset[nextPoolSlot].x = 0;
                 boxColliderComponent.offset[nextPoolSlot].y = 0;
+
+                // Get the pointer to this entity’s transform position
+                for (uint8_t t = 0; t < TRANSFORM_POOL_SIZE; t++) {
+                    if (transformComponent.entityID[t] == entity->ID) {
+                        boxColliderComponent.position[nextPoolSlot] = &transformComponent.position[t];
+                        break;
+                    }
+                }
             }
         break;
         default:
@@ -174,6 +182,7 @@ void EntityRemoveComponent(Entity *entity, uint16_t component) {
                     boxColliderComponent.height[i] = 0;
                     boxColliderComponent.offset[i].x = 0;
                     boxColliderComponent.offset[i].y = 0;
+                    boxColliderComponent.position[i] = 0;
                 }
             }
             return;
@@ -190,6 +199,18 @@ bool EntityHasComponent(const Entity *entity, uint16_t component) {
     return (entity->components & component) != 0;
 }
 
+// Get the first entity index inside of a component pool
+uint8_t FindEntityIndexInComponentPool(uint8_t entityID, uint8_t *poolPointer, uint8_t poolSize) {
+    uint8_t i;
+    for (i = 0; i < poolSize; i++) {
+        if (poolPointer[i] == entityID) {
+            return i;
+        }
+    }
+    return 255;
+}
+
+// Get the next available component pool slot
 uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize) {
     uint8_t i;
     for (i = 0; i < poolSize; i++) {
@@ -200,11 +221,35 @@ uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize
     return 255;
 }
 
-Entity* getEntityById (uint8_t id) {
+// Return a pointer to an entity for lookup by ID
+Entity* getEntityById (uint8_t entityID) {
     for (int i = 0; i < MAX_ENTITIES; i++) {
-        if (entity[i].ID == id) {
+        if (entity[i].ID == entityID) {
             return &entity[i];
         }
     }
     return 0;
+}
+
+// Kill Entity
+void KillEntity(uint8_t entityID) {
+    Entity* entity = getEntityById(entityID);
+
+    // Clear any components tied to the entity
+    EntityRemoveComponent(entity, TRANSFORM_COMPONENT);
+    EntityRemoveComponent(entity, SPRITE_COMPONENT);
+    EntityRemoveComponent(entity, EVENT_LISTENER_COMPONENT);
+    EntityRemoveComponent(entity, BOX_COLLIDER_COMPONENT);
+
+    // Remove the entity from the entity pool
+    entity -> ID = 0;
+    entity -> components = 0;
+}
+
+// Initialize Component Pools
+void InitializeComponentPools(void) {
+    initializeBoxColliderPool();
+    initializeEventListenerPool();
+    initializeSpritePool();
+    initializeTransformPool();
 }

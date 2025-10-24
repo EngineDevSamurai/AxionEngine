@@ -36,9 +36,20 @@ void EntityRemoveComponent(Entity *entity, uint16_t component);
 // Check if entity has a component
 bool EntityHasComponent(const Entity *entity, uint16_t component);
 
+// Get the first entity index inside of a component pool
+uint8_t FindEntityIndexInComponentPool(uint8_t entityID, uint8_t *poolPointer, uint8_t poolSize);
+
+
+// Get the next available component pool slot
 uint8_t GetNextAvailableComponentPoolSlot(uint8_t *poolPointer, uint8_t poolSize);
 
 // Return a pointer to an entity for lookup by ID
-Entity* getEntityById (uint8_t id);
+Entity* getEntityById (uint8_t entityID);
+
+// Kill Entity
+void KillEntity(uint8_t entityID);
+
+// Initialize Component Pools
+void InitializeComponentPools(void);
 
 #endif

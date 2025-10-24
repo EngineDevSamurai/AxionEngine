@@ -2,10 +2,10 @@
 #define SETTINGS_H
 
 // Max Entities
-#define MAX_ENTITIES 100
+#define MAX_ENTITIES 50
 
 // Component Pool Sizes
-#define TRANSFORM_POOL_SIZE 100
+#define TRANSFORM_POOL_SIZE 50
 #define SPRITE_POOL_SIZE 50
 #define EVENT_LISTENER_POOL_SIZE 150
 #define BOX_COLLIDER_POOL_SIZE 30

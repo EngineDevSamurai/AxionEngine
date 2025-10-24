@@ -4,7 +4,7 @@
 #include <gb/gb.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "../Components/component_manifest.h"
+#include "../Components/components.h"
 #include "../ECS/ECS.h"
 #include "event_system.h"
 
