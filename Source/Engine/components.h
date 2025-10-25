@@ -4,9 +4,9 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <gb/gb.h>                    
-#include "../../settings.h"
-#include "../Libraries/vec2.h"
-#include "../../Asset_Manifests/event_manifest.h"
+#include "../settings.h"
+#include "Libraries/vec2.h"
+#include "../Asset_Manifests/event_manifest.h"
 
 
 

@@ -1,5 +1,5 @@
 #include "ECS.h"
-#include "../Components/components.h"
+#include "components.h"
 
 // Global Entity Pool
 Entity entity[MAX_ENTITIES];

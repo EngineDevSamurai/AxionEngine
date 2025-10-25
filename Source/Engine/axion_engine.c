@@ -29,12 +29,10 @@ SOFTWARE. */
 
 #include "../Asset_Manifests/tile_manifest.h"
 #include "../Asset_Manifests/tilemap_manifest.h"
-#include "Components/components.h"
-#include "Systems/render_sprite_system.h"
-#include "Systems/event_system.h"
-#include "Systems/input_system.h"
-#include "Systems/collision_detection_system.h"
-#include "ECS/ECS.h"
+#include "components.h"
+#include "systems.h"
+#include "collision_detection_system.h"
+#include "ECS.h"
 
 void movePlayer3     (Event* e);
 void movePlayer      (Event* e);
