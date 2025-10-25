@@ -50,7 +50,7 @@ void ClearEventPool(void);
 void EmitEvent(Event event);
 
 // Wrapper for EmitEvent. Removes need to construct an event
-void Emit(uint8_t type, uint8_t entityID, uint8_t arg1, uint8_t arg2);
+void Emit(uint8_t type, uint8_t arg1, uint8_t arg2);
 
 // Process events
 void ProcessEvents(void);
@@ -116,5 +116,22 @@ void ProcessInput(void);
 //──────────────────── INPUT SYSTEM ──────────────────────────//
 //                                                            //
 //──────────────────────── END ───────────────────────────────//
+
+
+/*──────────────────────────────────────────────────*/
+/*─           ██████╗  ██████╗ ██╗  ██╗            ─*/
+/*─           ██╔══██╗██╔═══██╗╚██╗██╔╝            ─*/
+/*─           ██████╔╝██║   ██║ ╚███╔╝             ─*/
+/*─           ██╔══██╗██║   ██║ ██╔██╗             ─*/
+/*─           ██████╔╝╚██████╔╝██╔╝ ██╗            ─*/
+/*─           ╚═════╝  ╚═════╝ ╚═╝  ╚═╝            ─*/
+/*──────────── BOX COLLISION SYSTEM ────────────────*/
+
+// Process Collisions
+void ProcessCollisions(void);
+
+//────────────────────── BOX COLLIDER SYSTEM ─────────────────────────//
+//                                                                    //
+//───────────────────────────── END ──────────────────────────────────//
 
 #endif

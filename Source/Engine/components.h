@@ -274,14 +274,16 @@ static inline void setSpriteOffset(uint8_t entityID, vec2_i newOffset) {
 
 // Set Sprite World Flag
 static inline void setSpriteWorldFlag(uint8_t entityID, bool isWorld) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
         if (spriteComponent.entityID[i] == entityID) {
-            if (isWorld)
+            if (isWorld) {
                 spriteComponent.flags[i] |= SPRF_WORLD;
-            else
+            } else {
                 spriteComponent.flags[i] &= ~SPRF_WORLD;
+            }
             return;
         }
+    }
 }
 
 // Set Sprite Flip X
@@ -310,15 +312,18 @@ static inline void setSpriteFlipY(uint8_t entityID, bool flip) {
 
 // Set Sprite Active
 static inline void setSpriteActive(uint8_t entityID, bool active) {
-    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++)
+    for (uint8_t i = 0; i < SPRITE_POOL_SIZE; i++) {
         if (spriteComponent.entityID[i] == entityID) {
-            if (active)
+            if (active) {
                 spriteComponent.flags[i] |= SPRF_ACTIVE;
-            else
+            } else {
                 spriteComponent.flags[i] &= ~SPRF_ACTIVE;
+            }
             return;
         }
+    }
 }
+
 
 
 //─────────────────── SPRITE COMPONENT ──────────────────────//
@@ -434,7 +439,6 @@ void initializeTransformPool(void);
 // Event
 typedef struct {
     uint8_t type;
-    uint8_t entityID;
     uint8_t arg1;
     uint8_t arg2;
 } Event;

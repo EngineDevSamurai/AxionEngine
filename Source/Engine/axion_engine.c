@@ -31,11 +31,11 @@ SOFTWARE. */
 #include "../Asset_Manifests/tilemap_manifest.h"
 #include "components.h"
 #include "systems.h"
-#include "collision_detection_system.h"
 #include "ECS.h"
 
 void movePlayer3     (Event* e);
 void movePlayer      (Event* e);
+void movePlayer1     (Event* e);
 void killOtherEntity (Event* e);
 
 int8_t player;
@@ -47,7 +47,7 @@ void main(void)
   uint8_t player2 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT | EVENT_LISTENER_COMPONENT | BOX_COLLIDER_COMPONENT);
   uint8_t player3 = CreateEntity(TRANSFORM_COMPONENT | SPRITE_COMPONENT | EVENT_LISTENER_COMPONENT | BOX_COLLIDER_COMPONENT);
 
-  setTransformPosition(player, F12(65), F12(65));
+  setTransformPosition(player, F12(70), F12(65));
   setSpriteTileData(player, face);
   setSpriteWidth(player, 2);
   setSpriteHeight(player, 2);
@@ -61,6 +61,7 @@ void main(void)
   addEventListener(player, ON_BUTTON_LEFT_HELD, movePlayer);
   addEventListener(player, ON_BUTTON_RIGHT_PRESSED, movePlayer);
   addEventListener(player, ON_BUTTON_RIGHT_HELD, movePlayer);
+  addEventListener(player, ON_BUTTON_SELECT_PRESSED, movePlayer1);
   addEventListener(player, ON_COLLISION, killOtherEntity);
   setCollisionLayer(player, 1);
   setCollisionMask(player, 1);
@@ -87,14 +88,14 @@ void main(void)
   setSpriteHeight(player3, 2);
   setSpriteWorldFlag(player3, true);
   setSpriteActive(player3, true);
-  setEventListener(player3, ON_CREATE_ENTITY, movePlayer3);
+  // setEventListener(player3, ON_CREATE_ENTITY, movePlayer3);
   setCollisionLayer(player3, 1);
   setCollisionMask(player3, 1);
   setCollisionWidth(player3, 16);
   setCollisionHeight(player3, 16);
   
   ClearEventPool();
-  Emit(ON_CREATE_ENTITY, player3, player3, 0);
+  Emit(ON_CREATE_ENTITY, player3, 0);
 
   disable_interrupts();
   DISPLAY_OFF;
@@ -140,6 +141,9 @@ void main(void)
     // Render Function Calls Here
     RenderSprites();
 
+    // Remove All Queued Entities
+    RemoveAllQueuedEntities();
+
     // Prevent screen tearing and runaway CPU usage
     wait_vbl_done();
 
@@ -147,7 +151,7 @@ void main(void)
 }
 
   void movePlayer3 (Event* e) {
-  uint8_t id = e->entityID;
+  uint8_t id = e->arg1;
   setTransformPosition(id, 77, 77);
 }
 
@@ -163,6 +167,18 @@ void movePlayer (Event* e) {
 }
 
 void killOtherEntity(Event* e) {
-  uint8_t entityToBeKilled = e->arg1;
-  KillEntity(entityToBeKilled);
+  if (e->arg1 == player || e->arg2 == player)
+  {
+
+    uint8_t entityToBeKilled;
+    if (e->arg1 == player)
+      entityToBeKilled = e->arg2;
+    else
+      entityToBeKilled = e->arg1;
+     AddEntityToRemovalQueue(entityToBeKilled);
+  }
+}
+
+ void movePlayer1 (Event* e) {
+  setTransformPosition(player, F12(99), F12(77));
 }

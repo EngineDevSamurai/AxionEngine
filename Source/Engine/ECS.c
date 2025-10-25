@@ -4,6 +4,10 @@
 // Global Entity Pool
 Entity entity[MAX_ENTITIES];
 
+// Entities to be removed
+uint8_t removalQueue[MAX_ENTITIES];
+uint8_t removalQueueSize = 0;
+
 // Create an Entity
 uint8_t CreateEntity(uint16_t components) {
     uint8_t id = GetNextEntityID();
@@ -244,6 +248,21 @@ void KillEntity(uint8_t entityID) {
     // Remove the entity from the entity pool
     entity -> ID = 0;
     entity -> components = 0;
+}
+
+// Add entity to removal queue
+void AddEntityToRemovalQueue(uint8_t entityID) {
+    removalQueue[removalQueueSize] = entityID;
+    removalQueueSize++;
+}
+
+// Remove all queued entities
+void RemoveAllQueuedEntities(void) {
+    for (int i = 0; i < removalQueueSize; i++)
+    {
+        KillEntity(removalQueue[i]);
+    }
+    removalQueueSize = 0;
 }
 
 // Initialize Component Pools

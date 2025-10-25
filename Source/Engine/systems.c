@@ -126,7 +126,6 @@ void RenderSprites(void) {
 void ClearEventPool(void) {
     for (int i = 0; i < EVENT_POOL_SIZE; i++) {
         eventPool[i].type = 0;
-        eventPool[i].entityID = 0;
         eventPool[i].arg1 = 0;
         eventPool[i].arg2 = 0;
     }
@@ -141,8 +140,8 @@ void EmitEvent(Event event) {
 }
 
 // Wrapper for EmitEvent. Removes need to construct an event
-void Emit(uint8_t type, uint8_t entityID, uint8_t arg1, uint8_t arg2) {
-    Event e = {type, entityID, arg1, arg2};
+void Emit(uint8_t type, uint8_t arg1, uint8_t arg2) {
+    Event e = {type, arg1, arg2};
     EmitEvent(e);
 }
 
@@ -153,9 +152,7 @@ void ProcessEvents(void) {
 
         for (uint8_t j = 0; j < EVENT_LISTENER_POOL_SIZE; j++) {
             if (eventListenerComponent.callback[j] &&
-                eventListenerComponent.type[j] == e->type &&
-                (eventListenerComponent.entityID[j] == e->entityID ||
-                e->entityID == GLOBAL_EVENT))
+                eventListenerComponent.type[j] == e->type)
             {
                 eventListenerComponent.callback[j](e);
             }
@@ -223,11 +220,11 @@ void ProcessInput(void) {
     // UP
     if (input & J_UP) {
         if (IS_HELD(BTN_UP)) {
-            Emit(ON_BUTTON_UP_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_UP_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_UP);
-            Emit(ON_BUTTON_UP_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_UP_PRESSED, 0, 0);
         }
     } 
     else {
@@ -237,11 +234,11 @@ void ProcessInput(void) {
     // DOWN
     if (input & J_DOWN) {
         if (IS_HELD(BTN_DOWN)) {
-            Emit(ON_BUTTON_DOWN_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_DOWN_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_DOWN);
-            Emit(ON_BUTTON_DOWN_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_DOWN_PRESSED, 0, 0);
         }
     } 
     else {
@@ -251,11 +248,11 @@ void ProcessInput(void) {
     // LEFT
     if (input & J_LEFT) {
         if (IS_HELD(BTN_LEFT)) {
-            Emit(ON_BUTTON_LEFT_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_LEFT_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_LEFT);
-            Emit(ON_BUTTON_LEFT_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_LEFT_PRESSED, 0, 0);
         }
     } 
     else {
@@ -265,11 +262,11 @@ void ProcessInput(void) {
     // RIGHT
     if (input & J_RIGHT) {
         if (IS_HELD(BTN_RIGHT)) {
-            Emit(ON_BUTTON_RIGHT_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_RIGHT_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_RIGHT);
-            Emit(ON_BUTTON_RIGHT_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_RIGHT_PRESSED, 0, 0);
         }
     } 
     else {
@@ -279,11 +276,11 @@ void ProcessInput(void) {
     // A
     if (input & J_A) {
         if (IS_HELD(BTN_A)) {
-            Emit(ON_BUTTON_A_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_A_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_A);
-            Emit(ON_BUTTON_A_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_A_PRESSED, 0, 0);
         }
     } 
     else {
@@ -293,11 +290,11 @@ void ProcessInput(void) {
     // B
     if (input & J_B) {
         if (IS_HELD(BTN_B)) {
-            Emit(ON_BUTTON_B_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_B_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_B);
-            Emit(ON_BUTTON_B_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_B_PRESSED, 0, 0);
         }
     } 
     else {
@@ -307,11 +304,11 @@ void ProcessInput(void) {
     // START
     if (input & J_START) {
         if (IS_HELD(BTN_START)) {
-            Emit(ON_BUTTON_START_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_START_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_START);
-            Emit(ON_BUTTON_START_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_START_PRESSED, 0, 0);
         }
     } 
     else {
@@ -321,11 +318,11 @@ void ProcessInput(void) {
     // SELECT
     if (input & J_SELECT) {
         if (IS_HELD(BTN_SELECT)) {
-            Emit(ON_BUTTON_SELECT_HELD, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_SELECT_HELD, 0, 0);
         } 
         else {
             SET_HELD(BTN_SELECT);
-            Emit(ON_BUTTON_SELECT_PRESSED, GLOBAL_EVENT, 0, 0);
+            Emit(ON_BUTTON_SELECT_PRESSED, 0, 0);
         }
     } 
     else {
@@ -336,3 +333,59 @@ void ProcessInput(void) {
 //──────────────────── INPUT SYSTEM ──────────────────────────//
 //                                                            //
 //──────────────────────── END ───────────────────────────────//
+
+/*──────────────────────────────────────────────────*/
+/*─           ██████╗  ██████╗ ██╗  ██╗            ─*/
+/*─           ██╔══██╗██╔═══██╗╚██╗██╔╝            ─*/
+/*─           ██████╔╝██║   ██║ ╚███╔╝             ─*/
+/*─           ██╔══██╗██║   ██║ ██╔██╗             ─*/
+/*─           ██████╔╝╚██████╔╝██╔╝ ██╗            ─*/
+/*─           ╚═════╝  ╚═════╝ ╚═╝  ╚═╝            ─*/
+/*──────────── BOX COLLISION SYSTEM ────────────────*/
+
+// Process Collisions
+void ProcessCollisions(void) {
+    LocalCollider boxA;
+    LocalCollider boxB;
+    for (uint8_t i = 0; i < BOX_COLLIDER_POOL_SIZE; i++) 
+    {
+        if (boxColliderComponent.entityID[i] == 0) continue;
+        boxA.entityID  = boxColliderComponent.entityID[i];
+        boxA.layerMask = boxColliderComponent.layerMask[i];
+        boxA.width     = boxColliderComponent.width[i];
+        boxA.height    = boxColliderComponent.height[i];
+        boxA.offset    = boxColliderComponent.offset[i];
+        boxA.position  = *boxColliderComponent.position[i];
+        boxA.position.x += F12(boxA.offset.x);
+        boxA.position2.x = boxA.position.x + F12(boxA.width);
+        boxA.position.y += F12(boxA.offset.y);
+        boxA.position2.y = boxA.position.y + F12(boxA.height);
+
+        for (uint8_t j = 0; j < BOX_COLLIDER_POOL_SIZE; j++) 
+        {
+            if (boxColliderComponent.entityID[j] == 0 || j <= i) continue;
+            boxB.entityID  = boxColliderComponent.entityID[j];
+            boxB.layerMask = boxColliderComponent.layerMask[j];
+            boxB.width     = boxColliderComponent.width[j];
+            boxB.height    = boxColliderComponent.height[j];
+            boxB.offset    = boxColliderComponent.offset[j];
+            boxB.position  = *boxColliderComponent.position[j];
+            boxB.position.x += F12(boxB.offset.x);
+            boxB.position2.x = boxB.position.x + F12(boxB.width);
+            boxB.position.y += F12(boxB.offset.y);
+            boxB.position2.y = boxB.position.y + F12(boxB.height);
+
+            if (boxA.position.x < boxB.position2.x &&
+                boxA.position2.x > boxB.position.x &&
+                boxA.position.y < boxB.position2.y &&
+                boxA.position2.y > boxB.position.y) 
+            {
+                Emit(ON_COLLISION, boxA.entityID, boxB.entityID);
+            } 
+        }
+    }
+}
+
+//────────────────────── BOX COLLIDER SYSTEM ─────────────────────────//
+//                                                                    //
+//───────────────────────────── END ──────────────────────────────────//

@@ -49,6 +49,12 @@ Entity* getEntityById (uint8_t entityID);
 // Kill Entity
 void KillEntity(uint8_t entityID);
 
+// Add entity to removal queue
+void AddEntityToRemovalQueue(uint8_t entityID);
+
+// Remove all queued entities
+void RemoveAllQueuedEntities(void);
+
 // Initialize Component Pools
 void InitializeComponentPools(void);
 
