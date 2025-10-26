@@ -104,6 +104,12 @@ void RenderSprites(void) {
             }
         }
     }
+
+    // After drawing all active sprites
+    for (uint8_t i = spriteOAMIndex; i < 40; i++) {
+        move_sprite(i, 0, 0); // Move offscreen (e.g., y=0 hides sprite)
+    }
+
 }
 
 
