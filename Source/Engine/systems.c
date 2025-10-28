@@ -1,10 +1,7 @@
 #include "systems.h"
 #include "components.h"
 #include "../Asset_Manifests/tile_manifest.h"
-
-// Temporary camera placeholder
-vec2_i camera = {0, 0};
-
+#include "engine_globals.h"
 
 /*────────────────────────────────────────────────*/
 /*─ ███████╗██████╗ ██████╗ ██╗████████╗███████╗ ─*/
@@ -52,9 +49,9 @@ void RenderSprites(void) {
 
         position = getTransformPosition(id);
 
-        int16_t screenX = s.isWorld ? (TO_INT(position.x) - camera.x + s.offset.x)
+        int16_t screenX = s.isWorld ? (TO_INT(position.x - camera.x) + s.offset.x)
                                     : position.x + s.offset.x;
-        int16_t screenY = s.isWorld ? (TO_INT(position.y) - camera.y + s.offset.y)
+        int16_t screenY = s.isWorld ? (TO_INT(position.y - camera.y) + s.offset.y)
                                     : position.y + s.offset.y;
 
         OAMEntry entry;

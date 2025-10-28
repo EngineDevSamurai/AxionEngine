@@ -56,10 +56,12 @@ SOFTWARE. */
 #include "components.h"
 #include "systems.h"
 #include "ECS.h"
+#include "engine_globals.h"
+
 
 void movePlayer3     (Event* e);
 void movePlayer      (Event* e);
-void movePlayer1     (Event* e);
+void panCameraRight  (Event* e);
 void killOtherEntity (Event* e);
 
 int8_t player;
@@ -85,7 +87,7 @@ void main(void)
   addEventListener(player, ON_BUTTON_LEFT_HELD, movePlayer);
   addEventListener(player, ON_BUTTON_RIGHT_PRESSED, movePlayer);
   addEventListener(player, ON_BUTTON_RIGHT_HELD, movePlayer);
-  addEventListener(player, ON_BUTTON_SELECT_PRESSED, movePlayer1);
+  addEventListener(player, ON_BUTTON_SELECT_PRESSED, panCameraRight);
   addEventListener(player, ON_COLLISION, killOtherEntity);
   setCollisionLayer(player, 1);
   setCollisionMask(player, 1);
@@ -203,6 +205,6 @@ void killOtherEntity(Event* e) {
   }
 }
 
- void movePlayer1 (Event* e) {
-  setTransformPosition(player, F12(99), F12(77));
+ void panCameraRight (Event* e) {
+  MoveCamera (9, 0);
 }
